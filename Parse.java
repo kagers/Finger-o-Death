@@ -45,8 +45,16 @@ public class Parse{
 	//System.out.println(Arrays.toString(a));
 	System.out.println(operands);
 	System.out.println(operators);
-	return (1/3);
-	    
+	double out=operands.get(0);
+	for (int i=0;i<operators.size();i++){
+	    if (operators.get(i).equals("+")){
+		out+=operands.get(i+1);
+	    }else{
+		out-=operands.get(i+1);
+	    }
+	    //System.out.println(out);
+	}
+	return out;   
     }
     public static void main(String[]args){
 	//String x="((1+1)-(4*(6/7)))";
