@@ -11,7 +11,7 @@ K and M both worked on basic arithmetic evaluation using order of operations for
 Two different approaches were implemented, in Parse.java and Arithmetic.java, respectively.
 
 **2015-01-06:**<br>
-
+K started the GUI. M created an order of operations ArrayList
 
 
 
