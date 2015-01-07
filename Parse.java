@@ -61,6 +61,6 @@ public class Parse{
 	//String[] y=x.split("5");
 	//String y="(* 3 3 3 6)";
 	//System.out.println(Arrays.toString(y));
-	System.out.println(evaluate("4-5*5+7/6.0*4"));
+	System.out.println(evaluate("4/3+2*8/5-7-8"));
     }
 }
