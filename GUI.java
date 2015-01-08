@@ -109,6 +109,8 @@ public class GUI extends JFrame implements ActionListener{
     }
     public void actionPerformed(ActionEvent e){
 	String action = e.getActionCommand();
+	double output = 0.0;
+	boolean out = false;
 	switch(action){
 	case "0": case "1": case "2": case "3": case "4":
 	case "5": case "6": case "7": case "8": case "9":
@@ -117,8 +119,16 @@ public class GUI extends JFrame implements ActionListener{
 	    break;
 	case "clear":
 	    input.clear();
+	    break;
+	case "enter":
+	    output=Evaluation.evaluateMath(input);
+	    out=true;
+	    break;
 	}
-	disp.setText(input.toString());	 
+	disp.setText(Evaluation.combine(input));
+	if (out){
+	    disp.append("\n"+output);
+	}
 	index++;   
     }
     public static void main(String[] args) {
