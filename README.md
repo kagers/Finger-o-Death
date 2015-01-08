@@ -13,6 +13,9 @@ Two different approaches were implemented, in Parse.java and Arithmetic.java, re
 **2015-01-06:**<br>
 K started the GUI. M created an order of operations ArrayList
 
+**2015-01-07:**<br>
+M worked on evaluation with parentheses; works in some cases but bugs in others.
+
 
 
 ######First Objective: Basic arithmatic. 
