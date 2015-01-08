@@ -1,42 +1,31 @@
 import java.util.*;
 import java.lang.Math;
 public class Evaluation{
-    //separate expression into its parentheses delimited subsets
-    /*public static String[] parentheses(String in){
-	}*/
 
-    //evaluates an expression
-
-    public static ArrayList<ArrayList<String>> createOrder(ArrayList<ArrayList<String>> orderOfOperations){
-	//order of operations
-	ArrayList<String> groupAS = new ArrayList<String>();
-	groupAS.add("+");
-	groupAS.add("-");
-	orderOfOperations.add(groupAS);
-
-	ArrayList<String> groupMD = new ArrayList<String>();
-	groupMD.add("*");
-	groupMD.add("/");
-	orderOfOperations.add(groupMD);
-
-	ArrayList<String> groupEX = new ArrayList<String>();
-	groupEX.add("^");//pow(a,b) a^b
-	orderOfOperations.add(groupEX);
-
-	//orderOfOperations.add("log");//log10
-	//orderOfOperations.add("ln");//log
-	//orderOfOperations.add("sin");
-	//orderOfOperations.add("cos");
-	//orderOfOperations.add("tan");
-	return orderOfOperations;
+    //separates expression into parentheses
+    public static double evaluateParens(String expression){
+	int startParen = 0;
+	int endParen = 0;
+	for(int i=0; i<expression.length(); i++){
+	    if(expression.charAt(i)=='('){
+		startParen++;
+	    }else if(expression.charAt(i)==')'){
+		endParen++;
+	    }
+	    if(startParen==endParen && startParen!=0){
+		int start = expression.indexOf('(');
+		System.out.println("evaluateParens("+expression.substring(0,start)+")+evaluateParens("+expression.substring(start+1,i)+")'"+expression.substring(i+1)+"')");
+		//if(expression.charAt(i)==')'){
+		//return evaluateParens(expression.substring(0,start)+evaluateParens(expression.substring(start+1,i)));
+		//}else{
+		    return evaluateParens(expression.substring(0,start)+evaluateParens(expression.substring(start+1,i))+expression.substring(i+1));
+		    //}
+	    }
+	}
+	return evaluateMath(expression);
     }
 
-
-    public static double evaluate(String expression){
-	ArrayList<ArrayList<String>> order = new ArrayList<ArrayList<String>>();
-	order = createOrder(order);
-	System.out.println(order.toString());
-
+    public static double evaluateMath(String expression){
 	String[] mult,frac;
 	ArrayList<String> operators = new ArrayList<String>();
 	ArrayList<Double> operands = new ArrayList<Double>();
@@ -46,35 +35,29 @@ public class Evaluation{
 		operators.add(here);
 	    }	    
 	}
-	//System.out.println(expression);
-	//expression=expression.replace("-","+-");
 	expression=expression.replace("/","*1/");
-	//System.out.println(expression);
 	String[] a = expression.split("[+\\-]");
-	//System.out.println(Arrays.toString(a));
 	for (int i=0; i<a.length; i++){
 	    mult=a[i].split("[*]");
-	    double product=Double.parseDouble(mult[0]);
-	    if (mult.length>1){
-		System.out.println(Arrays.toString(mult));
-		for (int j=1; j<mult.length; j++){
-		    frac=mult[j].split("[/]");
-		    double res=Double.parseDouble(frac[0]);
-		    if (frac.length>1){
-			for (int k=1; k<frac.length; k++){
-			    res/=Double.parseDouble(frac[k]);
+	    if(!mult[0].equals("")){
+		System.out.println("mult[0]: "+mult[0]);
+		double product=Double.parseDouble(mult[0]);
+		if (mult.length>1){
+		    for (int j=1; j<mult.length; j++){
+			frac=mult[j].split("[/]");
+			double res=Double.parseDouble(frac[0]);
+			if (frac.length>1){
+			    for (int k=1; k<frac.length; k++){
+				res/=Double.parseDouble(frac[k]);
+			    }
 			}
+			mult[j]=""+res;
+			product*=Double.parseDouble(mult[j]);
 		    }
-		    mult[j]=""+res;
-		    product*=Double.parseDouble(mult[j]);
 		}
+		operands.add(product);
 	    }
-	    operands.add(product);
-	    //System.out.println(Arrays.toString(a));
 	}
-	//System.out.println(Arrays.toString(a));
-	System.out.println(operands);
-	System.out.println(operators);
 	double out=operands.get(0);
 	for (int i=0;i<operators.size();i++){
 	    if (operators.get(i).equals("+")){
@@ -82,15 +65,16 @@ public class Evaluation{
 	    }else{
 		out-=operands.get(i+1);
 	    }
-	    //System.out.println(out);
 	}
-	return out;   
+	return out;
     }
+
+ 
     public static void main(String[]args){
-	//String x="((1+1)-(4*(6/7)))";
-	//String[] y=x.split("5");
-	//String y="(* 3 3 3 6)";
-	//System.out.println(Arrays.toString(y));
-	System.out.println(evaluate("4-5*5+7/6.0*4"));
+	System.out.println("0: "+evaluateMath("4-5*5+7/6.0*4"));
+	System.out.println("1: "+evaluateParens("(2+3)*7"));
+	System.out.println("2: "+evaluateParens("7*(2+3)"));
+	System.out.println("3: "+evaluateParens("((4+8)*3)+((5-6)*1)*1"));
+	System.out.println("4: "+evaluateParens("((4+8)*3)+(5-6)"));
     }
 }
