@@ -22,8 +22,9 @@ class Button{
    text(name,xcor+(xSpan/2),ycor+(ySpan/2));
    textAlign(LEFT,BOTTOM);
  }
-}
+
 
  boolean isClicked(){
   return (mouseX>xcor && mouseX<xcor+xSpan && mouseY>ycor && mouseY<ycor+ySpan);
  }
+}
