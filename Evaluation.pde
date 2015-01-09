@@ -1,6 +1,27 @@
+Button[] buttons;
+
 void setup(){
  size(400,400); 
  background(255);
+ buttons = new Button[18];
+ buttons[0] = new Button(0,height/2,".");
+ buttons[1] = new Button(100,height/2,"(");
+ buttons[2] = new Button(200,height/2,")");
+ buttons[3] = new Button(300,height/2,"/");
+ buttons[4] = new Button(0,height/2+50,"7");
+ buttons[5] = new Button(100,height/2+50,"8");
+ buttons[6] = new Button(200,height/2+50,"9");
+ buttons[7] = new Button(300,height/2+50,"*");
+ buttons[8] = new Button(0,height/2+100,"4");
+ buttons[9] = new Button(100,height/2+100,"5");
+ buttons[10] = new Button(200,height/2+100,"6");
+ buttons[11] = new Button(300,height/2+100,"-");
+ buttons[12] = new Button(0,height/2+150,"1");
+ buttons[13] = new Button(100,height/2+150,"2");
+ buttons[14] = new Button(200,height/2+150,"3");
+ buttons[15] = new Button(300,height/2+150,"+");
+ buttons[16] = new Button(100,height/2+200,"0");
+ buttons[17] = new Button(300,height/2+200,"ENTER");
 }
 
 void draw(){
