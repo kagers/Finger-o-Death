@@ -1,7 +1,7 @@
 Button[] buttons;
 
 void setup(){
- size(400,400); 
+ size(400,500); 
  background(255);
  buttons = new Button[18];
  buttons[0] = new Button(0,height/2,".");
@@ -26,10 +26,14 @@ void setup(){
 
 void draw(){
   fill(0);
+  textAlign(LEFT,BOTTOM);
   text("0: "+evaluateParens("4*8-3+2/5*7+3.2"),10,30);
   text("1: "+evaluateParens("(2+3)*7"),10,50);
   text("2: "+evaluateParens("7*(2+3)"),10,70);
   text("3: "+evaluateParens("((4+8)*3)+(5-6)"),10,90);
+  for(int i=0; i<buttons.length; i++){
+   buttons[i].draw(); 
+  }
 }
 
 
