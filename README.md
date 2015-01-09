@@ -15,11 +15,16 @@ K started the GUI; M created an order of operations ArrayList.
 
 **2015-01-07:**<br>
 M worked on evaluation with parentheses; works in some cases but bugs in others.
-K fixed above mentioned bugs as well as subsequent bugs that arose from the first bug fix.
+K fixed aforementioned bugs as well as subsequent bugs that arose from the first bug fix.
 
+**2015-01-08:**<br>
+M moved Evaluation.java code into a processing file and began work on the Processing display.
+K used the *power* of recursion to simplify evaluation of String expressions, and made the order of operations more *power*ful.
 
+<br><br>
 ######First Objective: Basic arithmatic. 
-We may be using straight java and displaying in processing using Swing for the graphing functions later.
+~~We may be using straight java and displaying in processing using Swing for the graphing functions later.~~
+This is now full-on Processing
 
 ######Initial Tasks:
 Window:
@@ -28,6 +33,4 @@ creating a simple GUI display with buttons, interpreting input
 Evaluation:
 evaluation of simple math functions
 
-currently working on implementing order of operations (excluding parentheses)
-            
-next step will be to implement evaluating with parentheses and those math functions that require them (log, sin, etc)
+
