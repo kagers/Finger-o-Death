@@ -1,9 +1,15 @@
 Button[] buttons;
+ArrayList<String> input = new ArrayList<String>();
+double output = 0.0;
+String disp = "";
+float inLine = 30;
+float outLine = 10;
+boolean displayOut = false;
 
 void setup(){
  size(400,500); 
  background(255);
- buttons = new Button[18];
+ buttons = new Button[19];
  buttons[0] = new Button(0,height/2,".");
  buttons[1] = new Button(100,height/2,"(");
  buttons[2] = new Button(200,height/2,")");
@@ -21,16 +27,21 @@ void setup(){
  buttons[14] = new Button(200,height/2+150,"3");
  buttons[15] = new Button(300,height/2+150,"+");
  buttons[16] = new Button(100,height/2+200,"0");
- buttons[17] = new Button(300,height/2+200,"ENTER");
+ buttons[17] = new Button(200,height/2+200,"CLEAR");
+ buttons[18] = new Button(300,height/2+200,"ENTER");
 }
 
 void draw(){
   fill(0);
   textAlign(LEFT,BOTTOM);
-  text("0: "+evaluateParens("4*8-3+2/5*7+3.2"),10,30);
-  text("1: "+evaluateParens("(2+3)*7"),10,50);
-  text("2: "+evaluateParens("7*(2+3)"),10,70);
-  text("3: "+evaluateParens("((4+8)*3)+(5-6)"),10,90);
+  if(displayOut){
+    drawOutput();
+  }
+  drawInput();
+//  text("0: "+evaluateParens("4*8-3+2/5*7+3.2"),10,30);
+//  text("1: "+evaluateParens("(2+3)*7"),10,50);
+//  text("2: "+evaluateParens("7*(2+3)"),10,70);
+//  text("3: "+evaluateParens("((4+8)*3)+(5-6)"),10,90);
   for(int i=0; i<buttons.length; i++){
    buttons[i].draw(); 
   }
@@ -118,4 +129,29 @@ String combine(ArrayList<String> in) {
     joined+=in.get(i);
   }
   return joined;
+}
+
+void mouseClicked() {
+  for(int i=0; i<buttons.length; i++){
+   if(buttons[i].isClicked()){
+     if(buttons[i].name=="CLEAR"){
+      input.clear();
+     }else if(buttons[i].name=="ENTER"){
+       displayOut = true;
+       output = evaluateMath(input);
+       input.clear();
+       outLine+=40;
+       inLine+=40;
+     }else{
+      input.add(buttons[i].name); 
+     }
+   }
+  disp = combine(input);
+  }
+}
+void drawInput(){
+  text(combine(input),10,inLine);
+}
+void drawOutput(){
+  text(""+output,30,outLine);
 }
