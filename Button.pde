@@ -10,6 +10,10 @@ class Button{
    name = n;
  }
  
+ Button(float x, float y, String name){
+  this(x,y,100,50,name); 
+ }
+ 
  void draw(){
    fill(150);
    rect(xcor, ycor, xSpan, ySpan);
