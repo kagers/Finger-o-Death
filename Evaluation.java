@@ -137,6 +137,42 @@ public class Evaluation{
 	}
 	return joined;
     }
+    /*public static boolean evaluateErrors(String expression){
+	if ((evaluateErrors.charAt(0)=='*'||
+	     evaluateErrors.charAt(0)=='/'||
+	     evaluateErrors.charAt(0)=='^'||
+	     evaluateErrors.charAt(0)=='+'||)||
+	    (evaluateErrors.charAt(evaluateErrors.length()-1)=='*'||
+	     evaluateErrors.charAt(evaluateErrors.length()-1)=='/'||
+	     evaluateErrors.charAt(evaluateErrors.length()-1)=='+'||
+	     evaluateErrors.charAt(evaluateErrors.length()-1)=='-'||
+	     evaluateErrors.charAt(evaluateErrors.length()-1)=='^')){
+	    System.out.println("starts or ends w/ aн operaтor");
+	    return true;
+	}
+	int open=0;
+	int closed=0;
+	for (int i=0; i<expression.length(); i++){
+	    if (!(expression.substring(i,i).equals("/0")) || (i)){
+		switch(expression.charAt(i)){
+		case '(':
+		    open++;
+		    break;
+		case ')':
+		    closed++;
+		    break;
+		}
+	    } else{
+		System.out.println("divide by zero");
+		return true;
+	    }
+	}
+	if (open!=closed){
+	    System.out.println("parenz");
+	    return true;
+	}
+	return false;
+    }*/	    
     public static void main(String[]args){
 	ArrayList<String> a = new ArrayList<String>();
 	a.add("4");
@@ -150,13 +186,14 @@ public class Evaluation{
 	a.add("6");
 	a.add("*");
 	a.add("4");
-	System.out.println("0: "+evaluateParens("4-5*5+7/6.0*4"));
+	System.out.println("0: "+evaluateErrors("4-5*5+7/6.0*4"));
 	System.out.println("0: "+evaluateParens(a));
-	System.out.println("1: "+evaluateParens("(2+3)*(7)"));
-	System.out.println("2: "+evaluateParens("7*(2+3)"));
-	System.out.println("3: "+evaluateParens("(((4+8)*3)+((5-6)*1)*1)^2"));
-	System.out.println("4: "+evaluateParens("((4+8)*3)+(5-6)"));
-	System.out.println("5: "+evaluateParens("(1+2)*(3-4)"));
-	System.out.println("6: "+evaluateParens("(-9/-3)^3-1"));
+	System.out.println("1: "+evaluateErrors("(2+3)*(7)"));
+	System.out.println("2: "+evaluateErrors("7*(2+3)"));
+	System.out.println("3: "+evaluateErrors("(((4+8)*3)+((5-6)*1)*1)^2"));
+	System.out.println("4: "+evaluateErrors("((4+8)*3)+(5-6)"));
+	System.out.println("5: "+evaluateErrors("(1+2)*(3-4)"));
+	System.out.println("6: "+evaluateErrors("(-9/-3)^(3-1"));
+	System.out.println("7: "+evaluateErrors("(-9/-3)^(1-1)"));
     }
 }
