@@ -2,7 +2,7 @@ Button[] buttons;
 ArrayList<ArrayList<String>> input = new ArrayList<ArrayList<String>>();
 int row = 0;
 int col = 0;
-int lastEvaluated = 0;
+String lastEvaluated = "";
 double output = 0.0;
 String Ans = "";
 String disp = "";
@@ -13,8 +13,8 @@ boolean displayOut = false;
 void setup() {
   size(400, 500); 
   background(255);
-  for (int i=0; i<8; i++){
-    input.add(new ArrayList<String>());          
+  for (int i=0; i<8; i++) {
+    input.add(new ArrayList<String>());
   }
   buttons = new Button[19];
   buttons[0] = new Button(0, height/2, ".");
@@ -42,18 +42,19 @@ void draw() {
   System.out.println(input);
   fill(0);
   textAlign(LEFT, BOTTOM);
-  for (int i=0; i<input.size(); i++){
+  background(255);
+  for (int i=0; i<input.size (); i++) {
     String joined = combine(input.get(i));
-    if (joined.equals(Ans)){
-       text(joined,10,10+i);
-    } else{
-       text(joined,10,10+i); 
+    if (joined.length()>0 && joined.charAt(0)=='~') {
+      text(joined.substring(1), 40, 20+30*i);
+    } else {
+      text(joined, 10, 20+30*i);
     }
   }
   /*if (displayOut) {
-    drawOutput();
-  }
-  drawInput();*/
+   drawOutput();
+   }
+   drawInput();*/
   //  text("0: "+evaluateParens("4*8-3+2/5*7+3.2"),10,30);
   //  text("1: "+evaluateParens("(2+3)*7"),10,50);
   //  text("2: "+evaluateParens("7*(2+3)"),10,70);
@@ -62,7 +63,6 @@ void draw() {
     buttons[i].draw();
   }
 }
-
 
 //separates expression into parentheses
 double evaluateParens(String expression) {
@@ -157,25 +157,31 @@ String combine(ArrayList<String> in) {
 void mouseClicked() {
   for (int i=0; i<buttons.length; i++) {
     if (buttons[i].isClicked()) {
+      if (row>=7) {
+          input.remove(0);
+          input.add(7, new ArrayList<String>());
+          row--;
+        }
       if (buttons[i].name=="CLEAR") {
         input.get(row).clear();
       } else if (buttons[i].name=="ENTER") {
         //displayOut = true;
-        if (input.get(row).size()!=0){
-          lastEvaluated=row;
-        Ans = ""+evaluateParens(input.get(row));
-        input.get(row+1).add(Ans);
-        //input.clear();
-        //outLine+=40;
-        //inLine+=40;
-        } else{
-          Ans = ""+evaluateParens(input.get(lastEvaluated));
+        if (input.get(row).size()!=0) {
+          lastEvaluated=combine(input.get(row));
+          Ans = "~"+evaluateParens(input.get(row));
           input.get(row+1).add(Ans);
-          row+=2;
-          col=0;          
+          //input.clear();
+          //outLine+=40;
+          //inLine+=40;
+          row++;
+        } else {
+          Ans = "~"+evaluateParens(lastEvaluated);
+          input.get(row).add(Ans);
         }
+        row+=1;
+        col=0;
       } else {
-        input.get(row).add(col,buttons[i].name);
+        input.get(row).add(col, buttons[i].name);
         col++;
       }
     }
@@ -183,9 +189,8 @@ void mouseClicked() {
   }
 }
 /*void drawInput() {
-  text(combine(input), 10, inLine);
-}
-void drawOutput() {
-  text(""+output, 30, outLine);
-}*/
-
+ text(combine(input), 10, inLine);
+ }
+ void drawOutput() {
+ text(""+output, 30, outLine);
+ }*/
