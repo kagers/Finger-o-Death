@@ -14,8 +14,8 @@ public class Evaluation{
 	    }
 	    if(startParen==endParen && startParen!=0){
 		int start = expression.indexOf('(');
-		//System.out.println("evaluateParens("+expression.substring(0,start)+")+evaluateParens("+expression.substring(start,i)+")'"+expression.substring(i+1)+"')");
-		//System.out.println("evaluateParens("+expression.substring(0,start)+")+evaluateParens("+expression.substring(start+1,i)+")'"+expression.substring(i+1)+"')");
+		System.out.println("evaluateParens("+expression.substring(0,start)+")+evaluateParens("+expression.substring(start,i)+")'"+expression.substring(i+1)+"')");
+		System.out.println("evaluateParens("+expression.substring(0,start)+")+evaluateParens("+expression.substring(start+1,i)+")'"+expression.substring(i+1)+"')");
 		return evaluateParens(expression.substring(0,start)+evaluateParens(expression.substring(start+1,i))+expression.substring(i+1));
 	    }
 	}
@@ -41,7 +41,7 @@ public class Evaluation{
     }
     //helper
     public static String evaluateHelper(String expression, int delimiter){
-	//System.out.println(expression);
+	System.out.println(expression);
 	String[] pemdas = {"+","*","/","\\^"};
 	String[] oper = expression.split("["+pemdas[delimiter]+"]");
 	for (int i=0; i<oper.length; i++){
@@ -144,14 +144,14 @@ public class Evaluation{
 	a.add("6");
 	a.add("*");
 	a.add("4");
-	System.out.println("0: "+evaluateParens("4-5*5+7/6.0*4"));
-	System.out.println("0: "+evaluateParens(a));
-	System.out.println("1: "+evaluateParens("(2+3)*(7)"));
-	System.out.println("2: "+evaluateParens("7*(2+3)"));
-	System.out.println("3: "+evaluateParens("(((4+8)*3)+((5-6)*1)*1)^2"));
-	System.out.println("4: "+evaluateParens("((4+8)*3)+(5-6)"));
-	System.out.println("5: "+evaluateParens("(1+2)/(4-4)"));
-	System.out.println("6: "+evaluateParens("(-9/-3)^(3-1"));
-	System.out.println("7: "+evaluateParens("(-9/-3)^(1/-)"));
+	//System.out.println("0: "+evaluateParens("4-5*5+7/6.0*4"));
+	//System.out.println("0: "+evaluateParens(a));
+	//System.out.println("1: "+evaluateParens("(2+3)*(7)"));
+	//System.out.println("2: "+evaluateParens("7*(2+3)"));
+	//System.out.println("3: "+evaluateParens("(((4+8)*3)+((5-6)*1)*1)^2"));
+	//System.out.println("4: "+evaluateParens("((4+8)*3)+(5-6)"));
+	//System.out.println("5: "+evaluateParens("(1+2)/(4-4)"));
+	//System.out.println("6: "+evaluateParens("(-9/-3)^(3-1"));
+	System.out.println("7: "+evaluateParens("-(4^2)3-2"));
     }
 }

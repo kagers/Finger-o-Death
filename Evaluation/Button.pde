@@ -11,7 +11,7 @@ class Button{
  }
  
  Button(float x, float y, String name){
-  this(x,y,100,50,name); 
+  this(x,y,75,25,name); 
  }
  
  void draw(){

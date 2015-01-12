@@ -10,10 +10,13 @@ String disp = "";
 //float inLine = 30;
 //float outLine = 10;
 boolean displayOut = false;
+int cursorX = 11;
 
 void setup() {
   size(400, 500); 
   background(255);
+  fill(0);
+  rect(cursorX,20,5,10);
   for (int i=0; i<8; i++) {
     input.add(new ArrayList<String>());
   }
@@ -104,6 +107,8 @@ void draw() {
   fill(0);
   textAlign(LEFT, BOTTOM);
   background(255);
+  fill(0);
+  rect(cursorX,7,5,10);
   for (int i=0; i<input.size (); i++) {
     String joined = combine(input.get(i));
     if (joined.length()>0 && joined.charAt(0)=='~') {
