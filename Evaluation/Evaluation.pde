@@ -1,13 +1,14 @@
 Button[] buttons;
+boolean on = false;
 ArrayList<ArrayList<String>> input = new ArrayList<ArrayList<String>>();
 int row = 0;
 int col = 0;
 String lastEvaluated = "";
-double output = 0.0;
+//double output = 0.0;
 String Ans = "";
 String disp = "";
-float inLine = 30;
-float outLine = 10;
+//float inLine = 30;
+//float outLine = 10;
 boolean displayOut = false;
 
 void setup() {
@@ -16,8 +17,67 @@ void setup() {
   for (int i=0; i<8; i++) {
     input.add(new ArrayList<String>());
   }
-  buttons = new Button[19];
-  buttons[0] = new Button(0, height/2, ".");
+  buttons = new Button[20];
+  /*buttons[0] = new Button(0, height/2-10, "Y=");
+   buttons[1] = new Button(75, height/2-10, "WINDOW");
+   buttons[2] = new Button(150, height/2-10, "ZOOM");
+   buttons[3] = new Button(225, height/2-10, "TRACE");
+   buttons[4] = new Button(300, height/2-10, "GRAPH");
+   
+   buttons[5] = new Button(0, height/2+30, "2nd");
+   buttons[6] = new Button(100, height/2+30, "MODE");
+   buttons[7] = new Button(200, height/2+30, "DEL");
+   buttons[8] = new Button(400, height/2+30, "N");
+   
+   buttons[9] = new Button(0, height/2+100, "ALPHA");
+   buttons[10] = new Button(100, height/2+100, "X");
+   buttons[11] = new Button(200, height/2+100, "STAT");
+   buttons[12] = new Button(300, height/2+100, "W");
+   buttons[13] = new Button(400, height/2+100, "S");
+   buttons[14] = new Button(500, height/2+100, "E");
+   
+   buttons[15] = new Button(0, height/2+150, "MATH");
+   buttons[16] = new Button(100, height/2+150, "APPS");
+   buttons[17] = new Button(200, height/2+150, "PRGM");
+   buttons[18] = new Button(300, height/2+150, "VARS");
+   buttons[19] = new Button(400, height/2+150, "CLEAR");
+   
+   buttons[20] = new Button(0, height/2+200, "x^-1");
+   buttons[21] = new Button(100, height/2+200, "SIN");
+   buttons[22] = new Button(200, height/2+200, "COS");
+   buttons[23] = new Button(300, height/2+200, "TAN");
+   buttons[24] = new Button(400, height/2+200, "^");
+   
+   buttons[25] = new Button(0, height/2+250, "x^2");
+   buttons[26] = new Button(100, height/2+250, ",");
+   buttons[27] = new Button(200, height/2+250, "(");
+   buttons[28] = new Button(300, height/2+250, ")");
+   buttons[29] = new Button(400, height/2+250, "/");
+   
+   buttons[30] = new Button(0, height/2+300, "LOG");
+   buttons[31] = new Button(100, height/2+300, "7");
+   buttons[32] = new Button(200, height/2+300, "8");
+   buttons[33] = new Button(300, height/2+300, "9");
+   buttons[34] = new Button(400, height/2+300, "*");
+   
+   buttons[35] = new Button(0, height/2+350, "LN");
+   buttons[36] = new Button(100, height/2+350, "4");
+   buttons[37] = new Button(200, height/2+350, "5");
+   buttons[38] = new Button(300, height/2+350, "6");
+   buttons[39] = new Button(400, height/2+350, "7");
+   
+   buttons[40] = new Button(0, height/2+400, "STO->");
+   buttons[41] = new Button(100, height/2+400, "1");
+   buttons[42] = new Button(200, height/2+400, "2");
+   buttons[43] = new Button(300, height/2+400, "3");
+   buttons[44] = new Button(400, height/2+400, "+");
+   
+   buttons[45] = new Button(0, height/2+450, "ON");
+   buttons[46] = new Button(100, height/2+450, "0");
+   buttons[47] = new Button(200, height/2+450, ".");
+   buttons[48] = new Button(300, height/2+450, "(-)");
+   buttons[49] = new Button(400, height/2+450, "ENTER");
+   */  buttons[0] = new Button(0, height/2, ".");
   buttons[1] = new Button(100, height/2, "(");
   buttons[2] = new Button(200, height/2, ")");
   buttons[3] = new Button(300, height/2, "/");
@@ -33,9 +93,10 @@ void setup() {
   buttons[13] = new Button(100, height/2+150, "2");
   buttons[14] = new Button(200, height/2+150, "3");
   buttons[15] = new Button(300, height/2+150, "+");
-  buttons[16] = new Button(100, height/2+200, "0");
-  buttons[17] = new Button(200, height/2+200, "CLEAR");
-  buttons[18] = new Button(300, height/2+200, "ENTER");
+  buttons[16] = new Button(0, height/2+200, "^");
+  buttons[17] = new Button(100, height/2+200, "0");
+  buttons[18] = new Button(200, height/2+200, "CLEAR");
+  buttons[19] = new Button(300, height/2+200, "ENTER");
 }
 
 void draw() {
@@ -158,12 +219,20 @@ void mouseClicked() {
   for (int i=0; i<buttons.length; i++) {
     if (buttons[i].isClicked()) {
       if (row>=7) {
-          input.remove(0);
-          input.add(7, new ArrayList<String>());
-          row--;
-        }
+        input.remove(0);
+        input.add(7, new ArrayList<String>());
+        row--;
+      }
       if (buttons[i].name=="CLEAR") {
-        input.get(row).clear();
+        if (combine(input.get(row)).length()>0) {
+          input.get(row).clear();
+          col=0;
+        } else {
+          for (int j=0; j<input.size (); j++) {
+            input.get(j).clear();
+            row=0;
+          }
+        }
       } else if (buttons[i].name=="ENTER") {
         //displayOut = true;
         if (input.get(row).size()!=0) {
