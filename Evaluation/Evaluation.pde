@@ -107,8 +107,7 @@ void draw() {
   fill(0);
   textAlign(LEFT, BOTTOM);
   background(255);
-  fill(0);
-  rect(cursorX,7,5,10);
+  drawCursor();
   for (int i=0; i<input.size (); i++) {
     String joined = combine(input.get(i));
     if (joined.length()>0 && joined.charAt(0)=='~') {
@@ -128,6 +127,19 @@ void draw() {
   for (int i=0; i<buttons.length; i++) {
     buttons[i].draw();
   }
+}
+
+void drawCursor(){
+  if((frameCount/30)%2==0){
+   stroke(0);
+   fill(0); 
+  }else{
+   stroke(255);
+   fill(255); 
+  }
+ rect(cursorX,7,5,10);
+ stroke(0);
+ fill(0);
 }
 
 //separates expression into parentheses
