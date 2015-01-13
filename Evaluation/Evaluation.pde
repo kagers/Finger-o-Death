@@ -17,90 +17,71 @@ void setup() {
   size(400, 500); 
   background(255);
   fill(0);
-  rect(cursorX,20,5,10);
+  rect(cursorX, 20, 5, 10);
   for (int i=0; i<8; i++) {
     input.add(new ArrayList<String>());
   }
-  buttons = new Button[20];
-  /*buttons[0] = new Button(0, height/2-10, "Y=");
-   buttons[1] = new Button(75, height/2-10, "WINDOW");
-   buttons[2] = new Button(150, height/2-10, "ZOOM");
-   buttons[3] = new Button(225, height/2-10, "TRACE");
-   buttons[4] = new Button(300, height/2-10, "GRAPH");
-   
-   buttons[5] = new Button(0, height/2+30, "2nd");
-   buttons[6] = new Button(100, height/2+30, "MODE");
-   buttons[7] = new Button(200, height/2+30, "DEL");
-   buttons[8] = new Button(400, height/2+30, "N");
-   
-   buttons[9] = new Button(0, height/2+100, "ALPHA");
-   buttons[10] = new Button(100, height/2+100, "X");
-   buttons[11] = new Button(200, height/2+100, "STAT");
-   buttons[12] = new Button(300, height/2+100, "W");
-   buttons[13] = new Button(400, height/2+100, "S");
-   buttons[14] = new Button(500, height/2+100, "E");
-   
-   buttons[15] = new Button(0, height/2+150, "MATH");
-   buttons[16] = new Button(100, height/2+150, "APPS");
-   buttons[17] = new Button(200, height/2+150, "PRGM");
-   buttons[18] = new Button(300, height/2+150, "VARS");
-   buttons[19] = new Button(400, height/2+150, "CLEAR");
-   
-   buttons[20] = new Button(0, height/2+200, "x^-1");
-   buttons[21] = new Button(100, height/2+200, "SIN");
-   buttons[22] = new Button(200, height/2+200, "COS");
-   buttons[23] = new Button(300, height/2+200, "TAN");
-   buttons[24] = new Button(400, height/2+200, "^");
-   
-   buttons[25] = new Button(0, height/2+250, "x^2");
-   buttons[26] = new Button(100, height/2+250, ",");
-   buttons[27] = new Button(200, height/2+250, "(");
-   buttons[28] = new Button(300, height/2+250, ")");
-   buttons[29] = new Button(400, height/2+250, "/");
-   
-   buttons[30] = new Button(0, height/2+300, "LOG");
-   buttons[31] = new Button(100, height/2+300, "7");
-   buttons[32] = new Button(200, height/2+300, "8");
-   buttons[33] = new Button(300, height/2+300, "9");
-   buttons[34] = new Button(400, height/2+300, "*");
-   
-   buttons[35] = new Button(0, height/2+350, "LN");
-   buttons[36] = new Button(100, height/2+350, "4");
-   buttons[37] = new Button(200, height/2+350, "5");
-   buttons[38] = new Button(300, height/2+350, "6");
-   buttons[39] = new Button(400, height/2+350, "7");
-   
-   buttons[40] = new Button(0, height/2+400, "STO->");
-   buttons[41] = new Button(100, height/2+400, "1");
-   buttons[42] = new Button(200, height/2+400, "2");
-   buttons[43] = new Button(300, height/2+400, "3");
-   buttons[44] = new Button(400, height/2+400, "+");
-   
-   buttons[45] = new Button(0, height/2+450, "ON");
-   buttons[46] = new Button(100, height/2+450, "0");
-   buttons[47] = new Button(200, height/2+450, ".");
-   buttons[48] = new Button(300, height/2+450, "(-)");
-   buttons[49] = new Button(400, height/2+450, "ENTER");
-   */  buttons[0] = new Button(0, height/2, ".");
-  buttons[1] = new Button(100, height/2, "(");
-  buttons[2] = new Button(200, height/2, ")");
-  buttons[3] = new Button(300, height/2, "/");
-  buttons[4] = new Button(0, height/2+50, "7");
-  buttons[5] = new Button(100, height/2+50, "8");
-  buttons[6] = new Button(200, height/2+50, "9");
-  buttons[7] = new Button(300, height/2+50, "*");
-  buttons[8] = new Button(0, height/2+100, "4");
-  buttons[9] = new Button(100, height/2+100, "5");
-  buttons[10] = new Button(200, height/2+100, "6");
-  buttons[11] = new Button(300, height/2+100, "-");
-  buttons[12] = new Button(0, height/2+150, "1");
-  buttons[13] = new Button(100, height/2+150, "2");
-  buttons[14] = new Button(200, height/2+150, "3");
-  buttons[15] = new Button(300, height/2+150, "+");
-  buttons[16] = new Button(0, height/2+200, "^");
-  buttons[17] = new Button(100, height/2+200, "0");
-  buttons[18] = new Button(200, height/2+200, "CLEAR");
-  buttons[19] = new Button(300, height/2+200, "ENTER");
+  buttons = new Button[51];
+  buttons[0] = new Button(0, height/2-height/2/10,width/5,height/20, "Y=",170);
+  buttons[1] = new Button(1*width/5, height/2-height/2/10,width/5,height/20, "WINDOW",170);
+  buttons[2] = new Button(2*width/5, height/2-height/2/10,width/5,height/20, "ZOOM",170);
+  buttons[3] = new Button(3*width/5, height/2-height/2/10,width/5,height/20, "TRACE",170);
+  buttons[4] = new Button(4*width/5, height/2-height/2/10,width/5,height/20, "GRAPH",170);
+
+  buttons[5] = new Button(0,  height/2+(0*height/2/10), "2nd");
+  buttons[6] = new Button(1*width/5, height/2+(0*height/2/10), "MODE");
+  buttons[7] = new Button(2*width/5, height/2+(0*height/2/10), "DEL");
+  buttons[8] = new Button(15*width/20, height/2+(0*height/2/10)+3,width/10,height/20-height/40+1, "N",170);
+
+  buttons[9] = new Button(0, height/2+(1*height/2/10), "ALPHA");
+  buttons[10] = new Button(1*width/5, height/2+(1*height/2/10), "X");
+  buttons[11] = new Button(2*width/5, height/2+(1*height/2/10), "STAT");
+  buttons[12] = new Button(13*width/20, height/2+(0.5*height/2/10)+5,width/10,height/20-height/40+1, "W",170);
+  buttons[13] = new Button(15*width/20, height/2+(1*height/2/10)+6,width/10,height/20-height/40+1, "S",170);
+  buttons[14] = new Button(17*width/20, height/2+(0.5*height/2/10)+5,width/10,height/20-height/40+1, "E",170);
+
+  buttons[15] = new Button(0, height/2+(2*height/2/10), "MATH");
+  buttons[16] = new Button(1*width/5, height/2+(2*height/2/10), "APPS");
+  buttons[17] = new Button(2*width/5, height/2+(2*height/2/10), "PRGM");
+  buttons[18] = new Button(3*width/5, height/2+(2*height/2/10), "VARS");
+  buttons[19] = new Button(4*width/5, height/2+(2*height/2/10), "CLEAR");
+
+  buttons[20] = new Button(0, height/2+(3*height/2/10), "x^-1");
+  buttons[21] = new Button(1*width/5, height/2+(3*height/2/10), "SIN");
+  buttons[22] = new Button(2*width/5, height/2+(3*height/2/10), "COS");
+  buttons[23] = new Button(3*width/5, height/2+(3*height/2/10), "TAN");
+  buttons[24] = new Button(4*width/5, height/2+(3*height/2/10),width/5,height/20, "^",170);
+
+  buttons[25] = new Button(0, height/2+(4*height/2/10), "x^2");
+  buttons[26] = new Button(1*width/5, height/2+(4*height/2/10),width/5,height/20+height/20/5, ",",225);
+  buttons[27] = new Button(2*width/5, height/2+(4*height/2/10),width/5,height/20+height/20/5, "(",225);
+  buttons[28] = new Button(3*width/5, height/2+(4*height/2/10),width/5,height/20+height/20/5, ")",225);
+  buttons[29] = new Button(4*width/5, height/2+(4*height/2/10),width/5,height/20, "/",170);
+
+  buttons[30] = new Button(0, height/2+(5*height/2/10), "LOG");
+  buttons[31] = new Button(1*width/5, height/2+(5*height/2/10)+height/20/5,width/5,height/20+height/20/5, "7",225);
+  buttons[32] = new Button(2*width/5, height/2+(5*height/2/10)+height/20/5,width/5,height/20+height/20/5, "8",225);
+  buttons[33] = new Button(3*width/5, height/2+(5*height/2/10)+height/20/5,width/5,height/20+height/20/5, "9",225);
+  buttons[34] = new Button(4*width/5, height/2+(5*height/2/10),width/5,height/20, "*",170);
+
+  buttons[35] = new Button(0, height/2+(6*height/2/10), "LN");
+  buttons[36] = new Button(1*width/5, height/2+(6*height/2/10)+2*height/20/5,width/5,height/20+height/20/5, "4",225);
+  buttons[37] = new Button(2*width/5, height/2+(6*height/2/10)+2*height/20/5,width/5,height/20+height/20/5, "5",225);
+  buttons[38] = new Button(3*width/5, height/2+(6*height/2/10)+2*height/20/5,width/5,height/20+height/20/5, "6",225);
+  buttons[39] = new Button(4*width/5, height/2+(6*height/2/10),width/5,height/20, "-",170);
+
+  buttons[40] = new Button(0, height/2+(7*height/2/10), "STO->");
+  buttons[41] = new Button(1*width/5, height/2+(7*height/2/10)+3*height/20/5,width/5,height/20+height/20/5, "1",225);
+  buttons[42] = new Button(2*width/5, height/2+(7*height/2/10)+3*height/20/5,width/5,height/20+height/20/5, "2",225);
+  buttons[43] = new Button(3*width/5, height/2+(7*height/2/10)+3*height/20/5,width/5,height/20+height/20/5, "3",225);
+  buttons[44] = new Button(4*width/5, height/2+(7*height/2/10),width/5,height/20, "+",170);
+
+  buttons[45] = new Button(0, height/2+(8*height/2/10), "ON");
+  buttons[46] = new Button(1*width/5, height/2+(8*height/2/10)+4*height/20/5,width/5,height/20+height/20/5, "0",225);
+  buttons[47] = new Button(2*width/5, height/2+(8*height/2/10)+4*height/20/5,width/5,height/20+height/20/5, ".",225);
+  buttons[48] = new Button(3*width/5, height/2+(8*height/2/10)+4*height/20/5,width/5,height/20+height/20/5, "(-)",225);
+  buttons[49] = new Button(4*width/5, height/2+(8*height/2/10),width/5,height/20+5*height/20/5, "ENTER",170);
+  buttons[50] = new Button(4*width/5,height/2+(2*height/2/10), "CLEAR");
 }
 
 void draw() {
@@ -130,17 +111,17 @@ void draw() {
   }
 }
 
-void drawCursor(){
-  if((frameCount/30)%2==0){
-   stroke(0);
-   fill(0); 
-  }else{
-   stroke(255);
-   fill(255); 
+void drawCursor() {
+  if ((frameCount/30)%2==0) {
+    stroke(0);
+    fill(0);
+  } else {
+    stroke(255);
+    fill(255);
   }
- rect(cursorX,cursorY,5,10);
- stroke(0);
- fill(0);
+  rect(cursorX, cursorY, 5, 10);
+  stroke(0);
+  fill(0);
 }
 
 //separates expression into parentheses
