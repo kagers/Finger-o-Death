@@ -13,7 +13,7 @@ class Button{
  }
  
  Button(float x, float y, String name){
-  this(x,y,width/5,height/20,name,150); 
+  this(x,y,width/5,height/20,name,125); 
  }
  
  void draw(){
