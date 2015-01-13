@@ -11,6 +11,7 @@ String disp = "";
 //float outLine = 10;
 boolean displayOut = false;
 int cursorX = 11;
+int cursorY = 7;
 
 void setup() {
   size(400, 500); 
@@ -137,7 +138,7 @@ void drawCursor(){
    stroke(255);
    fill(255); 
   }
- rect(cursorX,7,5,10);
+ rect(cursorX,cursorY,5,10);
  stroke(0);
  fill(0);
 }
@@ -260,14 +261,18 @@ void mouseClicked() {
           //outLine+=40;
           //inLine+=40;
           row++;
+          cursorY+=60;
         } else {
           Ans = "~"+evaluateParens(lastEvaluated);
           input.get(row).add(Ans);
+          cursorY+=30;
         }
+        cursorX=11;
         row+=1;
         col=0;
       } else {
         input.get(row).add(col, buttons[i].name);
+        cursorX+=textWidth(buttons[i].name);
         col++;
       }
     }
