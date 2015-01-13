@@ -1,21 +1,23 @@
 class Button{
  float xcor, ycor, xSpan, ySpan; 
  String name;
+ int col;
  
- Button(float x, float y, float xS, float yS, String n){
+ Button(float x, float y, float xS, float yS, String n, int c){
    xcor = x;
    ycor = y;
    xSpan = xS;
    ySpan = yS;
    name = n;
+   col = c;
  }
  
  Button(float x, float y, String name){
-  this(x,y,75,25,name); 
+  this(x,y,width/5,height/20,name,150); 
  }
  
  void draw(){
-   fill(150);
+   fill(col);
    rect(xcor, ycor, xSpan, ySpan);
    fill(0);
    textAlign(CENTER,CENTER);
