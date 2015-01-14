@@ -32,10 +32,11 @@ K changed the display so that an ArrayList is always displayed, rather than text
 K also made it so that if enter is pressed with no input, the previous entry is evaluated. The last output is now stored in Ans.
 
 **2015-01-12:**<br>
-K worked on using logs.
+K worked on using function calls like log() and sin().
 M added buttons to display.
 
 **2015-01-13:**<br>
 M added 2nd and ALPHA text on buttons.
 M made it detect mode (normal, 2nd, or ALPHA) and input values accordingly.
 M experimented with graphing. Results are not yet added to the project.
+K made functions functional???
