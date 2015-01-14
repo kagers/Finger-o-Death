@@ -14,7 +14,7 @@ int cursorX = 11;
 int cursorY = 7;
 
 void setup() {
-  size(400, 500); 
+  size(600, 700); 
   background(255);
   PFont font = loadFont("Courier10PitchBT-Roman-48.vlw");
   textFont(font,12);
