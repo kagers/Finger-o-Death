@@ -272,13 +272,15 @@ public class Evaluation{
 	a.add("4");
 	//System.out.println("0: "+evaluateParens("4-5*5+7/6.0*4"));
 	//System.out.println("0: "+evaluateParens(a));
-	System.out.println("\t1: "+evaluateParens("log(2*(2+3))+sqrt(1*7^2)+(-5+-56/-8)"));//+7(9-1)"));
+	/*System.out.println("\t1: "+evaluateParens("log(2*(2+3))+sqrt(1*7^2)+(-5+-56/-8)"));//+7(9-1)"));
 	System.out.println("\t2: "+evaluateParens("(1+3)-(1+4)"));
 	System.out.println("\t2: "+evaluateParens("7*(2+3)"));
 	System.out.println("\t3: "+evaluateParens("(((4+8)*3)+((5-6)*1)*1)^2"));
 	System.out.println("\t4: "+evaluateParens("((4+8)*3)+(5-6)"));
 	System.out.println("\t5: "+evaluateParens("(1+2)/(4^0)"));
 	System.out.println("\t6: "+evaluateParens("(-9/-3)^(3-1)"));
-	System.out.println("\t7: "+evaluateParens("((4^2)*3)-ln(2*(4-3))"));
+	System.out.println("\t7: "+evaluateParens("((4^2)*3)-ln(2*(4-3))"));*/
+	System.out.println("\t8: "+evaluateParens("sin(30)+cos(30)+tan(1)"));
+	System.out.println("\t9: "+evaluateParens("sin(84)^(cos(48))+(log(51)/ln(9))"));
     }
 }
