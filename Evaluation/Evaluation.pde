@@ -14,6 +14,7 @@ int cursorX = 11;
 int cursorY = 7;
 String[] functions;
 String mode = "NORM";
+String screen = "NORM";
 
 void setup() {
   size(500, 700); 
@@ -91,14 +92,25 @@ void draw() {
   fill(0);
   textAlign(LEFT, BOTTOM);
   background(255);
-  drawCursor();
-  for (int i=0; i<input.size (); i++) {
-    String joined = combine(input.get(i));
-    if (joined.length()>0 && joined.charAt(0)=='~') {
-      text(joined.substring(1), 40, 20+30*i);
-    } else {
-      text(joined, 10, 20+30*i);
+  if (screen.equals("NORM")) {
+    drawCursor();
+    for (int i=0; i<input.size (); i++) {
+      String joined = combine(input.get(i));
+      if (joined.length()>0 && joined.charAt(0)=='~') {
+        text(joined.substring(1), 40, 20+30*i);
+      } else {
+        text(joined, 10, 20+30*i);
+      }
     }
+  } else if (screen.equals("Y=")) {
+    for (int i=0; i<10; i++) {
+      text("Y"+i+"=", 40, 20+(30*i));
+      cursorX=70;
+      drawCursor();
+    }
+  } else if (screen.equals("GRAPH")) {
+    grid();
+    graph("(1/3)*X^2");
   }
   /*if (displayOut) {
    drawOutput();
@@ -110,6 +122,42 @@ void draw() {
   //  text("3: "+evaluateParens("((4+8)*3)+(5-6)"),10,90);
   for (int i=0; i<buttons.length; i++) {
     buttons[i].draw();
+  }
+}
+
+void grid() {
+  for (int x=10; x<=width-10; x+=10) {
+    stroke(200);
+    line(x, 10, x, (height/2)-20);
+  } 
+  for (int y=10; y< (height/2)- 10; y+=10) {
+    stroke(200);
+    line(10, y, width-10, y);
+  }
+  stroke(0);
+  line(width/2, 10, width/2, (height/2)-20);
+  line(10, 170, width-10, 170);
+}
+
+void graph(String function) {
+  String funct = "";
+  for (float x=-24; x<=24; x+=0.01) {
+    String plugged = "";
+    for (int i=0; i<function.length (); i++) {
+      if (function.charAt(i)=='X') {
+        plugged+=""+x;
+      } else {
+        plugged+=function.charAt(i);
+      }
+    }
+    plotPoint(x*10, (float)evaluateParens(plugged)*10);
+  }
+}
+
+void plotPoint(float x, float y) {
+  fill(255, 0, 0);
+  if (170-y>=10 && 170-y<=(height/2)-20) {
+    ellipse((width/2)+x, 170-y, 0.05, 0.05);
   }
 }
 
@@ -225,18 +273,22 @@ void mouseClicked() {
         row--;
       }   
       if (mode.equals("NORM")) {
-        if(buttons[i].name=="2nd"){
+        if (buttons[i].name=="2nd") {
           mode = "2nd";
-        }else if(buttons[i].name=="ALPHA"){
+        } else if (buttons[i].name=="ALPHA") {
           mode = "ALPHA";
-        }else if (buttons[i].name=="CLEAR") {
-          if (combine(input.get(row)).length()>0) {
-            input.get(row).clear();
-            col=0;
+        } else if (buttons[i].name=="CLEAR") {
+          if (screen.equals("GRAPH")) {
+            screen="NORM";
           } else {
-            for (int j=0; j<input.size (); j++) {
-              input.get(j).clear();
-              row=0;
+            if (combine(input.get(row)).length()>0) {
+              input.get(row).clear();
+              col=0;
+            } else {
+              for (int j=0; j<input.size (); j++) {
+                input.get(j).clear();
+                row=0;
+              }
             }
           }
         } else if (buttons[i].name=="ENTER") {
@@ -258,17 +310,21 @@ void mouseClicked() {
           cursorX=11;
           row+=1;
           col=0;
+        } else if (buttons[i].name=="Y=") {
+          screen="Y=";
+        } else if (buttons[i].name=="GRAPH") {
+          screen="GRAPH";
         } else {
           input.get(row).add(col, buttons[i].name);
           cursorX+=textWidth(buttons[i].name);
           col++;
         }
-      }else if(mode.equals("2nd")){
-        if(buttons[i].name=="2nd"){
+      } else if (mode.equals("2nd")) {
+        if (buttons[i].name=="2nd") {
           mode = "NORM";
-        }else if(buttons[i].name=="ALPHA"){
+        } else if (buttons[i].name=="ALPHA") {
           mode = "ALPHA";
-        }else if (buttons[i].name=="CLEAR") {
+        } else if (buttons[i].name=="CLEAR") {
           if (combine(input.get(row)).length()>0) {
             input.get(row).clear();
             col=0;
@@ -284,12 +340,12 @@ void mouseClicked() {
           col++;
         }
         mode = "NORM";
-      }else if(mode.equals("ALPHA")){
-        if(buttons[i].name=="2nd"){
+      } else if (mode.equals("ALPHA")) {
+        if (buttons[i].name=="2nd") {
           mode = "2nd";
-        }else if(buttons[i].name=="ALPHA"){
+        } else if (buttons[i].name=="ALPHA") {
           mode = "NORM";
-        }else if (buttons[i].name=="CLEAR") {
+        } else if (buttons[i].name=="CLEAR") {
           if (combine(input.get(row)).length()>0) {
             input.get(row).clear();
             col=0;
@@ -310,9 +366,3 @@ void mouseClicked() {
     //disp = combine(input);
   }
 }
-/*void drawInput() {
- text(combine(input), 10, inLine);
- }
- void drawOutput() {
- text(""+output, 30, outLine);
- }*/
