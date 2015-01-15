@@ -3,7 +3,7 @@ import java.lang.*;
 
 public class Evaluation{
     public static String evaluateFunctions(String fxn, String expression){
-	System.out.println(fxn+" "+expression+"hi");
+	//System.out.println(fxn+" "+expression+"hi");
 	//String fxn = expression.substring(0,expression.indexOf("("));
 	String args = expression;
 	String after = "";//expression.substring(expression.indexOf(")")+1);
@@ -50,44 +50,22 @@ public class Evaluation{
 		endParen++;
 	    }
 	}
-	expression=evaluateParensHelper(expression,false);
+	expression=evaluateParensHelper(expression);
 	while (expression.charAt(0)=='(' && expression.charAt(expression.length()-1)==')'){
 		expression=expression.substring(1,expression.length()-1);
 	}
 	return Double.parseDouble(expression);
     }
-    public static String evaluateParensHelper(String expression, boolean check){
-	System.out.println(expression);
+    public static String evaluateParensHelper(String expression){
+	//System.out.println(expression);
 	/*if (expression.charAt(0)=='(' && expression.charAt(expression.length()-1)==')'){
 	  return expression.substring(1,expression.length()-1);
 	  }*/
 	int startParen=0;
 	int endParen=0;
-	/*if (check){
-	  System.out.println(expression+"BYE");
-	  /*int startParen = 0;
-	  int endParen = 0;
-	  for (int i=0; i<expression.length(); i++){
-	  if(expression.charAt(i)=='('){
-	  startParen++;
-	  }else if(expression.charAt(i)==')'){
-	  endParen++;
-	  }
-	  }
-	  if (expression.length()>0 && expression.indexOf('(')>-1){
-	  System.out.println(expression);
-	  //if (startParen==1 && endParen==1 && expression.substring(0,expression.indexOf('(')).length()>0){
-	  if (expression.substring(0,expression.indexOf('(')).length()>0){
-	  return evaluateFunctions(expression.substring(0,expression.indexOf(")")+1))+expression.substring(expression.indexOf(")"));
-	  //expression=expression.substring(1,expression.length()-1);
-	  } else if (expression.charAt(0)=='(' && expression.charAt(expression.length()-1)==')'){
-	  return expression.substring(1,expression.length()-1);
-	  }
-	  }
-	  }*/
-	System.out.println("kkk"+expression);
+	//System.out.println("kkk"+expression);
 	if (expression.indexOf('(')!=-1){
-	    System.out.println("gonna check for fxn");
+	    //System.out.println("gonna check for fxn");
 	    String[] fa = expression.substring(0,expression.indexOf('(')).split("[+\\-/*^]");
 	    String f = fa[fa.length-1];
 	    String before = expression.substring(0,expression.indexOf(f));
@@ -101,7 +79,7 @@ public class Evaluation{
 		}
 		//System.out.println(mult);
 	    }
-	    System.out.println("\n"+f);
+	    //System.out.println("\n"+f);
 	    if (f.length()>0 && !mult){
 		int index = expression.substring(0,expression.indexOf('(')).length()+1;
 		startParen=1;
@@ -113,18 +91,20 @@ public class Evaluation{
 		    }
 		    index++;
 		}
-		System.out.println(index+" found a fxn "+f);
+		//System.out.println(index+" found a fxn "+f);
 		if (index+1<expression.length()){
-		    System.out.println("stuff after");
-		    return evaluateParensHelper(before+evaluateParensHelper(evaluateFunctions(f,evaluateParensHelper(expression.substring(expression.indexOf("("),index),false))+expression.substring(index,index+1)+evaluateParensHelper(expression.substring(index+1),false),false),false);
+		    //System.out.println("stuff after");
+		    //System.out.println("evaluateParensHelper("+before+"evaluateFunctions("+f+","+"evaluateParensHelper("+expression.substring(expression.indexOf("("),index)+")+"+expression.substring(index,index+1)+"+evaluateParensHelper("+expression.substring(index+1));
+		    expression = before+evaluateFunctions(f,""+evaluateParens(expression.substring(expression.indexOf("("),index)))+expression.substring(index);//+evaluateParensHelper(expression.substring(index+1));
+		    return evaluateParensHelper(expression);
 		}
 		else {
-		    System.out.println("no stuff after");
-		    return evaluateParensHelper(before+evaluateParensHelper(evaluateFunctions(f,evaluateParensHelper(expression.substring(expression.indexOf("(")),false)),false),false);//+expression.substring(index,index+1)+evaluateParensHelper(expression.substring(index+1),false),false);
+		    //System.out.println("no stuff after");
+		    expression = before+(evaluateFunctions(f,""+evaluateParens(expression.substring(expression.indexOf("(")))));//+expression.substring(index,index+1)+evaluateParensHelper(expression.substring(index+1),false),false);
 		}
 	    }
 	}													       
-	System.out.println("no fxns here");
+	//System.out.println("no fxns here");
 	startParen = 0;
 	endParen =  0;
 	//System.out.println(expression+"HI");
@@ -137,13 +117,13 @@ public class Evaluation{
 	    if(startParen==endParen && startParen!=0){
 		int start = expression.indexOf('(');
 		//System.out.println("evaluateParens("+expression.substring(0,start)+")+evaluateParens("+expression.substring(start,i)+")'"+expression.substring(i+1)+"')");
-		System.out.println("evaluateParensHelper("+expression.substring(0,start)+")+evaluateParensHelper("+expression.substring(start+1,i)+")'"+expression.substring(i+1)+"')");
-		System.out.println("breakin it up");
-		return evaluateParensHelper(expression.substring(0,start)+evaluateParensHelper(expression.substring(start+1,i),false)+expression.substring(i+1),false);
+		//System.out.println("evaluateParensHelper("+expression.substring(0,start)+")+evaluateParensHelper("+expression.substring(start+1,i)+")'"+expression.substring(i+1)+"')");
+		//System.out.println("breakin it up");
+		return evaluateParensHelper(expression.substring(0,start)+evaluateParensHelper(expression.substring(start+1,i))+expression.substring(i+1));
 	    }
 	}
 	//System.out.println(expression);
-	System.out.println("evaluating dis shiz "+expression);
+	//System.out.println("evaluating dis shiz "+expression);
 	return evaluateMath(expression)+"";
     }
     //recursive expression evaluation
@@ -167,7 +147,6 @@ public class Evaluation{
     }
     //helper
     public static String evaluateHelper(String expression, int delimiter){
-	System.out.println(expression);
 	String[] pemdas = {"+","*","/","\\^"};
 	String[] oper = expression.split("["+pemdas[delimiter]+"]");
 	for (int i=0; i<oper.length; i++){
@@ -272,15 +251,15 @@ public class Evaluation{
 	a.add("4");
 	//System.out.println("0: "+evaluateParens("4-5*5+7/6.0*4"));
 	//System.out.println("0: "+evaluateParens(a));
-	/*System.out.println("\t1: "+evaluateParens("log(2*(2+3))+sqrt(1*7^2)+(-5+-56/-8)"));//+7(9-1)"));
+	System.out.println("\t1: "+evaluateParens("log(2*(2+3))+sqrt(1*7^2)+(-5+-56/-8)"));//+7(9-1)"));
 	System.out.println("\t2: "+evaluateParens("(1+3)-(1+4)"));
 	System.out.println("\t2: "+evaluateParens("7*(2+3)"));
 	System.out.println("\t3: "+evaluateParens("(((4+8)*3)+((5-6)*1)*1)^2"));
 	System.out.println("\t4: "+evaluateParens("((4+8)*3)+(5-6)"));
 	System.out.println("\t5: "+evaluateParens("(1+2)/(4^0)"));
 	System.out.println("\t6: "+evaluateParens("(-9/-3)^(3-1)"));
-	System.out.println("\t7: "+evaluateParens("((4^2)*3)-ln(2*(4-3))"));*/
+	System.out.println("\t7: "+evaluateParens("((4^2)*3)-ln(2*(4-3))"));
 	System.out.println("\t8: "+evaluateParens("sin(30)+cos(30)+tan(1)"));
-	System.out.println("\t9: "+evaluateParens("sin(84)^(cos(48))+(log(51)/ln(9))"));
-    }
+	System.out.println("\t9: "+evaluateParens("sin(84)^(cos(48)+log(51)/ln(9))"));
+	}
 }
