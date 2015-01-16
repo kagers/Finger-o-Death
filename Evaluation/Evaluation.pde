@@ -14,7 +14,32 @@ String[] functions;
 String mode = "NORM";
 String screen = "NORM";
 //double Ans = 0;
-double X = 0;
+String A = "0"; 
+String B = "0"; 
+String C = "0";
+String D = "0";
+String E = "0";
+String F = "0";
+String G = "0";
+String H = "0";
+String I = "0";
+String J = "0";
+String K = "0";
+String L = "0";
+String M = "0";
+String N = "0";
+String O = "0";
+String P = "0";
+String Q = "0";
+String R = "0";
+String S = "0";
+String T = "0";
+String U = "0";
+String V = "0";
+String W = "0";
+String X = "0";
+String Y = "0";
+String Z = "0";
 
 void setup() {
   size(500, 700); 
@@ -413,8 +438,8 @@ String evaluateFunctions(String fxn, String expression) {
 //recursively separates expression into parentheses
 double evaluateParens(String expression) {
   expression=expression.replace(")(", ")*(");
-  if (expression.indexOf("Ans")!=-1){
-  expression=expression.replace("Ans", Ans.substring(1));
+  if (expression.indexOf("Ans")!=-1) {
+    expression=expression.replace("Ans", Ans.substring(1));
   }
   //expression=expression.replace("X", ""+X);
   int startParen = 0;
