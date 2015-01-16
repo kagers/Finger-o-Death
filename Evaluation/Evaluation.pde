@@ -89,7 +89,7 @@ void setup() {
 }
 
 void draw() {
-  System.out.println(input);
+  //System.out.println(input);
   fill(0);
   textAlign(LEFT, BOTTOM);
   background(255);
@@ -108,10 +108,10 @@ void draw() {
       text("Y"+i+"=", 40, 20+(30*i));
       cursorX=70;
       drawCursor();
-      for (int j=0; j<graphInput.size (); j++) {
+      for (int j=0; j<graphInput.size(); j++) {
         String joined = combine(graphInput.get(j));
         if (joined.length()>0) {
-          text(joined.substring(1), 70, 20+30*j);
+          text(joined, 70, 20+30*j);
         }
       }
     }
@@ -252,6 +252,8 @@ void mouseClicked() {
             if (screen.equals("NORM")) {
               input.get(row).add(col, buttons[i].name);
             } else if (screen.equals("Y=")) {
+              System.out.println(buttons[i].name);
+              System.out.println("graphInput: "+graphInput.toString());
               graphInput.get(row).add(col, buttons[i].name);
             }
           }
