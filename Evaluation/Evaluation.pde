@@ -382,6 +382,12 @@ double evaluateParens(String expression) {
       endParen++;
     }
   }
+  if (startParen>endParen){
+   while (startParen>endParen){
+    expression+=")";
+    endParen++;
+   } 
+  }
   expression=evaluateParensHelper(expression);
   java.math.BigDecimal bd = new java.math.BigDecimal(expression);
   bd = bd.setScale(10, java.math.BigDecimal.ROUND_HALF_UP);
