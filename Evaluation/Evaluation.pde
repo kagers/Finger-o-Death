@@ -106,9 +106,8 @@ void draw() {
   } else if (screen.equals("Y=") ) {
     for (int i=0; i<10; i++) {
       text("Y"+i+"=", 40, 20+(30*i));
-      cursorX=70;
       drawCursor();
-      for (int j=0; j<graphInput.size(); j++) {
+      for (int j=0; j<graphInput.size (); j++) {
         String joined = combine(graphInput.get(j));
         if (joined.length()>0) {
           text(joined, 70, 20+30*j);
@@ -218,6 +217,9 @@ void mouseClicked() {
             row+=1;
             col=0;
           } else if (screen.equals("Y=")) {
+            if (graphInput.get(row).size()!=0) {
+              cursorY+=30;
+            }
             cursorX = 70;
             row+=1;
             col = 0;
@@ -228,7 +230,6 @@ void mouseClicked() {
           cursorY = 7;
           col = 0;
           row = 0;
-          System.out.println("graphInput: "+graphInput.toString());
           if (combine(input.get(row)).length()>0) {
             input.get(row).clear();
             col=0;
@@ -252,9 +253,9 @@ void mouseClicked() {
             if (screen.equals("NORM")) {
               input.get(row).add(col, buttons[i].name);
             } else if (screen.equals("Y=")) {
+              graphInput.get(row).add(col, buttons[i].name);
               System.out.println(buttons[i].name);
               System.out.println("graphInput: "+graphInput.toString());
-              graphInput.get(row).add(col, buttons[i].name);
             }
           }
           cursorX+=textWidth(buttons[i].name);
@@ -276,7 +277,11 @@ void mouseClicked() {
             }
           }
         } else {
-          input.get(row).add(col, buttons[i].sec);
+          if (screen.equals("NORM")) {
+            input.get(row).add(col, buttons[i].sec);
+          } else if (screen.equals("Y=")) {
+            graphInput.get(row).add(col, buttons[i].sec);
+          }
           cursorX+=textWidth(buttons[i].sec);
           col++;
         }
@@ -297,7 +302,11 @@ void mouseClicked() {
             }
           }
         } else {
+          if(screen.equals("NORM")){
           input.get(row).add(col, buttons[i].alph);
+          }else if(screen.equals("Y=")){
+            graphInput.get(row).add(col, buttons[i].alph);
+          }
           cursorX+=textWidth(buttons[i].alph);
           col++;
         }
