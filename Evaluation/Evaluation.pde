@@ -1,6 +1,7 @@
 Button[] buttons;
 boolean on = false;
 ArrayList<ArrayList<String>> input = new ArrayList<ArrayList<String>>();
+ArrayList<ArrayList<String>> graphInput = new ArrayList<ArrayList<String>>();
 int row = 0;
 int col = 0;
 String lastEvaluated = "";
@@ -20,6 +21,9 @@ void setup() {
   rect(cursorX, 20, 5, 10);
   for (int i=0; i<8; i++) {
     input.add(new ArrayList<String>());
+  }
+  for (int j=0; j<10; j++) {
+    graphInput.add(new ArrayList<String>());
   }
   buttons = new Button[51];
   buttons[0] = new Button(0, height/2-height/2/10, width/5, height/20, "Y=", "STAT PLOT", "F1", 170);
@@ -76,7 +80,7 @@ void setup() {
   buttons[43] = new Button(3*width/5, height/2+(7*height/2/10)+3*height/20/5, width/5, height/20+height/20/5, "3", "L3", "THETA", 225);
   buttons[44] = new Button(4*width/5, height/2+(7*height/2/10), width/5, height/20, "+", "MEM", "''", 170);
 
-  buttons[45] = new Button(0, height/2+(8*height/2/10), "ON", "OFF", "");
+  buttons[45] = new Button(0, height/2+(8*height/2/10), width/5, height/20+5*height/20/5, "ON", "OFF", "", 125);
   buttons[46] = new Button(1*width/5, height/2+(8*height/2/10)+4*height/20/5, width/5, height/20+height/20/5, "0", "CATALOG", "SPACE", 225);
   buttons[47] = new Button(2*width/5, height/2+(8*height/2/10)+4*height/20/5, width/5, height/20+height/20/5, ".", "i", ":", 225);
   buttons[48] = new Button(3*width/5, height/2+(8*height/2/10)+4*height/20/5, width/5, height/20+height/20/5, "(-)", "ANS", "?", 225);
@@ -99,11 +103,17 @@ void draw() {
         text(joined, 10, 20+30*i);
       }
     }
-  } else if (screen.equals("Y=")) {
+  } else if (screen.equals("Y=") ) {
     for (int i=0; i<10; i++) {
       text("Y"+i+"=", 40, 20+(30*i));
       cursorX=70;
       drawCursor();
+      for (int j=0; j<graphInput.size (); j++) {
+        String joined = combine(graphInput.get(j));
+        if (joined.length()>0) {
+          text(joined.substring(1), 70, 20+30*j);
+        }
+      }
     }
   } else if (screen.equals("GRAPH")) {
     grid();
@@ -192,30 +202,58 @@ void mouseClicked() {
           }
         } else if (buttons[i].name=="ENTER") {
           //displayOut = true;
-          if (input.get(row).size()!=0) {
-            lastEvaluated=combine(input.get(row));
-            Ans = "~"+evaluateParens(input.get(row));
-            input.get(row+1).add(Ans);
-            row++;
-            cursorY+=60;
-          } else {
-            Ans = "~"+evaluateParens(lastEvaluated);
-            input.get(row).add(Ans);
-            cursorY+=30;
+          if (screen.equals("NORM")) {
+            if (input.get(row).size()!=0) {
+              lastEvaluated=combine(input.get(row));
+              Ans = "~"+evaluateParens(input.get(row));
+              input.get(row+1).add(Ans);
+              row++;
+              cursorY+=60;
+            } else {
+              Ans = "~"+evaluateParens(lastEvaluated);
+              input.get(row).add(Ans);
+              cursorY+=30;
+            }
+            cursorX=11;
+            row+=1;
+            col=0;
+          } else if (screen.equals("Y=")) {
+            cursorX = 70;
+            row+=1;
+            col = 0;
           }
-          cursorX=11;
-          row+=1;
-          col=0;
-        } else if (buttons[i].name=="Y=") {
+        } else if (buttons[i].name=="Y=") {//initializes Y= screen
           screen="Y=";
+          cursorX = 70;
+          cursorY = 7;
+          col = 0;
+          row = 0;
+          System.out.println("graphInput: "+graphInput.toString());
+          if (combine(input.get(row)).length()>0) {
+            input.get(row).clear();
+            col=0;
+          } else {
+            for (int j=0; j<input.size (); j++) {
+              input.get(j).clear();
+              row=0;
+            }
+          }
         } else if (buttons[i].name=="GRAPH") {
           screen="GRAPH";
-        } else {
+        } else {//normal buttons 
           if (buttons[i].name=="LOG" || buttons[i].name=="LN" ||
-          buttons[i].name=="SIN" || buttons[i].name=="COS" || buttons[i].name=="TAN") {
-            input.get(row).add(col, buttons[i].name.toLowerCase()+"(");
+            buttons[i].name=="SIN" || buttons[i].name=="COS" || buttons[i].name=="TAN") {
+            if (screen.equals("NORM")) {
+              input.get(row).add(col, buttons[i].name.toLowerCase()+"(");
+            } else if (screen.equals("Y=")) {
+              graphInput.get(row).add(col, buttons[i].name.toLowerCase()+"(");
+            }
           } else {
-            input.get(row).add(col, buttons[i].name);
+            if (screen.equals("NORM")) {
+              input.get(row).add(col, buttons[i].name);
+            } else if (screen.equals("Y=")) {
+              graphInput.get(row).add(col, buttons[i].name);
+            }
           }
           cursorX+=textWidth(buttons[i].name);
           col++;
@@ -432,4 +470,3 @@ String combine(ArrayList<String> in) {
   }
   return joined;
 }
-
