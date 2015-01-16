@@ -40,3 +40,7 @@ M added 2nd and ALPHA text on buttons.
 M made it detect mode (normal, 2nd, or ALPHA) and input values accordingly.
 M experimented with graphing. Results are not yet added to the project.
 K made functions functional???
+
+**2015-01-14:**<br>
+K successfully implemented special functions using parentheses: log, ln, sin, cos, tan.
+M added graphing and created the Y= and GRAPH screens.
