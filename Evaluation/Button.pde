@@ -20,7 +20,7 @@ class Button{
  
  void draw(){
    fill(col);
-   rect(xcor, ycor, xSpan, ySpan,6,6,6,6);
+   rect(xcor, ycor, xSpan, ySpan,12,12,12,12);
    fill(0);
    textAlign(CENTER,CENTER);
    textSize(12);
