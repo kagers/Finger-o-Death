@@ -139,18 +139,21 @@ void grid() {
 
 void graph(ArrayList<ArrayList<String>> functions) {
   for (int k=0; k<functions.size (); k++) {
-    ArrayList<String> plugged = functions.get(k);
-    for (float x=-24; x<=24; x+=0.01) {
-      for (int i=0; i<functions.get(k).size(); i++) {
-        if (functions.get(k).get(i).equals("X")) {
-          plugged.add(""+x);
-        }else{
-       System.out.println(functions.get(k).get(i));
-         plugged.add(functions.get(k).get(i)); 
-          System.out.println(plugged);
+    ArrayList<String> plugged = new ArrayList<String>();
+    if (functions.get(k).size()!=0) {
+      for (float x=-24; x<=24; x+=0.01) {
+        for (int i=0; i<functions.get (k).size(); i++) {
+          if (functions.get(k).get(i).equals("X")) {
+            plugged.add(""+x);
+          } else {
+            System.out.println(functions.get(k).get(i));
+            plugged.add(functions.get(k).get(i)); 
+            System.out.println(plugged);
+          }
         }
+        plotPoint(x*10, (float)evaluateParens(plugged)*10);
+        plugged.clear();
       }
-      plotPoint(x*10, (float)evaluateParens(plugged)*10);
     }
   }
 }
@@ -191,6 +194,18 @@ void mouseClicked() {
         } else if (buttons[i].name=="CLEAR") {
           if (screen.equals("GRAPH")) {
             screen="NORM";
+          } else if (screen.equals("Y=")) {
+            if (combine(graphInput.get(row)).length()>0) {
+              graphInput.get(row).clear();
+              col=0;
+            } else {
+              for (int j=0; j<graphInput.size (); j++) {
+                graphInput.get(j).clear();
+                row=0;
+              }
+            }
+            cursorX=70;
+            cursorY=7;
           } else {
             if (combine(input.get(row)).length()>0) {
               input.get(row).clear();
@@ -201,6 +216,8 @@ void mouseClicked() {
                 row=0;
               }
             }
+            cursorX=11;
+            cursorY=7;
           }
         } else if (buttons[i].name=="ENTER") {
           //displayOut = true;
