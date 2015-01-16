@@ -116,7 +116,7 @@ void draw() {
     }
   } else if (screen.equals("GRAPH")) {
     grid();
-    graph("(1/3)*X^2");
+    graph(graphInput);
   }
   for (int i=0; i<buttons.length; i++) {
     buttons[i].draw();
@@ -137,18 +137,21 @@ void grid() {
   line(10, 170, width-10, 170);
 }
 
-void graph(String function) {
-  String funct = "";
-  for (float x=-24; x<=24; x+=0.01) {
-    String plugged = "";
-    for (int i=0; i<function.length (); i++) {
-      if (function.charAt(i)=='X') {
-        plugged+=""+x;
-      } else {
-        plugged+=function.charAt(i);
+void graph(ArrayList<ArrayList<String>> functions) {
+  for (int k=0; k<functions.size (); k++) {
+    ArrayList<String> plugged = functions.get(k);
+    for (float x=-24; x<=24; x+=0.01) {
+      for (int i=0; i<functions.get(k).size(); i++) {
+        if (functions.get(k).get(i).equals("X")) {
+          plugged.add(""+x);
+        }else{
+       System.out.println(functions.get(k).get(i));
+         plugged.add(functions.get(k).get(i)); 
+          System.out.println(plugged);
+        }
       }
+      plotPoint(x*10, (float)evaluateParens(plugged)*10);
     }
-    plotPoint(x*10, (float)evaluateParens(plugged)*10);
   }
 }
 
@@ -302,9 +305,9 @@ void mouseClicked() {
             }
           }
         } else {
-          if(screen.equals("NORM")){
-          input.get(row).add(col, buttons[i].alph);
-          }else if(screen.equals("Y=")){
+          if (screen.equals("NORM")) {
+            input.get(row).add(col, buttons[i].alph);
+          } else if (screen.equals("Y=")) {
             graphInput.get(row).add(col, buttons[i].alph);
           }
           cursorX+=textWidth(buttons[i].alph);
