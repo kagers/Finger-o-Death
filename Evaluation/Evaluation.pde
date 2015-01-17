@@ -205,8 +205,8 @@ void mouseClicked() {
           if (screen.equals("GRAPH")) {//Clear brings screen back from Graph to Norm
             screen="NORM";
           } else if (screen.equals("Y=")) {//Clear for Y= screen
-            if (combine(graphInput.get(row)).length()>0) {//works; currently input moves but not cursor; this is due to a problem with enter, not clear
-              graphInput.get(row).clear(); //clears current row only (I think)
+            if (combine(graphInput.get(row)).length()>0) {
+              graphInput.get(row).clear(); //clears current line only
               col=0;
             }
             cursorX=70;
@@ -241,9 +241,7 @@ void mouseClicked() {
             row+=1;//row (of input?) increased by one
             col=0;
           } else if (screen.equals("Y=")) {//Enter for Y= screen
-            if (graphInput.get(row).size()!=0) {//moves cursor down a line
-              cursorY+=30;
-            }
+            cursorY+=30; //moves cursor down a line
             cursorX = 70;
             row+=1;//moves down a line in graphInput
             col = 0;
