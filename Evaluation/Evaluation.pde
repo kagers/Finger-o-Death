@@ -228,8 +228,18 @@ void mouseClicked() {
           if (screen.equals("NORM")) {
             if (input.get(row).size()!=0) {//evaluates current line, goes to next line
               lastEvaluated=combine(input.get(row));
-              Ans = "~"+evaluateParens(input.get(row));
-              input.get(row+1).add(Ans);
+              String[] exps = lastEvaluated.split("->");
+              switch (exps.length) {
+              case 1:
+                Ans = "~"+evaluateParens(exps[0]);
+                input.get(row+1).add(Ans);
+                break;
+              case 2:
+                Ans = "~"+evaluateParens(exps[0]);
+                alphabet[exps[1].charAt(0)-'A']=Ans.substring(1);
+                input.get(row+1).add(Ans);
+                break;
+              }
               row++;
               cursorY+=60;
             } else {//repeats last evaluation
@@ -264,7 +274,17 @@ void mouseClicked() {
         } else if (buttons[i].name=="GRAPH") {//switches screen to Graph when buttons are pressed
           screen="GRAPH";
         } else {//normal buttons 
-          if (buttons[i].name=="LOG" || buttons[i].name=="LN" ||
+          if (buttons[i].name=="STO->") {
+            if (screen.equals("NORM")) {
+              if (col!=0) {
+                input.get(row).add(col, buttons[i].name.substring(3));
+              } else {
+                input.get(row).add(col, "Ans");
+                input.get(row).add(col+1, buttons[i].name.substring(3));
+                col++;
+              }
+            }
+          } else if (buttons[i].name=="LOG" || buttons[i].name=="LN" ||
             buttons[i].name=="SIN" || buttons[i].name=="COS" || buttons[i].name=="TAN") {
             if (screen.equals("NORM")) {
               input.get(row).add(col, buttons[i].name.toLowerCase()+"("); //adds to input
@@ -323,18 +343,25 @@ void mouseClicked() {
             } else if (screen.equals("Y=")) {
               graphInput.get(row).add(col, "sqrt(");
             }
-          } else if (buttons[i].name=="LOG") {
+          } else if (buttons[i].name=="LOG" || buttons[i].name=="LN") {
             if (screen.equals("NORM")) {
-              input.get(row).add(col, "10^");
+              input.get(row).add(col, buttons[i].sec.substring(0, buttons[i].sec.length()-1));
             } else if (screen.equals("Y=")) {
-              graphInput.get(row).add(col, "10^");
+              graphInput.get(row).add(col, buttons[i].sec.substring(0, buttons[i].sec.length()-1));
             }
-          } else if (buttons[i].name=="LN") {
-            if (screen.equals("NORM")) {
-              input.get(row).add(col, "e^");
-            } else if (screen.equals("Y=")) {
-              graphInput.get(row).add(col, "e^");
-            }
+
+            /*else if (buttons[i].name=="LOG") {
+             if (screen.equals("NORM")) {
+             input.get(row).add(col, "10^");
+             } else if (screen.equals("Y=")) {
+             graphInput.get(row).add(col, "10^");
+             }
+             } else if (buttons[i].name=="LN") {
+             if (screen.equals("NORM")) {
+             input.get(row).add(col, "e^");
+             } else if (screen.equals("Y=")) {
+             graphInput.get(row).add(col, "e^");
+             }*/
           } else if (buttons[i].name=="SIN" || buttons[i].name=="COS" || buttons[i].name=="TAN") {
             if (screen.equals("NORM")) {
               input.get(row).add(col, buttons[i].sec.toLowerCase()+"(");
@@ -568,3 +595,4 @@ String combine(ArrayList<String> in) {
   }
   return joined;
 }
+
