@@ -1,4 +1,5 @@
 Button[] buttons;
+Graphs g;
 boolean on = false;
 ArrayList<ArrayList<String>> input = new ArrayList<ArrayList<String>>();
 ArrayList<ArrayList<String>> graphInput = new ArrayList<ArrayList<String>>();
@@ -32,6 +33,9 @@ void setup() {
   for (int i=0; i<alphabet.length; i++) {
     alphabet[i] = "0.0";
   }
+  
+  g = new Graphs();
+  
   buttons = new Button[51];
   buttons[0] = new Button(0, height/2-height/2/10, width/5, height/20, "Y=", "STAT PLOT", "F1", 170);
   buttons[1] = new Button(1*width/5, height/2-height/2/10, width/5, height/20, "WINDOW", "TBLSET", "F2", 170);
@@ -128,55 +132,10 @@ void draw() {
       }
     }
   } else if (screen.equals("GRAPH")) {//the graph screen
-    grid(); //sets up screen
-    graph(graphInput);  //graphs the input of the Y= screen
+    g.draw();//draws graph
   }
   for (int i=0; i<buttons.length; i++) {//the buttons are displayed no matter what the screen
     buttons[i].draw();
-  }
-}
-
-void grid() {//draws grid lines and axis
-  for (int x=10; x<=width-10; x+=10) {//vertical grid lines on a scale of 1
-    stroke(200);
-    line(x, 10, x, (height/2)-20);
-  } 
-  for (int y=10; y< (height/2)- 10; y+=10) {//horizontal grid lines on a scale of 1
-    stroke(200);
-    line(10, y, width-10, y);
-  }
-  stroke(0);
-  line(width/2, 10, width/2, (height/2)-20);//y-axis
-  line(10, 170, width-10, 170);//x-axis
-}
-
-void graph(ArrayList<ArrayList<String>> functions) {//graphs all functions inputted into the Y= screen
-  for (int k=0; k<functions.size (); k++) {
-    ArrayList<String> plugged = new ArrayList<String>();
-    if (functions.get(k).size()!=0) {
-      //finds all y values for all x values on the graph, with a 0.01 scale
-      //is this enough? Some graphs look sketchier than others. Will try connecting points and/or making scale smaller
-      for (float x=-24; x<=24; x+=0.01) {
-        for (int i=0; i<functions.get (k).size(); i++) {
-          if (functions.get(k).get(i).equals("X")) {//plugs in x value for every "X" in the input
-            plugged.add(""+x);
-          } else {
-            System.out.println(functions.get(k).get(i));
-            plugged.add(functions.get(k).get(i)); 
-            System.out.println(plugged);
-          }
-        }
-        plotPoint(x*10, (float)evaluateParens(plugged)*10); //plots the point
-        plugged.clear();
-      }
-    }
-  }
-}
-
-void plotPoint(float x, float y) {
-  fill(255, 0, 0);
-  if (170-y>=10 && 170-y<=(height/2)-20) {//plots only points that fit on the graph, current dimensions margins size 10 on each side
-    ellipse((width/2)+x, 170-y, 0.05, 0.05);//try messing with width to see if it makes graphs less sketchy
   }
 }
 
