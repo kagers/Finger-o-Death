@@ -101,7 +101,7 @@ void draw() {
   fill(0);
   textAlign(LEFT, BOTTOM);
   background(255);
-  if (screen.equals("NORM")) {
+  if (screen.equals("NORM")) {//normal display screen
     drawCursor();
     for (int i=0; i<input.size (); i++) {
       String joined = combine(input.get(i));
@@ -111,47 +111,49 @@ void draw() {
         text(joined, 10, 20+30*i);
       }
     }
-  } else if (screen.equals("Y=") ) {
+  } else if (screen.equals("Y=") ) {//Y= display screen
     for (int i=0; i<10; i++) {
       text("Y"+i+"=", 40, 20+(30*i));
-      drawCursor();
+      drawCursor();//not sure if this is necessary here; will test later
       for (int j=0; j<graphInput.size (); j++) {
         String joined = combine(graphInput.get(j));
-        if (joined.length()>0) {
+        if (joined.length()>0) {//displays inputted functions
           text(joined, 70, 20+30*j);
         }
       }
     }
-  } else if (screen.equals("GRAPH")) {
-    grid();
-    graph(graphInput);
+  } else if (screen.equals("GRAPH")) {//the graph screen
+    grid(); //sets up screen
+    graph(graphInput);  //graphs the input of the Y= screen
   }
-  for (int i=0; i<buttons.length; i++) {
+  for (int i=0; i<buttons.length; i++) {//the buttons are displayed no matter what the screen
     buttons[i].draw();
   }
 }
 
-void grid() {
-  for (int x=10; x<=width-10; x+=10) {
+void grid() {//draws grid lines and axis
+  for (int x=10; x<=width-10; x+=10) {//vertical grid lines on a scale of 1
     stroke(200);
     line(x, 10, x, (height/2)-20);
   } 
-  for (int y=10; y< (height/2)- 10; y+=10) {
+  for (int y=10; y< (height/2)- 10; y+=10) {//horizontal grid lines on a scale of 1
     stroke(200);
     line(10, y, width-10, y);
   }
   stroke(0);
-  line(width/2, 10, width/2, (height/2)-20);
-  line(10, 170, width-10, 170);
+  line(width/2, 10, width/2, (height/2)-20);//y-axis
+  line(10, 170, width-10, 170);//x-axis
 }
 
-void graph(ArrayList<ArrayList<String>> functions) {
+void graph(ArrayList<ArrayList<String>> functions) {//graphs all functions inputted into the Y= screen
   for (int k=0; k<functions.size (); k++) {
     ArrayList<String> plugged = new ArrayList<String>();
     if (functions.get(k).size()!=0) {
+      //finds all y values for all x values on the graph, with a 0.01 scale
+      //is this enough? Some graphs look sketchier than others. Will try connecting points and/or making scale smaller
       for (float x=-24; x<=24; x+=0.01) {
         for (int i=0; i<functions.get (k).size(); i++) {
-          if (functions.get(k).get(i).equals("X")) {
+          if (functions.get(k).get(i).equals("X")) {//plugs in x value for every "X" in the input
             plugged.add(""+x);
           } else {
             System.out.println(functions.get(k).get(i));
@@ -159,7 +161,7 @@ void graph(ArrayList<ArrayList<String>> functions) {
             System.out.println(plugged);
           }
         }
-        plotPoint(x*10, (float)evaluateParens(plugged)*10);
+        plotPoint(x*10, (float)evaluateParens(plugged)*10); //plots the point
         plugged.clear();
       }
     }
@@ -168,88 +170,89 @@ void graph(ArrayList<ArrayList<String>> functions) {
 
 void plotPoint(float x, float y) {
   fill(255, 0, 0);
-  if (170-y>=10 && 170-y<=(height/2)-20) {
-    ellipse((width/2)+x, 170-y, 0.05, 0.05);
+  if (170-y>=10 && 170-y<=(height/2)-20) {//plots only points that fit on the graph, current dimensions margins size 10 on each side
+    ellipse((width/2)+x, 170-y, 0.05, 0.05);//try messing with width to see if it makes graphs less sketchy
   }
 }
 
 void drawCursor() {
-  if ((frameCount/30)%2==0) {
+  if ((frameCount/30)%2==0) {//makes cursor blink
     stroke(0);
     fill(0);
   } else {
     stroke(255);
     fill(255);
   }
-  rect(cursorX, cursorY, 5, 10);
+  rect(cursorX, cursorY, 5, 10);//fixed cursor dimensions (if there's a way to conform it to text width maybe that would be better but it doesn't really matter)
   stroke(0);
   fill(0);
 }
 
 void mouseClicked() {
-  for (int i=0; i<buttons.length; i++) {
+  for (int i=0; i<buttons.length; i++) {//checks to see if each button is clicked
     if (buttons[i].isClicked()) {
-      if (row>=7) {
-        input.remove(0);
+      if (row>=7) {//controls scrolling, yes?
+        input.remove(0); //we'd like to keep the old input if possible, yes?
         input.add(7, new ArrayList<String>());
         row--;
       }   
-      if (mode.equals("NORM")) {
-        if (buttons[i].name=="2nd") {
+      if (mode.equals("NORM")) { //what happens what buttons are clicked on the normal calculator screen
+        if (buttons[i].name=="2nd") {//if 2nd clicked sets mode to 2nd
           mode = "2nd";
-        } else if (buttons[i].name=="ALPHA") {
+        } else if (buttons[i].name=="ALPHA") {//if Alpha clicked sets mode to Alpha
           mode = "ALPHA";
-        } else if (buttons[i].name=="CLEAR") {
-          if (screen.equals("GRAPH")) {
+        } else if (buttons[i].name=="CLEAR") {//various functions of clear
+          if (screen.equals("GRAPH")) {//Clear brings screen back from Graph to Norm
             screen="NORM";
-          } else if (screen.equals("Y=")) {
-            if (combine(graphInput.get(row)).length()>0) {
-              graphInput.get(row).clear();
+          } else if (screen.equals("Y=")) {//Clear for Y= screen
+            if (combine(graphInput.get(row)).length()>0) {//I will fix it so that only the input on the current line is cleared
+              graphInput.get(row).clear(); //clears current row only (I think)
               col=0;
-            } else {
-              for (int j=0; j<graphInput.size (); j++) {
+            } else {//I'm not sure what this does. Clears entire line?
+              for (int j=0; j<graphInput.size (); j++) {//clears everything
                 graphInput.get(j).clear();
                 row=0;
               }
             }
+            //currently sets cursor back to the top; probably shouldn't
             cursorX=70;
             cursorY=7;
-          } else {
-            if (combine(input.get(row)).length()>0) {
+          } else { //Clear when screen is normal. Clears everything
+            if (combine(input.get(row)).length()>0) { //clears current row only
               input.get(row).clear();
               col=0;
             } else {
-              for (int j=0; j<input.size (); j++) {
+              for (int j=0; j<input.size (); j++) {//Clears everything
                 input.get(j).clear();
                 row=0;
               }
             }
-            cursorX=11;
-            cursorY=7;
+            cursorX=11;//sets cursor back to the margin
+            cursorY=7;//sets cursor back to the top
           }
-        } else if (buttons[i].name=="ENTER") {
+        } else if (buttons[i].name=="ENTER") {//Enter button
           //displayOut = true;
           if (screen.equals("NORM")) {
-            if (input.get(row).size()!=0) {
+            if (input.get(row).size()!=0) {//evaluates current line, goes to next line
               lastEvaluated=combine(input.get(row));
               Ans = "~"+evaluateParens(input.get(row));
               input.get(row+1).add(Ans);
               row++;
               cursorY+=60;
-            } else {
+            } else {//repeats last evaluation
               Ans = "~"+evaluateParens(lastEvaluated);
               input.get(row).add(Ans);
               cursorY+=30;
             }
-            cursorX=11;
-            row+=1;
+            cursorX=11;//cursor back to margin
+            row+=1;//row (of input?) increased by one
             col=0;
-          } else if (screen.equals("Y=")) {
-            if (graphInput.get(row).size()!=0) {
+          } else if (screen.equals("Y=")) {//Enter for Y= screen
+            if (graphInput.get(row).size()!=0) {//moves cursor down a line
               cursorY+=30;
             }
             cursorX = 70;
-            row+=1;
+            row+=1;//moves down a line in graphInput
             col = 0;
           }
         } else if (buttons[i].name=="Y=") {//initializes Y= screen
@@ -258,27 +261,27 @@ void mouseClicked() {
           cursorY = 7;
           col = 0;
           row = 0;
-          if (combine(input.get(row)).length()>0) {
+          if (combine(input.get(row)).length()>0) {//this might not be necessary
             input.get(row).clear();
             col=0;
           } else {
-            for (int j=0; j<input.size (); j++) {
+            for (int j=0; j<input.size (); j++) {//clears all input (might not be necessary either)
               input.get(j).clear();
               row=0;
             }
           }
-        } else if (buttons[i].name=="GRAPH") {
+        } else if (buttons[i].name=="GRAPH") {//switches screen to Graph when buttons are pressed
           screen="GRAPH";
         } else {//normal buttons 
           if (buttons[i].name=="LOG" || buttons[i].name=="LN" ||
             buttons[i].name=="SIN" || buttons[i].name=="COS" || buttons[i].name=="TAN") {
             if (screen.equals("NORM")) {
-              input.get(row).add(col, buttons[i].name.toLowerCase()+"(");
+              input.get(row).add(col, buttons[i].name.toLowerCase()+"("); //adds to input
             } else if (screen.equals("Y=")) {
-              graphInput.get(row).add(col, buttons[i].name.toLowerCase()+"(");
+              graphInput.get(row).add(col, buttons[i].name.toLowerCase()+"("); //adds to graphInput
             }
           } else if (buttons[i].name=="x^2" || buttons[i].name=="x^-1") {
-            if (screen.equals("NORM")) {
+            if (screen.equals("NORM")) { //adds to input
               if (col!=0) {
                 input.get(row).add(col, buttons[i].name.substring(1));
               } else {
@@ -286,27 +289,27 @@ void mouseClicked() {
                 input.get(row).add(col+1, buttons[i].name.substring(1));
                 col++;
               }
-            } else if (screen.equals("Y=")) {
+            } else if (screen.equals("Y=")) { //adds to graphInput
               graphInput.get(row).add(col, buttons[i].name.substring(1));
             }
-          } else {
-            if (screen.equals("NORM")) {
+          } else { //accounts for all other buttons (digits, operators)
+            if (screen.equals("NORM")) { //adds to input
               input.get(row).add(col, buttons[i].name);
-            } else if (screen.equals("Y=")) {
+            } else if (screen.equals("Y=")) { //adds to graphInput
               graphInput.get(row).add(col, buttons[i].name);
-              System.out.println(buttons[i].name);
-              System.out.println("graphInput: "+graphInput.toString());
+              //System.out.println(buttons[i].name);
+              //System.out.println("graphInput: "+graphInput.toString());
             }
           }
-          cursorX+=textWidth(buttons[i].name);
+          cursorX+=textWidth(buttons[i].name); //moves cursor over
           col++;
         }
-      } else if (mode.equals("2nd")) {
-        if (buttons[i].name=="2nd") {
+      } else if (mode.equals("2nd")) { //buttons in 2nd mode
+        if (buttons[i].name=="2nd") { //changes mode back to norm
           mode = "NORM";
-        } else if (buttons[i].name=="ALPHA") {
+        } else if (buttons[i].name=="ALPHA") { //changes mode to Alpha (should do A-lock, no? Will fix if there's time)
           mode = "ALPHA";
-        } else if (buttons[i].name=="CLEAR") {
+        } else if (buttons[i].name=="CLEAR") { //Clear works the same as in normal mode (even in the Y= and Graph screens currently, which is a problem. I will fix this)
           if (combine(input.get(row)).length()>0) {
             input.get(row).clear();
             col=0;
@@ -316,7 +319,7 @@ void mouseClicked() {
               row=0;
             }
           }
-        } else {
+        } else {//for all other buttons (these are grouped together because they affect the cursor, yes?)
           if (buttons[i].name=="(-)") {
             if (screen.equals("NORM")) {
               input.get(row).add(col, "Ans");
@@ -357,13 +360,13 @@ void mouseClicked() {
           cursorX+=textWidth(buttons[i].sec);
           col++;
         }
-        mode = "NORM";
-      } else if (mode.equals("ALPHA")) {
-        if (buttons[i].name=="2nd") {
+        mode = "NORM"; //reverts mode back to norm after first button is pressed
+      } else if (mode.equals("ALPHA")) { //buttons in alpha mode
+        if (buttons[i].name=="2nd") {//works the same as in normal mode
           mode = "2nd";
-        } else if (buttons[i].name=="ALPHA") {
+        } else if (buttons[i].name=="ALPHA") {//works the same as in normal mode
           mode = "NORM";
-        } else if (buttons[i].name=="CLEAR") {
+        } else if (buttons[i].name=="CLEAR") {//works the same as in normal mode (maybe move these three outside of the overarching mode if statements to avoid repetition?)
           if (combine(input.get(row)).length()>0) {
             input.get(row).clear();
             col=0;
@@ -373,7 +376,7 @@ void mouseClicked() {
               row=0;
             }
           }
-        } else {
+        } else {//all other buttons; just prints out letter/symbol
           if (screen.equals("NORM")) {
             input.get(row).add(col, buttons[i].alph);
           } else if (screen.equals("Y=")) {
@@ -382,13 +385,13 @@ void mouseClicked() {
           cursorX+=textWidth(buttons[i].alph);
           col++;
         }
-        mode = "NORM";
+        mode = "NORM"; //reverts mode back to norm after first button is pressed
       }
     }
     //disp = combine(input);
   }
 }
-String evaluateFunctions(String fxn, String expression) {
+String evaluateFunctions(String fxn, String expression) {//Math with functions longer than one character, involving parentheses
   String args = expression;
   double argh = Double.parseDouble(args);
   boolean mult = true;
@@ -435,7 +438,7 @@ double evaluateParens(String expression) {
   expression=expression.replace("e", ""+exp(1));
   int startParen = 0;
   int endParen = 0;
-  for (int i=0; i<expression.length (); i++) {
+  for (int i=0; i<expression.length (); i++) {//takes everything between the first complete overarching set of parentheses (in case of special functions yes?)
     if (expression.charAt(i)=='(') {
       startParen++;
     } else if (expression.charAt(i)==')') {
@@ -448,10 +451,10 @@ double evaluateParens(String expression) {
       endParen++;
     }
   }
-  expression=evaluateParensHelper(expression);
-  if (screen.equals("GRAPH")) {
+  expression=evaluateParensHelper(expression);//refers to helper function
+  if (screen.equals("GRAPH")) {//does not round when graphing (messes up when it tries to round nonexistent points using x values outside the domain)
     return Double.parseDouble(expression);
-  } else {
+  } else { //rounds to 10 decimal points
     java.math.BigDecimal bd = new java.math.BigDecimal(expression);
     bd = bd.setScale(10, java.math.BigDecimal.ROUND_HALF_UP);
     return(bd.doubleValue());
@@ -461,7 +464,7 @@ double evaluateParens(String expression) {
    }*/
   //return Double.parseDouble(expression);
 }
-String evaluateParensHelper(String expression) {
+String evaluateParensHelper(String expression) {//separates into parentheses not involved with functions
   int startParen=0;
   int endParen=0;
   if (expression.indexOf('(')!=-1) {
@@ -509,8 +512,8 @@ String evaluateParensHelper(String expression) {
   return evaluateMath(expression)+"";
 }
 //recursive expression evaluation
-double evaluateMath(String expression) {
-  for (int i=1; i<expression.length ()-1; i++) {
+double evaluateMath(String expression) {//does simple arithmatic
+  for (int i=1; i<expression.length ()-1; i++) {//does math
     if ((expression.charAt(i-1)>='0' && expression.charAt(i-1)<='9')&&
       (expression.charAt(i)=='-')&&
       (expression.charAt(i+1)>='0' && expression.charAt(i+1)<='9')) {
@@ -574,4 +577,3 @@ String combine(ArrayList<String> in) {
   }
   return joined;
 }
-
