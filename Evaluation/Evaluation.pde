@@ -100,10 +100,10 @@ void setup() {
 }
 
 void draw() {
-  System.out.println(input);
-  System.out.println(endRow);
-  System.out.println(startRow);
-  System.out.println(row);
+  //System.out.println(input);
+  //System.out.println(endRow);
+  //System.out.println(startRow);
+  //System.out.println(row);
   /*for (int i=0; i<alphabet.length; i++){
    System.out.println(alphabet[i]); 
    }*/
@@ -161,8 +161,18 @@ void mouseClicked() {
         //input.remove(0); //we'd like to keep the old input if possible, yes?
         input.add(new ArrayList<String>());
         //startRow++;
-      }   
-      if (mode.equals("NORM")) { //what happens what buttons are clicked on the normal calculator screen
+      }
+      if (buttons[i].name.equals("N")) {
+        row--;
+        cursorY-=30;
+      } else if (buttons[i].name.equals("E")) {
+        col++;
+      } else if (buttons[i].name.equals("S")) {
+        row++;
+        cursorY+=30;
+      } else if (buttons[i].name.equals("W")) {
+        col--;
+      } else if (mode.equals("NORM")) { //what happens what buttons are clicked on the normal calculator screen
         if (buttons[i].name.equals("2nd")) {//if 2nd clicked sets mode to 2nd
           mode = "2nd";
         } else if (buttons[i].name.equals("ALPHA")) {//if Alpha clicked sets mode to Alpha
