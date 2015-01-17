@@ -10,6 +10,8 @@ String disp = "";
 boolean displayOut = false;
 int cursorX = 11;
 int cursorY = 7;
+int startRow = 0;
+int endRow = 1;
 String[] functions;
 String mode = "NORM";
 String screen = "NORM";
@@ -94,7 +96,10 @@ void setup() {
 }
 
 void draw() {
-  //System.out.println(input);
+  System.out.println(input);
+  System.out.println(endRow);
+  System.out.println(startRow);
+  System.out.println(row);
   /*for (int i=0; i<alphabet.length; i++){
    System.out.println(alphabet[i]); 
    }*/
@@ -103,12 +108,12 @@ void draw() {
   background(255);
   if (screen.equals("NORM")) {//normal display screen
     drawCursor();
-    for (int i=0; i<input.size (); i++) {
+    for (int i=startRow; i<=endRow; i++) {
       String joined = combine(input.get(i));
       if (joined.length()>0 && joined.charAt(0)=='~') {
-        text(joined.substring(1), 85, 20+30*i);
+        text(joined.substring(1), 85, 20+30*(i-startRow));
       } else {
-        text(joined, 10, 20+30*i);
+        text(joined, 10, 20+30*(i-startRow));
       }
     }
   } else if (screen.equals("Y=") ) {//Y= display screen
@@ -191,10 +196,10 @@ void drawCursor() {
 void mouseClicked() {
   for (int i=0; i<buttons.length; i++) {//checks to see if each button is clicked
     if (buttons[i].isClicked()) {
-      if (row>=7) {//controls scrolling, yes?
-        input.remove(0); //we'd like to keep the old input if possible, yes?
-        input.add(7, new ArrayList<String>());
-        row--;
+      if (endRow>=input.size()-2) {//controls scrolling, yes?
+        //input.remove(0); //we'd like to keep the old input if possible, yes?
+        input.add(new ArrayList<String>());
+        //startRow++;
       }   
       if (mode.equals("NORM")) { //what happens what buttons are clicked on the normal calculator screen
         if (buttons[i].name=="2nd") {//if 2nd clicked sets mode to 2nd
@@ -229,6 +234,10 @@ void mouseClicked() {
             if (input.get(row).size()!=0) {
               lastEvaluated=combine(input.get(row));
               row++;
+              if (row>8 && endRow-startRow>=8){
+               startRow++;
+              } 
+              endRow++;
               cursorY+=60;
             } else {
               cursorY+=30;
@@ -247,32 +256,16 @@ void mouseClicked() {
               break;
             }
             row++;
-            /*if (input.get(row).size()!=0) {//evaluates current line, goes to next line
-             lastEvaluated=combine(input.get(row));
-             String[] exps = lastEvaluated.split("->");
-             switch (exps.length) {
-             case 1:
-             Ans = "~"+evaluateParens(exps[0]);
-             input.get(row+1).add(Ans);
-             break;
-             case 2:
-             Ans = "~"+evaluateParens(exps[0]);
-             alphabet[exps[1].charAt(0)-'A']=Ans.substring(1);
-             input.get(row+1).add(Ans);
-             break;
-             }
-             row++;
-             cursorY+=60;
-             } else {//repeats last evaluation
-             Ans = "~"+evaluateParens(lastEvaluated);
-             input.get(row).add(Ans);
-             cursorY+=30;
-             }*/
             cursorX=11;//cursor back to margin
             //if (input.get(row-1).size()!=0) {
             //  row++;//row (of input?) increased by one
             //}
             col=0;
+            endRow++;
+            if (row>8 && endRow-startRow>=8) {
+              startRow++;
+              cursorY=7+30*8;
+            }
           } else if (screen.equals("Y=")) {//Enter for Y= screen
             cursorY+=30; //moves cursor down a line
             cursorX = 70;
