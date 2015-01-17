@@ -9,22 +9,22 @@ void setup() {
 
 void draw() {
   background(255);
-  grid();
+  grid(-10, 10, 1, -10, 10, 1);
   graph("X^2");
 }
 
-void grid() {
-  for (int x=10; x<=width-10; x+=10) {
+void grid(float Xmin, float Xmax, float Xscl, float Ymin, float Ymax, float Yscl) {
+  for (int x=10; x<=width-10; x+=Xscl*10) {
     stroke(200);
     line(x, 10, x, (height/2)-20);
-  } 
-  for (int y=10; y< (height/2)- 10; y+=10) {
+  }
+  for (int y=10; y< (height/2)-10; y+=Yscl*10) {
     stroke(200);
     line(10, y, width-10, y);
   }
   stroke(0);
-  line(width/2, 10, width/2, (height/2)-20);
-  line(10, 170, width-10, 170);
+  line(width/2, 10, width/2, (height/2)-20);//y axis
+  line(10, 170, width-10, 170);//x-axis
 }
 
 void graph(String function) {
