@@ -9,22 +9,29 @@ void setup() {
 
 void draw() {
   background(255);
-  grid(-10, 10, 1, -10, 10, 1);
-  graph("X^2");
+  grid(-10, 10, 2, -10, 10, 1);
+  graph("X");
 }
 
-void grid(float Xmin, float Xmax, float Xscl, float Ymin, float Ymax, float Yscl) {
-  for (int x=10; x<=width-10; x+=Xscl*10) {
+void grid(float xMin, float xMax, float xScl, float yMin, float yMax, float yScl) {
+  float pixelXScl = (width-20)/(xMax-xMin); //number of pixels to make each x on the graph increase by 1
+  for(float xcor=10; xcor<=width-10; xcor+=pixelXScl*xScl){//graph x-coordinates
     stroke(200);
-    line(x, 10, x, (height/2)-20);
+    line(xcor, 10, xcor, (height/2)-45);
   }
-  for (int y=10; y< (height/2)-10; y+=Yscl*10) {
+  float pixelYScl = ((height/2)-55)/(yMax-yMin); //number of pixels to make each x on the graph increase by 1
+  for(float ycor=10; ycor<=(height/2)-55; ycor+=pixelYScl*yScl){//graph x-coordinates
     stroke(200);
-    line(10, y, width-10, y);
+    line(10, ycor, width-10, ycor);
   }
   stroke(0);
-  line(width/2, 10, width/2, (height/2)-20);//y axis
-  line(10, 170, width-10, 170);//x-axis
+  line(10+abs(xMin)*pixelXScl, 10, 10+abs(xMin)*pixelXScl, (height/2)-45);//y axis
+  line(10, 10+yMax*pixelYScl, width-10, 10+yMax*pixelYScl);//x-axis
+  
+  stroke(255,0,0);
+  noFill();
+  rect(10,10,width-20,(height/2)-55);
+  stroke(0);
 }
 
 void graph(String function) {
@@ -61,8 +68,8 @@ double evaluateParens(String expression) {
     }
     if (startParen==endParen && startParen!=0) {
       int start = expression.indexOf('(');
-      System.out.println("evaluateParens("+expression.substring(0, start)+")+evaluateParens("+expression.substring(start, i)+")'"+expression.substring(i+1)+"')");
-      System.out.println("evaluateParens("+expression.substring(0, start)+")+evaluateParens("+expression.substring(start+1, i)+")'"+expression.substring(i+1)+"')");
+      //System.out.println("evaluateParens("+expression.substring(0, start)+")+evaluateParens("+expression.substring(start, i)+")'"+expression.substring(i+1)+"')");
+      //System.out.println("evaluateParens("+expression.substring(0, start)+")+evaluateParens("+expression.substring(start+1, i)+")'"+expression.substring(i+1)+"')");
       //if(expression.charAt(i)==')'){
       //return evaluateParens(expression.substring(0,start)+evaluateParens(expression.substring(start+1,i)));
       //}else{
@@ -80,7 +87,7 @@ double evaluateMath(String expression) {
       expression=expression.substring(0, i)+"+"+expression.substring(i);
     }
   }
-  System.out.println(expression);
+  //System.out.println(expression);
   expression=expression.replace("/", "*1/");
   return Double.parseDouble(evaluateHelper(expression, 0));
 }
