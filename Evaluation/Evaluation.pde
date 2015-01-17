@@ -458,9 +458,13 @@ double evaluateParens(String expression) {
     }
   }
   expression=evaluateParensHelper(expression);
+  if (screen.equals("GRAPH")){
+    return Double.parseDouble(expression);
+  } else {
   java.math.BigDecimal bd = new java.math.BigDecimal(expression);
   bd = bd.setScale(10, java.math.BigDecimal.ROUND_HALF_UP);
-  return(bd.doubleValue());  
+  return(bd.doubleValue());
+  }  
   /*while (expression.charAt (0)=='(' && expression.charAt(expression.length()-1)==')') {
    expression=expression.substring(1, expression.length()-1);
    }*/
