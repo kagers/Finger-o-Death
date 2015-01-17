@@ -1,6 +1,24 @@
 ArrayList<ArrayList<String>> input = new ArrayList<ArrayList<String>>();
 String lastEvaluated = "";
-String Ans = "";
+//gotten from Window
+String Ans;
+float xMin;
+float xMax;
+float xScl;
+float yMin;
+float yMax;
+float yScl;
+
+//computed from Window values
+float pixelXScl; //number of pixels to make each x on the graph increase by 1
+float pixelYScl; //number of pixels to make each y on the graph increase by 1
+float x0; //xcor of y-axis; where x=0;
+float y0; //ycor of x-axis; where y=0;
+
+//size of display screen
+float gridWidth;
+float gridHeight;
+float margin;
 
 void setup() {
   size(500, 700);
@@ -10,43 +28,50 @@ void setup() {
 }
 
 void draw() {
+  xMin = -10;
+  xMax = 10;
+  xScl = 1;
+  yMin = -10;
+  yMax = 10;
+  yScl = 1;
+  pixelXScl = (width-20)/(xMax-xMin); //number of pixels to make each x on the graph increase by 1
+  pixelYScl = ((height/2)-55)/(yMax-yMin); //number of pixels to make each y on the graph increase by 1
+  x0 = 10+abs(xMin)*pixelXScl; //xcor of y-axis; where x=0;
+  y0 = 10+yMax*pixelYScl; //ycor of x-axis; where y=0;
+  gridWidth = width-20;
+  gridHeight = (height/2)-55;
+  margin = 10;
   background(255);
-  //grid(-5, 15, 1, -10, 10, 1);
+
   graph(input);
 }
 
-void grid(float xMin, float xMax, float xScl, float yMin, float yMax, float yScl) {
-  float pixelXScl = (width-20)/(xMax-xMin); //number of pixels to make each x on the graph increase by 1
-  for(float xcor=10; xcor<=width-10; xcor+=pixelXScl*xScl){//graph x-coordinates
+void graph(ArrayList<ArrayList<String>> functions) {
+  grid();
+  plug(functions);
+}
+
+void grid() {
+  for (float xcor=margin; xcor<=margin+gridWidth; xcor+=pixelXScl*xScl) {//vertical lines
     stroke(225);
-    line(xcor, 10, xcor, (height/2)-45);
+    line(xcor, margin, xcor, gridHeight+margin);
   }
-  float pixelYScl = ((height/2)-55)/(yMax-yMin); //number of pixels to make each y on the graph increase by 1
-  for(float ycor=10; ycor<=(height/2)-55; ycor+=pixelYScl*yScl){//graph x-coordinates
+  for (float ycor=margin; ycor<=gridHeight+margin; ycor+=pixelYScl*yScl) {//horizontal lines
     stroke(225);
-    line(10, ycor, width-10, ycor);
+    line(margin, ycor, margin+gridWidth, ycor);
   }
   stroke(0);
-  line(10+abs(xMin)*pixelXScl, 10, 10+abs(xMin)*pixelXScl, (height/2)-45);//y axis
-  line(10, 10+yMax*pixelYScl, width-10, 10+yMax*pixelYScl);//x-axis
-  
-  stroke(255,0,0);
+  line(x0, margin, x0, margin+gridHeight);//y axis
+  line(margin, y0, margin+gridWidth, y0);//x-axis
+
+  stroke(100);
   noFill();
-  rect(10,10,width-20,(height/2)-55);
+  rect(10, 10, gridWidth, (gridHeight));//border of display screen
   stroke(0);
 }
 
-void graph(ArrayList<ArrayList<String>> functions) {//graphs all functions inputted into the Y= screen
-  float xMin = -10;
-  float xMax = 10;
-  float xScl = 1;
-  float yMin = -10;
-  float yMax = 10;
-  float yScl = 1;
-  grid(xMin,xMax,xScl,yMin,yMax,yScl);
-  float pixelXScl = (width-20)/(xMax-xMin); //number of pixels to make each x on the graph increase by 1
-  float pixelYScl = ((height/2)-55)/(yMax-yMin); //number of pixels to make each y on the graph increase by 1
-  
+void plug(ArrayList<ArrayList<String>> functions) {//graphs all functions inputted into the Y= screen  
+
   for (int k=0; k<functions.size (); k++) {
     ArrayList<String> plugged = new ArrayList<String>();
     if (functions.get(k).size()!=0) {
@@ -62,7 +87,7 @@ void graph(ArrayList<ArrayList<String>> functions) {//graphs all functions input
             System.out.println(plugged);
           }
         }
-        plotPoint(x, (float)evaluateParens(plugged)); //plots the point
+        plotPoint(x, (float)evaluateParens(plugged));//plots the point
         plugged.clear();
       }
     }
@@ -70,19 +95,11 @@ void graph(ArrayList<ArrayList<String>> functions) {//graphs all functions input
 }
 
 void plotPoint(float x, float y) {
-  float xMin = -10;
-  float xMax = 10;
-  float xScl = 1;
-  float yMin = -10;
-  float yMax = 10;
-  float yScl = 1;
-  float pixelXScl = (width-20)/(xMax-xMin); //number of pixels to make each x on the graph increase by 1
-  float pixelYScl = ((height/2)-55)/(yMax-yMin); //number of pixels to make each y on the graph increase by 1
   fill(255, 0, 0);
-  float xcor = 10+abs(xMin)*pixelXScl+(x*pixelXScl);//(xcor of y-axis) + x(using the right ratio of pixels to x values)
-  float ycor = 10+yMax*pixelYScl-(y*pixelYScl);//(xcor of x-axis) + y(using the right ratio of pixels to y values)
-  if (ycor>=10 && ycor<=(height/2)-45) {
-    ellipse(xcor, ycor , 0.05, 0.05);
+  float xcor = x0+(x*pixelXScl);//(xcor of y-axis) + x(using the right ratio of pixels to x values)
+  float ycor = y0-(y*pixelYScl);//(xcor of x-axis) + y(using the right ratio of pixels to y values)
+  if (ycor>=margin && ycor<=margin+gridHeight) {
+    ellipse(xcor, ycor, 0.05, 0.05);
   }
 }
 
