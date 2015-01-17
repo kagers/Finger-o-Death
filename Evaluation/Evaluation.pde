@@ -226,29 +226,52 @@ void mouseClicked() {
         } else if (buttons[i].name=="ENTER") {//Enter button
           //displayOut = true;
           if (screen.equals("NORM")) {
-            if (input.get(row).size()!=0) {//evaluates current line, goes to next line
+            if (input.get(row).size()!=0) {
               lastEvaluated=combine(input.get(row));
-              String[] exps = lastEvaluated.split("->");
-              switch (exps.length) {
-              case 1:
-                Ans = "~"+evaluateParens(exps[0]);
-                input.get(row+1).add(Ans);
-                break;
-              case 2:
-                Ans = "~"+evaluateParens(exps[0]);
-                alphabet[exps[1].charAt(0)-'A']=Ans.substring(1);
-                input.get(row+1).add(Ans);
-                break;
-              }
               row++;
               cursorY+=60;
-            } else {//repeats last evaluation
-              Ans = "~"+evaluateParens(lastEvaluated);
-              input.get(row).add(Ans);
+            } else {
               cursorY+=30;
             }
+            System.out.println(lastEvaluated);
+            String[] exps = lastEvaluated.split("->");
+            switch (exps.length) {
+            case 1:
+              Ans = "~"+evaluateParens(exps[0]);
+              input.get(row).add(Ans);
+              break;
+            case 2:
+              Ans = "~"+evaluateParens(exps[0]);
+              alphabet[exps[1].charAt(0)-'A']=Ans.substring(1);
+              input.get(row).add(Ans);
+              break;
+            }
+            row++;
+            /*if (input.get(row).size()!=0) {//evaluates current line, goes to next line
+             lastEvaluated=combine(input.get(row));
+             String[] exps = lastEvaluated.split("->");
+             switch (exps.length) {
+             case 1:
+             Ans = "~"+evaluateParens(exps[0]);
+             input.get(row+1).add(Ans);
+             break;
+             case 2:
+             Ans = "~"+evaluateParens(exps[0]);
+             alphabet[exps[1].charAt(0)-'A']=Ans.substring(1);
+             input.get(row+1).add(Ans);
+             break;
+             }
+             row++;
+             cursorY+=60;
+             } else {//repeats last evaluation
+             Ans = "~"+evaluateParens(lastEvaluated);
+             input.get(row).add(Ans);
+             cursorY+=30;
+             }*/
             cursorX=11;//cursor back to margin
-            row+=1;//row (of input?) increased by one
+            //if (input.get(row-1).size()!=0) {
+            //  row++;//row (of input?) increased by one
+            //}
             col=0;
           } else if (screen.equals("Y=")) {//Enter for Y= screen
             cursorY+=30; //moves cursor down a line
@@ -349,19 +372,6 @@ void mouseClicked() {
             } else if (screen.equals("Y=")) {
               graphInput.get(row).add(col, buttons[i].sec.substring(0, buttons[i].sec.length()-1));
             }
-
-            /*else if (buttons[i].name=="LOG") {
-             if (screen.equals("NORM")) {
-             input.get(row).add(col, "10^");
-             } else if (screen.equals("Y=")) {
-             graphInput.get(row).add(col, "10^");
-             }
-             } else if (buttons[i].name=="LN") {
-             if (screen.equals("NORM")) {
-             input.get(row).add(col, "e^");
-             } else if (screen.equals("Y=")) {
-             graphInput.get(row).add(col, "e^");
-             }*/
           } else if (buttons[i].name=="SIN" || buttons[i].name=="COS" || buttons[i].name=="TAN") {
             if (screen.equals("NORM")) {
               input.get(row).add(col, buttons[i].sec.toLowerCase()+"(");
