@@ -5,7 +5,7 @@ Finger-o-Death
 A TI style graphing calculator with powers including math, graphs, and TI BASIC.<br>
 Originally planned in Java and Processing, but now is full-on Processing.
 
-##DevLog:
+##log(development):
 
 **2015-01-05:**<br>
 K and M both worked on basic arithmetic evaluation using order of operations for +, -, *, and /.
@@ -42,5 +42,17 @@ M experimented with graphing. Results are not yet added to the project.
 K made functions functional???
 
 **2015-01-14:**<br>
-K successfully implemented special functions using parentheses: log, ln, sin, cos, tan.
+K fixed a minor function evaluation problem and proceeded to add function evaluation stuff to processing file.
+K made said function buttons work.
 M added graphing and created the Y= and GRAPH screens.
+
+**2015-01-15:**<br>
+K made the result be rounded to 10 decimal places when appropriate so that the answer doesn't *float* away from you.
+K made it so that if all of the parentheses aren't closed it closes them itself.
+
+**2015-01-16:**<br>
+K made storing of variables a reality and made pi and Euler's constant things work.
+
+**2015-01-17:**<br>
+K changed storage of entries so that it doesn't erase past things when scrolling.
+K began fixing of cursor movement.
