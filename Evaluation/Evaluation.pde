@@ -14,32 +14,7 @@ String[] functions;
 String mode = "NORM";
 String screen = "NORM";
 //double Ans = 0;
-String A = "0"; 
-String B = "0"; 
-String C = "0";
-String D = "0";
-String E = "0";
-String F = "0";
-String G = "0";
-String H = "0";
-String I = "0";
-String J = "0";
-String K = "0";
-String L = "0";
-String M = "0";
-String N = "0";
-String O = "0";
-String P = "0";
-String Q = "0";
-String R = "0";
-String S = "0";
-String T = "0";
-String U = "0";
-String V = "0";
-String W = "0";
-String X = "0";
-String Y = "0";
-String Z = "0";
+String[] alphabet = new String[26];
 
 void setup() {
   size(500, 700); 
@@ -51,6 +26,9 @@ void setup() {
   }
   for (int j=0; j<10; j++) {
     graphInput.add(new ArrayList<String>());
+  }
+  for (int i=0; i<alphabet.length; i++) {
+    alphabet[i] = "0.0";
   }
   buttons = new Button[51];
   buttons[0] = new Button(0, height/2-height/2/10, width/5, height/20, "Y=", "STAT PLOT", "F1", 170);
@@ -81,7 +59,7 @@ void setup() {
   buttons[21] = new Button(1*width/5, height/2+(3*height/2/10), "SIN", "aSIN", "E");
   buttons[22] = new Button(2*width/5, height/2+(3*height/2/10), "COS", "aCOS", "F");
   buttons[23] = new Button(3*width/5, height/2+(3*height/2/10), "TAN", "aTAN", "G");
-  buttons[24] = new Button(4*width/5, height/2+(3*height/2/10), width/5, height/20, "^", "PI", "H", 170);
+  buttons[24] = new Button(4*width/5, height/2+(3*height/2/10), width/5, height/20, "^", "π", "H", 170);
 
   buttons[25] = new Button(0, height/2+(4*height/2/10), "x^2", "SQRT", "I");
   buttons[26] = new Button(1*width/5, height/2+(4*height/2/10), width/5, height/20+height/20/5, ",", "EE", "J", 225);
@@ -117,6 +95,9 @@ void setup() {
 
 void draw() {
   //System.out.println(input);
+  /*for (int i=0; i<alphabet.length; i++){
+   System.out.println(alphabet[i]); 
+   }*/
   fill(0);
   textAlign(LEFT, BOTTOM);
   background(255);
@@ -354,6 +335,12 @@ void mouseClicked() {
             } else if (screen.equals("Y=")) {
               graphInput.get(row).add(col, "10^");
             }
+          } else if (buttons[i].name=="LN") {
+            if (screen.equals("NORM")) {
+              input.get(row).add(col, "e^");
+            } else if (screen.equals("Y=")) {
+              graphInput.get(row).add(col, "e^");
+            }
           } else if (buttons[i].name=="SIN" || buttons[i].name=="COS" || buttons[i].name=="TAN") {
             if (screen.equals("NORM")) {
               input.get(row).add(col, buttons[i].sec.toLowerCase()+"(");
@@ -438,10 +425,14 @@ String evaluateFunctions(String fxn, String expression) {
 //recursively separates expression into parentheses
 double evaluateParens(String expression) {
   expression=expression.replace(")(", ")*(");
-  if (expression.indexOf("Ans")!=-1) {
-    expression=expression.replace("Ans", Ans.substring(1));
+  //if (expression.indexOf("Ans")!=-1) {
+  expression=expression.replace("Ans", Ans.substring(1));
+  //}
+  for (int i=0; i<alphabet.length; i++) {
+    expression=expression.replace(""+(char)('A'+i), alphabet[i]);
   }
-  //expression=expression.replace("X", ""+X);
+  expression=expression.replace("π", ""+PI);
+  expression=expression.replace("e", ""+exp(1));
   int startParen = 0;
   int endParen = 0;
   for (int i=0; i<expression.length (); i++) {
@@ -458,12 +449,12 @@ double evaluateParens(String expression) {
     }
   }
   expression=evaluateParensHelper(expression);
-  if (screen.equals("GRAPH")){
+  if (screen.equals("GRAPH")) {
     return Double.parseDouble(expression);
   } else {
-  java.math.BigDecimal bd = new java.math.BigDecimal(expression);
-  bd = bd.setScale(10, java.math.BigDecimal.ROUND_HALF_UP);
-  return(bd.doubleValue());
+    java.math.BigDecimal bd = new java.math.BigDecimal(expression);
+    bd = bd.setScale(10, java.math.BigDecimal.ROUND_HALF_UP);
+    return(bd.doubleValue());
   }  
   /*while (expression.charAt (0)=='(' && expression.charAt(expression.length()-1)==')') {
    expression=expression.substring(1, expression.length()-1);
