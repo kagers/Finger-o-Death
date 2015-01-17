@@ -153,6 +153,8 @@ void drawCursor() {
 }
 
 void mouseClicked() {
+  String inbefore = "";
+  String in = "";
   for (int i=0; i<buttons.length; i++) {//checks to see if each button is clicked
     if (buttons[i].isClicked()) {
       if (endRow>=input.size()-2) {//controls scrolling, yes?
@@ -252,43 +254,57 @@ void mouseClicked() {
           if (buttons[i].name=="STO->") {
             if (screen.equals("NORM")) {
               if (col!=0) {
-                input.get(row).add(col, buttons[i].name.substring(3));
+                //input.get(row).add(col, buttons[i].name.substring(3));
               } else {
-                input.get(row).add(col, "Ans");
-                input.get(row).add(col+1, buttons[i].name.substring(3));
-                col++;
+                inbefore = "Ans";
+                //input.get(row).add(col, "Ans");
+                //input.get(row).add(col+1, buttons[i].name.substring(3));
+                //col++;
               }
+              in = buttons[i].name.substring(3);
             }
           } else if (buttons[i].name=="LOG" || buttons[i].name=="LN" ||
             buttons[i].name=="SIN" || buttons[i].name=="COS" || buttons[i].name=="TAN") {
             if (screen.equals("NORM")) {
-              input.get(row).add(col, buttons[i].name.toLowerCase()+"("); //adds to input
+              in = buttons[i].name.toLowerCase()+"(";
+              //input.get(row).add(col, buttons[i].name.toLowerCase()+"("); //adds to input
             } else if (screen.equals("Y=")) {
               graphInput.get(row).add(col, buttons[i].name.toLowerCase()+"("); //adds to graphInput
             }
           } else if (buttons[i].name=="x^2" || buttons[i].name=="x^-1") {
             if (screen.equals("NORM")) { //adds to input
               if (col!=0) {
-                input.get(row).add(col, buttons[i].name.substring(1));
+                //input.get(row).add(col, buttons[i].name.substring(1));
               } else {
-                input.get(row).add(col, "Ans");
-                input.get(row).add(col+1, buttons[i].name.substring(1));
-                col++;
+                inbefore = "Ans";
+                //input.get(row).add(col, "Ans");
+                //input.get(row).add(col+1, buttons[i].name.substring(1));
+                //col++;
               }
+              in = buttons[i].name.substring(1);
             } else if (screen.equals("Y=")) { //adds to graphInput
               graphInput.get(row).add(col, buttons[i].name.substring(1));
             }
           } else { //accounts for all other buttons (digits, operators)
             if (screen.equals("NORM")) { //adds to input
-              input.get(row).add(col, buttons[i].name);
+              in = buttons[i].name;
+              //input.get(row).add(col, buttons[i].name);
             } else if (screen.equals("Y=")) { //adds to graphInput
               graphInput.get(row).add(col, buttons[i].name);
               //System.out.println(buttons[i].name);
               //System.out.println("graphInput: "+graphInput.toString());
             }
           }
-          cursorX+=textWidth(buttons[i].name); //moves cursor over
-          col++;
+          if (!(inbefore.equals(""))){
+            input.get(row).add(col, inbefore);
+            cursorX+=textWidth(inbefore);
+            col++;
+          } 
+          if (!(in.equals(""))){
+            input.get(row).add(col, in);
+            cursorX+=textWidth(in);
+            col++;
+          }
         }
       } else if (mode.equals("2nd")) { //buttons in 2nd mode
         if (buttons[i].name=="2nd") { //changes mode back to norm
@@ -435,7 +451,8 @@ double evaluateParens(String expression) {
   if (screen.equals("GRAPH")) {//does not round when graphing (messes up when it tries to round nonexistent points using x values outside the domain)
     return Double.parseDouble(expression);
   } else { //rounds to 10 decimal points
-    java.math.BigDecimal bd = new java.math.BigDecimal(expression);
+    System.out.println(expression);
+    java.math.BigDecimal bd = new java.math.BigDecimal(Double.parseDouble(expression));
     bd = bd.setScale(10, java.math.BigDecimal.ROUND_HALF_UP);
     return(bd.doubleValue());
   }  
