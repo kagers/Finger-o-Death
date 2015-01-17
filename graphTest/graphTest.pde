@@ -21,7 +21,7 @@ void grid(float xMin, float xMax, float xScl, float yMin, float yMax, float yScl
     stroke(225);
     line(xcor, 10, xcor, (height/2)-45);
   }
-  float pixelYScl = ((height/2)-55)/(yMax-yMin); //number of pixels to make each x on the graph increase by 1
+  float pixelYScl = ((height/2)-55)/(yMax-yMin); //number of pixels to make each y on the graph increase by 1
   for(float ycor=10; ycor<=(height/2)-55; ycor+=pixelYScl*yScl){//graph x-coordinates
     stroke(225);
     line(10, ycor, width-10, ycor);
@@ -44,6 +44,8 @@ void graph(ArrayList<ArrayList<String>> functions) {//graphs all functions input
   float yMax = 10;
   float yScl = 1;
   grid(xMin,xMax,xScl,yMin,yMax,yScl);
+  float pixelXScl = (width-20)/(xMax-xMin); //number of pixels to make each x on the graph increase by 1
+  float pixelYScl = ((height/2)-55)/(yMax-yMin); //number of pixels to make each y on the graph increase by 1
   
   for (int k=0; k<functions.size (); k++) {
     ArrayList<String> plugged = new ArrayList<String>();
@@ -60,31 +62,27 @@ void graph(ArrayList<ArrayList<String>> functions) {//graphs all functions input
             System.out.println(plugged);
           }
         }
-        plotPoint(x*10, (float)evaluateParens(plugged)*10); //plots the point
+        plotPoint(x, (float)evaluateParens(plugged)); //plots the point
         plugged.clear();
       }
     }
   }
 }
-void graph(String function) {
-  String funct = "";
-  for (float x=-24; x<=24; x+=0.01) {
-    String plugged = "";
-    for (int i=0; i<function.length (); i++) {
-      if (function.charAt(i)=='X') {
-        plugged+=""+x;
-      } else {
-        plugged+=function.charAt(i);
-      }
-    }
-    plotPoint(x*10, (float)evaluateParens(plugged)*10);
-  }
-}
 
 void plotPoint(float x, float y) {
+  float xMin = -10;
+  float xMax = 10;
+  float xScl = 1;
+  float yMin = -10;
+  float yMax = 10;
+  float yScl = 1;
+  float pixelXScl = (width-20)/(xMax-xMin); //number of pixels to make each x on the graph increase by 1
+  float pixelYScl = ((height/2)-55)/(yMax-yMin); //number of pixels to make each y on the graph increase by 1
   fill(255, 0, 0);
-  if (170-y>=10 && 170-y<=(height/2)-20) {
-    ellipse((width/2)+x, 170-y, 0.05, 0.05);
+  float xcor = 10+abs(xMin)*pixelXScl+(x*pixelXScl);//(xcor of y-axis) + x(using the right ratio of pixels to x values)
+  float ycor = 10+yMax*pixelYScl-(y*pixelYScl);//(xcor of x-axis) + y(using the right ratio of pixels to y values)
+  if (ycor>=10 && ycor<=(height/2)-45) {
+    ellipse(xcor, ycor , 0.05, 0.05);
   }
 }
 
