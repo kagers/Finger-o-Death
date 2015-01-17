@@ -205,18 +205,11 @@ void mouseClicked() {
           if (screen.equals("GRAPH")) {//Clear brings screen back from Graph to Norm
             screen="NORM";
           } else if (screen.equals("Y=")) {//Clear for Y= screen
-            if (combine(graphInput.get(row)).length()>0) {//I will fix it so that only the input on the current line is cleared
+            if (combine(graphInput.get(row)).length()>0) {//works; currently input moves but not cursor; this is due to a problem with enter, not clear
               graphInput.get(row).clear(); //clears current row only (I think)
               col=0;
-            } else {//I'm not sure what this does. Clears entire line?
-              for (int j=0; j<graphInput.size (); j++) {//clears everything
-                graphInput.get(j).clear();
-                row=0;
-              }
             }
-            //currently sets cursor back to the top; probably shouldn't
             cursorX=70;
-            cursorY=7;
           } else { //Clear when screen is normal. Clears everything
             if (combine(input.get(row)).length()>0) { //clears current row only
               input.get(row).clear();
