@@ -18,15 +18,15 @@ String mode = "NORM";
 String screen = "NORM";
 //double Ans = 0;
 String[] alphabet = new String[26];
-String writeMode = "overright";
+boolean overWrite=true;
 
 void setup() {
   size(500, 700); 
   background(255);
   fill(0);
   rect(cursorX, 20, 7.0023, 10);
-  //PFont font = loadFont("Courier10PitchBT-Roman-100.vlw");
-  //textFont(font, 100);
+  PFont font = loadFont("Courier10PitchBT-Roman-100.vlw");
+  textFont(font, 12);
   for (int i=0; i<8; i++) {
     input.add(new ArrayList<String>());
   }
@@ -113,6 +113,9 @@ void draw() {
   fill(0);
   textAlign(LEFT, BOTTOM);
   background(255);
+  for (int i=0; i<input.get (row).size(); i++) {
+    System.out.print("\t"+textWidth(input.get(row).get(i)));
+  }
   if (screen.equals("NORM")) {//normal display screen
     drawCursor();
     for (int i=startRow; i<=endRow; i++) {
@@ -270,6 +273,10 @@ void mouseClicked() {
           }
         } else if (buttons[i].name.equals("GRAPH")) {//switches screen to Graph when buttons are pressed
           screen="GRAPH";
+        } else if (buttons[i].name.equals("DEL")){
+          if (col<input.get(row).size()){
+            input.get(row).remove(col); 
+          }
         } else {//normal buttons 
           if (buttons[i].name.equals("STO->")) {
             if (screen.equals("NORM")) {
@@ -316,7 +323,7 @@ void mouseClicked() {
           if (col<input.get(row).size()) {
             System.out.println(textWidth(input.get(row).get(col)));
           }
-          if (writeMode.equals("overleft") || col>=input.get(row).size()) {
+          if (!overWrite || col>=input.get(row).size()) {
             if (!(inbefore.equals(""))) {
               input.get(row).add(col, inbefore);
               cursorX+=textWidth(inbefore);
@@ -327,7 +334,8 @@ void mouseClicked() {
               cursorX+=textWidth(in);
               col++;
             }
-          } else if (writeMode.equals("overright")) {
+            overWrite=true;
+          } else if (overWrite) {
             //if (col<input.size()) {
             if (!(inbefore.equals(""))) {
               input.get(row).set(col, inbefore);
@@ -357,6 +365,8 @@ void mouseClicked() {
               row=0;
             }
           }
+        } else if (buttons[i].name.equals("DEL")){
+          overWrite=true;
         } else {//for all other buttons (these are grouped together because they affect the cursor, yes?)
           if (buttons[i].name.equals("(-)")) {
             if (screen.equals("NORM")) {
