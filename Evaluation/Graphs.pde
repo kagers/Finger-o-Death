@@ -67,17 +67,22 @@ class Graphs {
       if (functions.get(k).size()!=0) {
         //finds all y values for all x values on the graph, with a 0.01 scale
         //is this enough? Some graphs look sketchier than others. Will try connecting points and/or making scale smaller
-        for (float x=xMin; x<=xMax; x+=0.01) {
+        //for (float x=xMin; x<=xMax; x+=0.01) {
+        for (float x=xMin; x<xMax; x+=0.01) {
+          //System.out.println("x=:"+x);
+          //System.out.println(Double.parseDouble("1.3357401E-4"));
           for (int i=0; i<functions.get (k).size(); i++) {
             if (functions.get(k).get(i).equals("X")) {//plugs in x value for every "X" in the input
+            //System.out.println("plugged");
               plugged.add(""+x);
-            } else {
-              System.out.println(functions.get(k).get(i));
-              plugged.add(functions.get(k).get(i)); 
               System.out.println(plugged);
+            } else {
+              //System.out.println(functions.get(k).get(i));
+              plugged.add(functions.get(k).get(i)); 
             }
           }
-          plotPoint(x, (float)evaluateParens(plugged));//plots the point
+          //System.out.println(plugged);
+          plotPoint((float)x, (float)evaluateParens(plugged));//plots the point
           plugged.clear();
         }
       }
