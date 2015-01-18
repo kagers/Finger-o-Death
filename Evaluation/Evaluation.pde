@@ -316,7 +316,7 @@ void mouseClicked() {
           if (col<input.get(row).size()) {
             input.get(row).remove(col);
           }
-        } else {//normal buttons 
+        } else {//NORMAL BUTTONS 
           if (buttons[i].name.equals("STO->")) {
             if (screen.equals("NORM")) {
               if (col==0) {
@@ -329,9 +329,9 @@ void mouseClicked() {
             if (screen.equals("NORM")) {
               in = buttons[i].name.toLowerCase()+"(";
             } else if (screen.equals("Y=")) {
-              graphInput.get(row).add(col, buttons[i].name.toLowerCase()+"("); //adds to graphInput
+              in = buttons[i].name.toLowerCase()+"(";
             } else if (screen.equals("WINDOW")) {
-              windowInput.get(row).add(col, buttons[i].name.toLowerCase()+"(");//adds to windowInput
+              in = buttons[i].name.toLowerCase()+"(";
             }
           } else if (buttons[i].name.equals("x^2") || buttons[i].name.equals("x^-1")) {
             if (screen.equals("NORM")) { //adds to input
@@ -340,61 +340,116 @@ void mouseClicked() {
               }
               in = buttons[i].name.substring(1);
             } else if (screen.equals("Y=")) { //adds to graphInput
-              graphInput.get(row).add(col, buttons[i].name.substring(1));
-            } else if (screen.equals("WINDOW")) {
-              windowInput.get(row).add(col, buttons[i].name.substring(1));//adds to windowInput
-            }
-          } else if (buttons[i].name.equals("+") || buttons[i].name.equals("-") || buttons[i].name.equals("*")
-            || buttons[i].name.equals("/")) {
-            if (screen.equals("NORM")) {
               if (col==0) {
                 inbefore = "Ans";
               }
-              in = buttons[i].name;
-            } else if (screen.equals("Y=")) {
-              graphInput.get(row).add(col, buttons[i].name);
+              in = buttons[i].name.substring(1);
             } else if (screen.equals("WINDOW")) {
-              windowInput.get(row).add(col, buttons[i].name);//adds to windowInput
+              if (col==0) {
+                inbefore = "Ans";
+              }
+              in = buttons[i].name.substring(1);
             }
           } else { //accounts for all other buttons (digits, operators)
             if (screen.equals("NORM")) { //adds to input
+              if (buttons[i].name.equals("+") || buttons[i].name.equals("-") || buttons[i].name.equals("*")
+                || buttons[i].name.equals("/")) {
+                if (col==0) {
+                  inbefore = "Ans";
+                }
+              }
               in = buttons[i].name;
+              if (col<input.get(row).size()) {
+                System.out.println(textWidth(input.get(row).get(col)));
+              }
+              if (!overWrite || col>=input.get(row).size()) {
+                if (!(inbefore.equals(""))) {
+                  input.get(row).add(col, inbefore);
+                  cursorX+=textWidth(inbefore);
+                  col++;
+                }
+                if (!(in.equals(""))) {
+                  input.get(row).add(col, in);
+                  cursorX+=textWidth(in);
+                  col++;
+                }
+                overWrite=true;
+              } else if (overWrite) {
+                //if (col<input.size()) {
+                if (!(inbefore.equals(""))) {
+                  input.get(row).set(col, inbefore);
+                  cursorX+=textWidth(inbefore);
+                  col++;
+                }
+                if (!(in.equals(""))) {
+                  input.get(row).set(col, in);
+                  cursorX+=textWidth(in);
+                  col++;
+                }
+              }
             } else if (screen.equals("Y=")) { //adds to graphInput
-              graphInput.get(row).add(col, buttons[i].name);
               //System.out.println(buttons[i].name);
               //System.out.println("graphInput: "+graphInput.toString());
+              in = buttons[i].name;
+              if (col<input.get(row).size()) {
+                System.out.println(textWidth(graphInput.get(row).get(col)));
+              }
+              if (!overWrite || col>=graphInput.get(row).size()) {
+                if (!(inbefore.equals(""))) {
+                  graphInput.get(row).add(col, inbefore);
+                  cursorX+=textWidth(inbefore);
+                  col++;
+                }
+                if (!(in.equals(""))) {
+                  graphInput.get(row).add(col, in);
+                  cursorX+=textWidth(in);
+                  col++;
+                }
+                overWrite=true;
+              } else if (overWrite) {
+                //if (col<input.size()) {
+                if (!(inbefore.equals(""))) {
+                  graphInput.get(row).set(col, inbefore);
+                  cursorX+=textWidth(inbefore);
+                  col++;
+                }
+                if (!(in.equals(""))) {
+                  graphInput.get(row).set(col, in);
+                  cursorX+=textWidth(in);
+                  col++;
+                }
+              }
             } else if (screen.equals("WINDOW")) {
-              windowInput.get(row).add(col, buttons[i].name);//adds to windowInput
+              in = buttons[i].name;
+              if (col<input.get(row).size()) {
+                System.out.println(textWidth(windowInput.get(row).get(col)));
+              }
+              if (!overWrite || col>=windowInput.get(row).size()) {
+                if (!(inbefore.equals(""))) {
+                  windowInput.get(row).add(col, inbefore);
+                  cursorX+=textWidth(inbefore);
+                  col++;
+                }
+                if (!(in.equals(""))) {
+                  windowInput.get(row).add(col, in);
+                  cursorX+=textWidth(in);
+                  col++;
+                }
+                overWrite=true;
+              } else if (overWrite) {
+                //if (col<input.size()) {
+                if (!(inbefore.equals(""))) {
+                  windowInput.get(row).set(col, inbefore);
+                  cursorX+=textWidth(inbefore);
+                  col++;
+                }
+                if (!(in.equals(""))) {
+                  windowInput.get(row).set(col, in);
+                  cursorX+=textWidth(in);
+                  col++;
+                }
+              }
             }
-          }
-          if (col<input.get(row).size()) {
-            System.out.println(textWidth(input.get(row).get(col)));
-          }
-          if (!overWrite || col>=input.get(row).size()) {
-            if (!(inbefore.equals(""))) {
-              input.get(row).add(col, inbefore);
-              cursorX+=textWidth(inbefore);
-              col++;
-            }
-            if (!(in.equals(""))) {
-              input.get(row).add(col, in);
-              cursorX+=textWidth(in);
-              col++;
-            }
-            overWrite=true;
-          } else if (overWrite) {
-            //if (col<input.size()) {
-            if (!(inbefore.equals(""))) {
-              input.get(row).set(col, inbefore);
-              cursorX+=textWidth(inbefore);
-              col++;
-            }
-            if (!(in.equals(""))) {
-              input.get(row).set(col, in);
-              cursorX+=textWidth(in);
-              col++;
-            }
-            //}
           }
         }
       } else if (mode.equals("2nd")) { //buttons in 2nd mode
