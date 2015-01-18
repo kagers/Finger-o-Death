@@ -18,12 +18,15 @@ String mode = "NORM";
 String screen = "NORM";
 //double Ans = 0;
 String[] alphabet = new String[26];
+String writeMode = "overright";
 
 void setup() {
   size(500, 700); 
   background(255);
   fill(0);
-  rect(cursorX, 20, 5, 10);
+  rect(cursorX, 20, 7.0023, 10);
+  //PFont font = loadFont("Courier10PitchBT-Roman-100.vlw");
+  //textFont(font, 100);
   for (int i=0; i<8; i++) {
     input.add(new ArrayList<String>());
   }
@@ -147,7 +150,7 @@ void drawCursor() {
     stroke(255);
     fill(255);
   }
-  rect(cursorX, cursorY, 5, 10);//fixed cursor dimensions (if there's a way to conform it to text width maybe that would be better but it doesn't really matter)
+  rect(cursorX, cursorY, 7.0023, 10);//fixed cursor dimensions (if there's a way to conform it to text width maybe that would be better but it doesn't really matter)
   stroke(0);
   fill(0);
 }
@@ -166,12 +169,18 @@ void mouseClicked() {
         row--;
         cursorY-=30;
       } else if (buttons[i].name.equals("E")) {
-        col++;
+        if (col<input.get(row).size()) {
+          cursorX+=textWidth(input.get(row).get(col));
+          col++;
+        }
       } else if (buttons[i].name.equals("S")) {
         row++;
         cursorY+=30;
       } else if (buttons[i].name.equals("W")) {
-        col--;
+        if (col>0) {
+          col--;
+          cursorX-=textWidth(input.get(row).get(col));
+        }
       } else if (mode.equals("NORM")) { //what happens what buttons are clicked on the normal calculator screen
         if (buttons[i].name.equals("2nd")) {//if 2nd clicked sets mode to 2nd
           mode = "2nd";
@@ -264,13 +273,8 @@ void mouseClicked() {
         } else {//normal buttons 
           if (buttons[i].name.equals("STO->")) {
             if (screen.equals("NORM")) {
-              if (col!=0) {
-                //input.get(row).add(col, buttons[i].name.substring(3));
-              } else {
+              if (col==0) {
                 inbefore = "Ans";
-                //input.get(row).add(col, "Ans");
-                //input.get(row).add(col+1, buttons[i].name.substring(3));
-                //col++;
               }
               in = buttons[i].name.substring(3);
             }
@@ -278,7 +282,6 @@ void mouseClicked() {
             buttons[i].name.equals("SIN") || buttons[i].name.equals("COS") || buttons[i].name.equals("TAN")) {
             if (screen.equals("NORM")) {
               in = buttons[i].name.toLowerCase()+"(";
-              //input.get(row).add(col, buttons[i].name.toLowerCase()+"("); //adds to input
             } else if (screen.equals("Y=")) {
               graphInput.get(row).add(col, buttons[i].name.toLowerCase()+"("); //adds to graphInput
             }
@@ -286,9 +289,6 @@ void mouseClicked() {
             if (screen.equals("NORM")) { //adds to input
               if (col==0) {
                 inbefore = "Ans";
-                //input.get(row).add(col, "Ans");
-                //input.get(row).add(col+1, buttons[i].name.substring(1));
-                //col++;
               }
               in = buttons[i].name.substring(1);
             } else if (screen.equals("Y=")) { //adds to graphInput
@@ -299,9 +299,6 @@ void mouseClicked() {
             if (screen.equals("NORM")) {
               if (col==0) {
                 inbefore = "Ans";
-                //input.get(row).add(col, "Ans");
-                //input.get(row).add(col+1, buttons[i].name.substring(1));
-                //col++;
               }
               in = buttons[i].name;
             } else if (screen.equals("Y=")) {
@@ -310,22 +307,39 @@ void mouseClicked() {
           } else { //accounts for all other buttons (digits, operators)
             if (screen.equals("NORM")) { //adds to input
               in = buttons[i].name;
-              //input.get(row).add(col, buttons[i].name);
             } else if (screen.equals("Y=")) { //adds to graphInput
               graphInput.get(row).add(col, buttons[i].name);
               //System.out.println(buttons[i].name);
               //System.out.println("graphInput: "+graphInput.toString());
             }
           }
-          if (!(inbefore.equals(""))) {
-            input.get(row).add(col, inbefore);
-            cursorX+=textWidth(inbefore);
-            col++;
-          } 
-          if (!(in.equals(""))) {
-            input.get(row).add(col, in);
-            cursorX+=textWidth(in);
-            col++;
+          if (col<input.get(row).size()) {
+            System.out.println(textWidth(input.get(row).get(col)));
+          }
+          if (writeMode.equals("overleft") || col>=input.get(row).size()) {
+            if (!(inbefore.equals(""))) {
+              input.get(row).add(col, inbefore);
+              cursorX+=textWidth(inbefore);
+              col++;
+            }
+            if (!(in.equals(""))) {
+              input.get(row).add(col, in);
+              cursorX+=textWidth(in);
+              col++;
+            }
+          } else if (writeMode.equals("overright")) {
+            //if (col<input.size()) {
+            if (!(inbefore.equals(""))) {
+              input.get(row).set(col, inbefore);
+              cursorX+=textWidth(inbefore);
+              col++;
+            }
+            if (!(in.equals(""))) {
+              input.get(row).set(col, in);
+              cursorX+=textWidth(in);
+              col++;
+            }
+            //}
           }
         }
       } else if (mode.equals("2nd")) { //buttons in 2nd mode
