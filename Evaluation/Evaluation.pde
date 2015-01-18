@@ -3,6 +3,7 @@ Graphs g;
 boolean on = false;
 ArrayList<ArrayList<String>> input = new ArrayList<ArrayList<String>>();
 ArrayList<ArrayList<String>> graphInput = new ArrayList<ArrayList<String>>();
+ArrayList<ArrayList<String>> windowInput = new ArrayList<ArrayList<String>>();
 int row = 0;
 int col = 0;
 String lastEvaluated = "";
@@ -140,6 +141,19 @@ void draw() {
     }
   } else if (screen.equals("GRAPH")) {//the graph screen
     g.draw();//draws graph
+  }else if(screen.equals("WINDOW")){
+    System.out.println("screen= WINDOW");
+    String names = "XminXmaxXsclYminYmaxYscl";
+    for (int i=0; i<6; i++) {
+      text(names.substring(i*4,(i*4)+4)+"=", 40, 20+(30*i));
+      drawCursor();//not sure if this is necessary here; will test later
+      for (int j=0; j<windowInput.size (); j++) {
+        String joined = combine(windowInput.get(j));
+        if (joined.length()>0) {//displays inputted functions
+          text(joined, 70, 20+30*j);
+        }
+      }
+    }
   }
   for (int i=0; i<buttons.length; i++) {//the buttons are displayed no matter what the screen
     buttons[i].draw();
@@ -185,6 +199,9 @@ void mouseClicked() {
           col--;
           cursorX-=textWidth(input.get(row).get(col));
         }
+      }else if(buttons[i].name.equals("WINDOW")){
+        System.out.println("buttons[i].name.equals(WINDOW)");
+        screen = "WINDOW";
       } else if (mode.equals("NORM")) { //what happens what buttons are clicked on the normal calculator screen
         if (buttons[i].name.equals("2nd")) {//if 2nd clicked sets mode to 2nd
           mode = "2nd";
