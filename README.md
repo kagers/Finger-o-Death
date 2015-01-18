@@ -52,7 +52,9 @@ K made it so that if all of the parentheses aren't closed it closes them itself.
 
 **2015-01-16:**<br>
 K made storing of variables a reality and made pi and Euler's constant things work.
+M made graph use Xmin, Xmax, Xscl, Ymin, Ymax, and Yscl.
 
 **2015-01-17:**<br>
 K changed storage of entries so that it doesn't erase past things when scrolling.
 K began fixing of cursor movement.
+M made graph into a class.
