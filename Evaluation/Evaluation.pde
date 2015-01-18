@@ -10,6 +10,7 @@ int yRow = 0;
 int yCol = 0;
 int wRow = 0;
 int wCol = 0;
+int zRow = 0;
 String lastEvaluated = "";
 String Ans = "~0";
 String disp = "";
@@ -169,7 +170,7 @@ void draw() {
         }
       }
     }
-  }else if(screen.equals("ZOOM")){
+  } else if (screen.equals("ZOOM")) {
     ArrayList<String> names = new ArrayList<String>();
     names.add("1:ZStandard");
     names.add("2:ZTrig");
@@ -279,18 +280,40 @@ void ENTER() {
       cursorX = 70;
       wRow+=1;//moves down a line in windowInput
       wCol = 0;
+    } else if (screen.equals("ZOOM")) {
+      for(int i=0; i<6; i++){
+       windowInput.get(i).clear(); 
+      }
+      if (zRow==0) {//ZStandard
+        windowInput.get(0).add("-10");//Xmin
+        windowInput.get(1).add("10");//Xmax
+        windowInput.get(2).add("1");//Xscl
+        windowInput.get(3).add("-10");//Ymin
+        windowInput.get(4).add("10");//Ymax
+        windowInput.get(5).add("1");//Yscl
+      } else if (zRow==1) {//ZTrig
+        windowInput.get(0).add("-2*π");//Xmin
+        windowInput.get(1).add("2*π");//Xmax
+        windowInput.get(2).add("π/2");//Xscl
+        windowInput.get(3).add("-4");//Ymin
+        windowInput.get(4).add("4");//Ymax
+        windowInput.get(5).add("1");//Yscl
+      }
+      System.out.println(windowInput.toString());
+      System.out.println(zRow);
+      screen="GRAPH";
     }
   }
 }
 
 void specialFunctions(int i) {
   if (screen.equals("NORM")) {
-    input.get(row).add(col,buttons[i].name.toLowerCase()+"(");
+    input.get(row).add(col, buttons[i].name.toLowerCase()+"(");
     col++;
   } else if (screen.equals("Y=")) {
     graphInput.get(yRow).add(yCol, buttons[i].name.toLowerCase()+"("); //adds to graphInput
     yCol++;
-  }else if(screen.equals("WINDOW")){
+  } else if (screen.equals("WINDOW")) {
     windowInput.get(wRow).add(wCol, buttons[i].name.toLowerCase()+"("); //adds to windowInput
     wCol++;
   }
@@ -448,6 +471,8 @@ void mouseClicked() {
           yRow--;
         } else if (screen.equals("WINDOW")) {
           wRow--;
+        } else if (screen.equals("ZOOM")) {
+          zRow--;
         }
         cursorY-=30;
       } else if (buttons[i].name.equals("E")) {
@@ -474,6 +499,8 @@ void mouseClicked() {
           yRow++;
         } else if (screen.equals("WINDOW")) {
           wRow++;
+        } else if (screen.equals("ZOOM")) {
+          zRow++;
         }
         cursorY+=30;
       } else if (buttons[i].name.equals("W")) {
@@ -496,10 +523,14 @@ void mouseClicked() {
       } else if (buttons[i].name.equals("WINDOW")) {
         screen = "WINDOW";
         cursorX = 70;
-      }else if(buttons[i].name.equals("ZOOM")){
+      } else if (buttons[i].name.equals("ZOOM")) {
         screen = "ZOOM";
         cursorX = 70;
-        cursorY = 7;
+        if (zRow==0) {
+          cursorY = 7;
+        } else if (zRow==1) {
+          cursorY = 37;
+        }
       } else if (mode.equals("NORM")) { //what happens what buttons are clicked on the normal calculator screen
         if (buttons[i].name.equals("2nd")) {//if 2nd clicked sets mode to 2nd
           mode = "2nd";
