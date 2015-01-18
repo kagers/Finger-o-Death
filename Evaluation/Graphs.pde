@@ -37,6 +37,20 @@ class Graphs {
   }
 
   void draw() {
+    xMin = (float)evaluateParens(windowInput.get(0));
+    xMax = (float)evaluateParens(windowInput.get(1));
+    xScl = (float)evaluateParens(windowInput.get(2));
+    yMin = (float)evaluateParens(windowInput.get(3));
+    yMax = (float)evaluateParens(windowInput.get(4));
+    yScl = (float)evaluateParens(windowInput.get(5));
+    pixelXScl = (width-20)/(xMax-xMin); //number of pixels to make each x on the graph increase by 1
+    pixelYScl = ((height/2)-55)/(yMax-yMin); //number of pixels to make each y on the graph increase by 1
+    x0 = 10+abs(xMin)*pixelXScl; //xcor of y-axis; where x=0;
+    y0 = 10+yMax*pixelYScl; //ycor of x-axis; where y=0;
+    gridWidth = width-20;
+    gridHeight = (height/2)-55;
+    margin = 10;
+    
     grid();
     graph(graphInput);
   }
