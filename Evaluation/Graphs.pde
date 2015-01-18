@@ -20,12 +20,12 @@ class Graphs {
 
 
   Graphs() {
-    xMin = -10;
-    xMax = 10;
-    xScl = 1;
-    yMin = -10;
-    yMax = 10;
-    yScl = 1;
+    xMin = (float)evaluateParens(windowInput.get(0));
+    xMax = (float)evaluateParens(windowInput.get(1));
+    xScl = (float)evaluateParens(windowInput.get(2));
+    yMin = (float)evaluateParens(windowInput.get(3));
+    yMax = (float)evaluateParens(windowInput.get(4));
+    yScl = (float)evaluateParens(windowInput.get(5));
     pixelXScl = (width-20)/(xMax-xMin); //number of pixels to make each x on the graph increase by 1
     pixelYScl = ((height/2)-55)/(yMax-yMin); //number of pixels to make each y on the graph increase by 1
     x0 = 10+abs(xMin)*pixelXScl; //xcor of y-axis; where x=0;
