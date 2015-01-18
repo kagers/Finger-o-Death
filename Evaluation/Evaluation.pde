@@ -6,6 +6,10 @@ ArrayList<ArrayList<String>> graphInput = new ArrayList<ArrayList<String>>();
 ArrayList<ArrayList<String>> windowInput = new ArrayList<ArrayList<String>>();
 int row = 0;
 int col = 0;
+int yRow = 0;
+int yCol = 0;
+int wRow = 0;
+int wCol = 0;
 String lastEvaluated = "";
 String Ans = "~0";
 String disp = "";
@@ -189,15 +193,15 @@ void CLEAR() {
   if (screen.equals("GRAPH")) {//Clear brings screen back from Graph to Norm
     screen="NORM";
   } else if (screen.equals("Y=")) {//Clear for Y= screen
-    if (combine(graphInput.get(row)).length()>0) {
-      graphInput.get(row).clear(); //clears current line only
-      col=0;
+    if (combine(graphInput.get(yRow)).length()>0) {
+      graphInput.get(yRow).clear(); //clears current line only
+      yCol=0;
     }
     cursorX=70;
   } else if (screen.equals("WINDOW")) {//Clear current line only
-    if (combine(windowInput.get(row)).length()>0) {
-      windowInput.get(row).clear(); //clears current line only
-      col=0;
+    if (combine(windowInput.get(wRow)).length()>0) {
+      windowInput.get(wRow).clear(); //clears current line only
+      wCol=0;
     }
     cursorX=70;
   } else { //Clear when screen is normal. Clears everything
@@ -261,24 +265,60 @@ void ENTER() {
     } else if (screen.equals("Y=")) {//Enter for Y= screen
       cursorY+=30; //moves cursor down a line
       cursorX = 70;
-      row+=1;//moves down a line in graphInput
-      col = 0;
+      yRow+=1;//moves down a line in graphInput
+      yCol = 0;
     } else if (screen.equals("WINDOW")) {//ENTER for Window screen
       cursorY+=30;//moves cursor down a line
       cursorX = 70;
-      row+=1;//moves down a line in windowInput
-      col = 0;
+      wRow+=1;//moves down a line in windowInput
+      wCol = 0;
     }
   }
 }
+//else if (screen.equals("Y=")) {
+//  graphInput.get(row).add(col, buttons[i].name.toLowerCase()+"("); //adds to graphInput
+//}
+//}  else if (buttons[i].name.equals("x^2") || buttons[i].name.equals("x^-1")) {
+//  if (screen.equals("NORM")) { //adds to input
+//    if (col==0) {
+//      inbefore = "Ans";
+//    }
+//    in = buttons[i].name.substring(1);
+//  } else if (screen.equals("Y=")) { //adds to graphInput
+//    graphInput.get(row).add(col, buttons[i].name.substring(1));
+//  }
 
 void specialFunctions(int i) {
+  if (screen.equals("NORM")) {
+    input.get(row).add(col,buttons[i].name.toLowerCase()+"(");
+    col++;
+  } else if (screen.equals("Y=")) {
+    graphInput.get(yRow).add(yCol, buttons[i].name.toLowerCase()+"("); //adds to graphInput
+    yCol++;
+  }else if(screen.equals("WINDOW")){
+    windowInput.get(wRow).add(wCol, buttons[i].name.toLowerCase()+"("); //adds to windowInput
+    wCol++;
+  }
+  cursorX+=textWidth(buttons[i].name+"(");
   in = buttons[i].name.toLowerCase()+"(";
 } 
 
 void specialExponents(int i) {
-  if (col==0) {
-    inbefore = "Ans";
+  if (screen.equals("NORM") ) {
+    if (col==0) {
+      inbefore = "Ans";
+    }
+    input.get(row).add(col, buttons[i].name.substring(1));
+  } else if (screen.equals("Y=") ) {
+    if (yCol==0) {
+      inbefore = "Ans";
+    }
+    graphInput.get(yRow).add(yCol, buttons[i].name.substring(1));
+  } else if (screen.equals("WINDOW")) {
+    if (wCol==0) {
+      inbefore = "Ans";
+    }
+    windowInput.get(wRow).add(wCol, buttons[i].name.substring(1));
   }
   in = buttons[i].name.substring(1);
 }
@@ -287,8 +327,18 @@ void normalButtons(int i) {
   //operators
   if (buttons[i].name.equals("+") || buttons[i].name.equals("-") || buttons[i].name.equals("*")
     || buttons[i].name.equals("/")) {
-    if (col==0) {
-      inbefore = "Ans";
+    if (screen.equals("NORM")) {
+      if (col==0) {
+        inbefore = "Ans";
+      }
+    } else if (screen.equals("Y=")) {
+      if (yCol==0) {
+        inbefore = "Ans";
+      }
+    } else if (screen.equals("WINDOW")) {
+      if (wCol==0) {
+        inbefore = "Ans";
+      }
     }
   }
 
@@ -327,62 +377,62 @@ void normalButtons(int i) {
     //System.out.println(buttons[i].name);
     //System.out.println("graphInput: "+graphInput.toString());
     in = buttons[i].name;
-    if (col<input.get(row).size()) {
-      System.out.println(textWidth(graphInput.get(row).get(col)));
+    if (yCol<graphInput.get(yRow).size()) {
+      System.out.println(textWidth(graphInput.get(yRow).get(yCol)));
     }
-    if (!overWrite || col>=graphInput.get(row).size()) {
+    if (!overWrite || yCol>=graphInput.get(yRow).size()) {
       if (!(inbefore.equals(""))) {
-        graphInput.get(row).add(col, inbefore);
+        graphInput.get(yRow).add(yCol, inbefore);
         cursorX+=textWidth(inbefore);
-        col++;
+        yCol++;
       }
       if (!(in.equals(""))) {
-        graphInput.get(row).add(col, in);
+        graphInput.get(yRow).add(yCol, in);
         cursorX+=textWidth(in);
-        col++;
+        yCol++;
       }
       overWrite=true;
     } else if (overWrite) {
       //if (col<input.size()) {
       if (!(inbefore.equals(""))) {
-        graphInput.get(row).set(col, inbefore);
+        graphInput.get(yRow).set(yCol, inbefore);
         cursorX+=textWidth(inbefore);
-        col++;
+        yCol++;
       }
       if (!(in.equals(""))) {
-        graphInput.get(row).set(col, in);
+        graphInput.get(yRow).set(yCol, in);
         cursorX+=textWidth(in);
-        col++;
+        yCol++;
       }
     }
   } else if (screen.equals("WINDOW")) {
     in = buttons[i].name;
-    if (col<input.get(row).size()) {
-      System.out.println(textWidth(windowInput.get(row).get(col)));
+    if (wCol<windowInput.get(wRow).size()) {
+      System.out.println(textWidth(windowInput.get(wRow).get(wCol)));
     }
-    if (!overWrite || col>=windowInput.get(row).size()) {
+    if (!overWrite || wCol>=windowInput.get(wRow).size()) {
       if (!(inbefore.equals(""))) {
-        windowInput.get(row).add(col, inbefore);
+        windowInput.get(wRow).add(wCol, inbefore);
         cursorX+=textWidth(inbefore);
-        col++;
+        wCol++;
       }
       if (!(in.equals(""))) {
-        windowInput.get(row).add(col, in);
+        windowInput.get(wRow).add(wCol, in);
         cursorX+=textWidth(in);
-        col++;
+        wCol++;
       }
       overWrite=true;
     } else if (overWrite) {
       //if (col<input.size()) {
       if (!(inbefore.equals(""))) {
-        windowInput.get(row).set(col, inbefore);
+        windowInput.get(wRow).set(wCol, inbefore);
         cursorX+=textWidth(inbefore);
-        col++;
+        wCol++;
       }
       if (!(in.equals(""))) {
-        windowInput.get(row).set(col, in);
+        windowInput.get(wRow).set(wCol, in);
         cursorX+=textWidth(in);
-        col++;
+        wCol++;
       }
     }
   }
@@ -397,20 +447,56 @@ void mouseClicked() {
         //startRow++;
       }
       if (buttons[i].name.equals("N")) {
-        row--;
+        if (screen.equals("NORM")) {
+          row--;
+        } else if (screen.equals("Y=")) {
+          yRow--;
+        } else if (screen.equals("WINDOW")) {
+          wRow--;
+        }
         cursorY-=30;
       } else if (buttons[i].name.equals("E")) {
-        if (col<input.get(row).size()) {
-          cursorX+=textWidth(input.get(row).get(col));
-          col++;
+        if (screen.equals("NORM")) {
+          if (col<input.get(row).size()) {
+            cursorX+=textWidth(input.get(row).get(col));
+            col++;
+          }
+        } else if (screen.equals("Y=")) {
+          if (yCol<graphInput.get(yRow).size()) {
+            cursorX+=textWidth(graphInput.get(yRow).get(yCol));
+            yCol++;
+          }
+        } else if (screen.equals("WINDOW")) {
+          if (wCol<windowInput.get(row).size()) {
+            cursorX+=textWidth(windowInput.get(wRow).get(wCol));
+            wCol++;
+          }
         }
       } else if (buttons[i].name.equals("S")) {
-        row++;
+        if (screen.equals("NORM")) {
+          row++;
+        } else if (screen.equals("Y=")) {
+          yRow++;
+        } else if (screen.equals("WINDOW")) {
+          wRow++;
+        }
         cursorY+=30;
       } else if (buttons[i].name.equals("W")) {
-        if (col>0) {
-          col--;
-          cursorX-=textWidth(input.get(row).get(col));
+        if (screen.equals("NORM")) {
+          if (col>0) {
+            col--;
+            cursorX-=textWidth(input.get(row).get(col));
+          }
+        } else if (screen.equals("Y=")) {
+          if (yCol>0) {
+            yCol--;
+            cursorX-=textWidth(graphInput.get(yRow).get(yCol));
+          }
+        } else if (screen.equals("WINDOW")) {
+          if (wCol>0) {
+            wCol--;
+            cursorX-=textWidth(windowInput.get(wRow).get(wCol));
+          }
         }
       } else if (buttons[i].name.equals("WINDOW")) {
         screen = "WINDOW";
@@ -428,22 +514,23 @@ void mouseClicked() {
           screen="Y=";
           cursorX = 70;
           cursorY = 7;
-          col = 0;
-          row = 0;
-          if (combine(input.get(row)).length()>0) {//this might not be necessary
-            input.get(row).clear();
-            col=0;
-          } else {
-            for (int j=0; j<input.size (); j++) {//clears all input (might not be necessary either)
-              input.get(j).clear();
-              row=0;
-            }
-          }
+          yCol = 0;
+          yRow = 0;
         } else if (buttons[i].name.equals("GRAPH")) {//switches screen to Graph when buttons are pressed
           screen="GRAPH";
         } else if (buttons[i].name.equals("DEL")) {
-          if (col<input.get(row).size()) {
-            input.get(row).remove(col);
+          if (screen.equals("NORM")) {
+            if (col<input.get(row).size()) {
+              input.get(row).remove(col);
+            }
+          } else if (screen.equals("Y=")) {
+            if (yCol<graphInput.get(yRow).size()) {
+              graphInput.get(yRow).remove(yCol);
+            }
+          } else if (screen.equals("WINDOW")) {
+            if (wCol<windowInput.get(wRow).size()) {
+              input.get(wRow).remove(wCol);
+            }
           }
         } else {//NORMAL BUTTONS 
           if (buttons[i].name.equals("STO->")) {
@@ -455,6 +542,7 @@ void mouseClicked() {
             }
           } else if (buttons[i].name.equals("LOG") || buttons[i].name.equals("LN") ||
             buttons[i].name.equals("SIN") || buttons[i].name.equals("COS") || buttons[i].name.equals("TAN")) {
+            System.out.println("Log etc clicked");
             specialFunctions(i);
           } else if (buttons[i].name.equals("x^2") || buttons[i].name.equals("x^-1")) {
             specialExponents(i);
@@ -473,39 +561,39 @@ void mouseClicked() {
           overWrite=true;
         } else {//for all other buttons (these are grouped together because they affect the cursor, yes?)
           if (buttons[i].name.equals("(-)")) {
-            if (screen.equals("NORM")) {
-              in = "Ans";
-              //input.get(row).add(col, "Ans");
-            } else if (screen.equals("Y=")) {
-              graphInput.get(row).add(col, "Ans");
-            }
+            //if (screen.equals("NORM")) {
+            in = "Ans";
+            //input.get(row).add(col, "Ans");
+            //            } else if (screen.equals("Y=")) {
+            //              graphInput.get(yRow).add(yCol, "Ans");
+            //            }
           } else if (buttons[i].name.equals("x^2")) {
             if (screen.equals("NORM")) {
               in = "sqrt(";
               //input.get(row).add(col, "sqrt(");
             } else if (screen.equals("Y=")) {
-              graphInput.get(row).add(col, "sqrt(");
+              graphInput.get(yRow).add(yCol, "sqrt(");
             }
           } else if (buttons[i].name.equals("LOG") || buttons[i].name.equals("LN")) {
             if (screen.equals("NORM")) {
               in = buttons[i].sec.substring(0, buttons[i].sec.length()-1);
               //input.get(row).add(col, buttons[i].sec.substring(0, buttons[i].sec.length()-1));
             } else if (screen.equals("Y=")) {
-              graphInput.get(row).add(col, buttons[i].sec.substring(0, buttons[i].sec.length()-1));
+              graphInput.get(yRow).add(yCol, buttons[i].sec.substring(0, buttons[i].sec.length()-1));
             }
           } else if (buttons[i].name.equals("SIN") || buttons[i].name.equals("COS") || buttons[i].name.equals("TAN")) {
             if (screen.equals("NORM")) {
               in = buttons[i].sec.toLowerCase()+"(";
               //input.get(row).add(col, buttons[i].sec.toLowerCase()+"(");
             } else if (screen.equals("Y=")) {
-              graphInput.get(row).add(col, buttons[i].sec.toLowerCase()+"(");
+              graphInput.get(yRow).add(yCol, buttons[i].sec.toLowerCase()+"(");
             }
           } else {
             if (screen.equals("NORM")) {
               in = buttons[i].sec;
               //input.get(row).add(col, buttons[i].sec);
             } else if (screen.equals("Y=")) {
-              graphInput.get(row).add(col, buttons[i].sec);
+              graphInput.get(yRow).add(yCol, buttons[i].sec);
             }
           }
           if (!in.equals("")) {
@@ -525,11 +613,15 @@ void mouseClicked() {
         } else {//all other buttons; just prints out letter/symbol
           if (screen.equals("NORM")) {
             input.get(row).add(col, buttons[i].alph);
+            col++;
           } else if (screen.equals("Y=")) {
-            graphInput.get(row).add(col, buttons[i].alph);
+            graphInput.get(yRow).add(yCol, buttons[i].alph);
+            yCol++;
+          } else if (screen.equals("WINDOW")) {
+            windowInput.get(wRow).add(yCol, buttons[i].alph);
+            wCol++;
           }
           cursorX+=textWidth(buttons[i].alph);
-          col++;
         }
         mode = "NORM"; //reverts mode back to norm after first button is pressed
       }
