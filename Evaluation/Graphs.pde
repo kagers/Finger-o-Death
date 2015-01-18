@@ -28,7 +28,7 @@ class Graphs {
     yScl = (float)evaluateParens(windowInput.get(5));
     pixelXScl = (width-20)/(xMax-xMin); //number of pixels to make each x on the graph increase by 1
     pixelYScl = ((height/2)-55)/(yMax-yMin); //number of pixels to make each y on the graph increase by 1
-    x0 = 10+abs(xMin)*pixelXScl; //xcor of y-axis; where x=0;
+    x0 = 10-xMin*pixelXScl; //xcor of y-axis; where x=0;
     y0 = 10+yMax*pixelYScl; //ycor of x-axis; where y=0;
     gridWidth = width-20;
     gridHeight = (height/2)-55;
@@ -45,12 +45,12 @@ class Graphs {
     yScl = (float)evaluateParens(windowInput.get(5));
     pixelXScl = (width-20)/(xMax-xMin); //number of pixels to make each x on the graph increase by 1
     pixelYScl = ((height/2)-55)/(yMax-yMin); //number of pixels to make each y on the graph increase by 1
-    x0 = 10+abs(xMin)*pixelXScl; //xcor of y-axis; where x=0;
+    x0 = 10-xMin*pixelXScl; //xcor of y-axis; where x=0;
     y0 = 10+yMax*pixelYScl; //ycor of x-axis; where y=0;
     gridWidth = width-20;
     gridHeight = (height/2)-55;
     margin = 10;
-    
+
     grid();
     graph(graphInput);
   }
@@ -87,12 +87,12 @@ class Graphs {
           //System.out.println(Double.parseDouble("1.3357401E-4"));
           for (int i=0; i<functions.get (k).size(); i++) {
             if (functions.get(k).get(i).equals("X")) {//plugs in x value for every "X" in the input
-            //System.out.println("plugged");
+              //System.out.println("plugged");
               plugged.add(""+x);
               System.out.println(plugged);
             } else {
               //System.out.println(functions.get(k).get(i));
-              plugged.add(functions.get(k).get(i)); 
+              plugged.add(functions.get(k).get(i));
             }
           }
           //System.out.println(plugged);
