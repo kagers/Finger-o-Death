@@ -35,7 +35,7 @@ void setup() {
   for (int j=0; j<10; j++) {
     graphInput.add(new ArrayList<String>());
   }
-  for(int k=0; k<6; k++){
+  for (int k=0; k<6; k++) {
     windowInput.add(new ArrayList<String>());
   }
   windowInput.get(0).add("-10");
@@ -150,11 +150,11 @@ void draw() {
     }
   } else if (screen.equals("GRAPH")) {//the graph screen
     g.draw();//draws graph
-  }else if(screen.equals("WINDOW")){
+  } else if (screen.equals("WINDOW")) {
     System.out.println("screen= WINDOW");
     String names = "Xmin=Xmax=Xscl=Ymin=Ymax=Yscl=";
     for (int i=0; i<6; i++) {
-      String n = names.substring(i*5,(i*5)+5);
+      String n = names.substring(i*5, (i*5)+5);
       text(n, 65-textWidth(n), 20+(30*i));
       drawCursor();//not sure if this is necessary here; will test later
       for (int j=0; j<windowInput.size (); j++) {
@@ -209,7 +209,7 @@ void mouseClicked() {
           col--;
           cursorX-=textWidth(input.get(row).get(col));
         }
-      }else if(buttons[i].name.equals("WINDOW")){
+      } else if (buttons[i].name.equals("WINDOW")) {
         screen = "WINDOW";
         cursorX = 70;
       } else if (mode.equals("NORM")) { //what happens what buttons are clicked on the normal calculator screen
@@ -223,6 +223,12 @@ void mouseClicked() {
           } else if (screen.equals("Y=")) {//Clear for Y= screen
             if (combine(graphInput.get(row)).length()>0) {
               graphInput.get(row).clear(); //clears current line only
+              col=0;
+            }
+            cursorX=70;
+          } else if (screen.equals("WINDOW")) {//Clear current line only
+            if (combine(windowInput.get(row)).length()>0) {
+              windowInput.get(row).clear(); //clears current line only
               col=0;
             }
             cursorX=70;
@@ -283,6 +289,11 @@ void mouseClicked() {
             cursorX = 70;
             row+=1;//moves down a line in graphInput
             col = 0;
+          } else if (screen.equals("WINDOW")) {//ENTER for Window screen
+            cursorY+=30;//moves cursor down a line
+            cursorX = 70;
+            row+=1;//moves down a line in windowInput
+            col = 0;
           }
         } else if (buttons[i].name.equals("Y=")) {//initializes Y= screen
           screen="Y=";
@@ -301,9 +312,9 @@ void mouseClicked() {
           }
         } else if (buttons[i].name.equals("GRAPH")) {//switches screen to Graph when buttons are pressed
           screen="GRAPH";
-        } else if (buttons[i].name.equals("DEL")){
-          if (col<input.get(row).size()){
-            input.get(row).remove(col); 
+        } else if (buttons[i].name.equals("DEL")) {
+          if (col<input.get(row).size()) {
+            input.get(row).remove(col);
           }
         } else {//normal buttons 
           if (buttons[i].name.equals("STO->")) {
@@ -319,6 +330,8 @@ void mouseClicked() {
               in = buttons[i].name.toLowerCase()+"(";
             } else if (screen.equals("Y=")) {
               graphInput.get(row).add(col, buttons[i].name.toLowerCase()+"("); //adds to graphInput
+            } else if (screen.equals("WINDOW")) {
+              windowInput.get(row).add(col, buttons[i].name.toLowerCase()+"(");//adds to windowInput
             }
           } else if (buttons[i].name.equals("x^2") || buttons[i].name.equals("x^-1")) {
             if (screen.equals("NORM")) { //adds to input
@@ -328,6 +341,8 @@ void mouseClicked() {
               in = buttons[i].name.substring(1);
             } else if (screen.equals("Y=")) { //adds to graphInput
               graphInput.get(row).add(col, buttons[i].name.substring(1));
+            } else if (screen.equals("WINDOW")) {
+              windowInput.get(row).add(col, buttons[i].name.substring(1));//adds to windowInput
             }
           } else if (buttons[i].name.equals("+") || buttons[i].name.equals("-") || buttons[i].name.equals("*")
             || buttons[i].name.equals("/")) {
@@ -338,6 +353,8 @@ void mouseClicked() {
               in = buttons[i].name;
             } else if (screen.equals("Y=")) {
               graphInput.get(row).add(col, buttons[i].name);
+            } else if (screen.equals("WINDOW")) {
+              windowInput.get(row).add(col, buttons[i].name);//adds to windowInput
             }
           } else { //accounts for all other buttons (digits, operators)
             if (screen.equals("NORM")) { //adds to input
@@ -346,6 +363,8 @@ void mouseClicked() {
               graphInput.get(row).add(col, buttons[i].name);
               //System.out.println(buttons[i].name);
               //System.out.println("graphInput: "+graphInput.toString());
+            } else if (screen.equals("WINDOW")) {
+              windowInput.get(row).add(col, buttons[i].name);//adds to windowInput
             }
           }
           if (col<input.get(row).size()) {
@@ -393,7 +412,7 @@ void mouseClicked() {
               row=0;
             }
           }
-        } else if (buttons[i].name.equals("DEL")){
+        } else if (buttons[i].name.equals("DEL")) {
           overWrite=true;
         } else {//for all other buttons (these are grouped together because they affect the cursor, yes?)
           if (buttons[i].name.equals("(-)")) {
@@ -511,7 +530,7 @@ double evaluateParens(String expression) {
   //}
   for (int i=0; i<alphabet.length; i++) {
     if (!(""+(char)('A'+i)).equals("E")) {
-    expression=expression.replace(""+(char)('A'+i), alphabet[i]);
+      expression=expression.replace(""+(char)('A'+i), alphabet[i]);
     }
   }
   expression=expression.replace("π", ""+PI);
