@@ -25,9 +25,9 @@ void setup() {
   background(255);
   fill(0);
   rect(cursorX, 20, 7.0023, 10);
-  PFont font = loadFont("Courier10PitchBT-Roman-100.vlw");
-  textFont(font, 12);
-  textSize(20);
+  //PFont font = loadFont("FreeMono-48.vlw");
+  //textFont(font, 12);
+  //textSize(20);
   for (int i=0; i<8; i++) {
     input.add(new ArrayList<String>());
   }
