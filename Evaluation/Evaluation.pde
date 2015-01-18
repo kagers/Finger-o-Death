@@ -143,9 +143,10 @@ void draw() {
     g.draw();//draws graph
   }else if(screen.equals("WINDOW")){
     System.out.println("screen= WINDOW");
-    String names = "XminXmaxXsclYminYmaxYscl";
+    String names = "Xmin=Xmax=Xscl=Ymin=Ymax=Yscl=";
     for (int i=0; i<6; i++) {
-      text(names.substring(i*4,(i*4)+4)+"=", 40, 20+(30*i));
+      String n = names.substring(i*5,(i*5)+5);
+      text(n, 65-textWidth(n), 20+(30*i));
       drawCursor();//not sure if this is necessary here; will test later
       for (int j=0; j<windowInput.size (); j++) {
         String joined = combine(windowInput.get(j));
@@ -200,8 +201,8 @@ void mouseClicked() {
           cursorX-=textWidth(input.get(row).get(col));
         }
       }else if(buttons[i].name.equals("WINDOW")){
-        System.out.println("buttons[i].name.equals(WINDOW)");
         screen = "WINDOW";
+        cursorX = 70;
       } else if (mode.equals("NORM")) { //what happens what buttons are clicked on the normal calculator screen
         if (buttons[i].name.equals("2nd")) {//if 2nd clicked sets mode to 2nd
           mode = "2nd";
