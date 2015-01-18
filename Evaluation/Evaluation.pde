@@ -35,6 +35,15 @@ void setup() {
   for (int j=0; j<10; j++) {
     graphInput.add(new ArrayList<String>());
   }
+  for(int k=0; k<6; k++){
+    windowInput.add(new ArrayList<String>());
+  }
+  windowInput.get(0).add("-10");
+  windowInput.get(1).add("10");
+  windowInput.get(2).add("1");
+  windowInput.get(3).add("-10");
+  windowInput.get(4).add("10");
+  windowInput.get(5).add("1");
   for (int i=0; i<alphabet.length; i++) {
     alphabet[i] = "0.0";
   }
