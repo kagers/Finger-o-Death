@@ -157,7 +157,6 @@ void draw() {
   } else if (screen.equals("GRAPH")) {//the graph screen
     g.draw();//draws graph
   } else if (screen.equals("WINDOW")) {
-    System.out.println("screen= WINDOW");
     String names = "Xmin=Xmax=Xscl=Ymin=Ymax=Yscl=";
     for (int i=0; i<6; i++) {
       String n = names.substring(i*5, (i*5)+5);
@@ -169,6 +168,14 @@ void draw() {
           text(joined, 70, 20+30*j);
         }
       }
+    }
+  }else if(screen.equals("ZOOM")){
+    ArrayList<String> names = new ArrayList<String>();
+    names.add("1:ZStandard");
+    names.add("2:ZTrig");
+    for (int i=0; i<2; i++) {
+      text(names.get(i), 70, 20+(30*i));
+      drawCursor();//not sure if this is necessary here; will test later
     }
   }
   for (int i=0; i<buttons.length; i++) {//the buttons are displayed no matter what the screen
@@ -275,18 +282,6 @@ void ENTER() {
     }
   }
 }
-//else if (screen.equals("Y=")) {
-//  graphInput.get(row).add(col, buttons[i].name.toLowerCase()+"("); //adds to graphInput
-//}
-//}  else if (buttons[i].name.equals("x^2") || buttons[i].name.equals("x^-1")) {
-//  if (screen.equals("NORM")) { //adds to input
-//    if (col==0) {
-//      inbefore = "Ans";
-//    }
-//    in = buttons[i].name.substring(1);
-//  } else if (screen.equals("Y=")) { //adds to graphInput
-//    graphInput.get(row).add(col, buttons[i].name.substring(1));
-//  }
 
 void specialFunctions(int i) {
   if (screen.equals("NORM")) {
@@ -501,6 +496,10 @@ void mouseClicked() {
       } else if (buttons[i].name.equals("WINDOW")) {
         screen = "WINDOW";
         cursorX = 70;
+      }else if(buttons[i].name.equals("ZOOM")){
+        screen = "ZOOM";
+        cursorX = 70;
+        cursorY = 7;
       } else if (mode.equals("NORM")) { //what happens what buttons are clicked on the normal calculator screen
         if (buttons[i].name.equals("2nd")) {//if 2nd clicked sets mode to 2nd
           mode = "2nd";
