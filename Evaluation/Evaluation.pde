@@ -15,8 +15,8 @@ String lastEvaluated = "";
 String Ans = "~0";
 String disp = "";
 boolean displayOut = false;
-int cursorX = 11;
-int cursorY = 7;
+float cursorX = 11;
+float cursorY = 7;
 int startRow = 0;
 int endRow = 1;
 String[] functions;
@@ -452,7 +452,7 @@ void ad() {
     //System.out.println("graphInput: "+graphInput.toString());
     //in = buttons[i].name;
     if (yCol<graphInput.get(yRow).size()) {
-      System.out.println(textWidth(graphInput.get(yRow).get(yCol)));
+      //System.out.println(textWidth(graphInput.get(yRow).get(yCol)));
     }
     if (!overWrite || yCol>=graphInput.get(yRow).size()) {
       if (!(inbefore.equals(""))) {
@@ -526,8 +526,16 @@ void mouseClicked() {
         if (!screen.equals("NORM")) {
           if (screen.equals("Y=")) {
             yRow--;
+            cursorX=70+textWidth(combine(graphInput.get(yRow)));
+            //if (graphInput.get(yRow).size()>0){
+            yCol=graphInput.get(yRow).size();
+            //} else {
+            //  yCol=0;
+            //}
           } else if (screen.equals("WINDOW")) {
             wRow--;
+            cursorX=70+textWidth(combine(windowInput.get(wRow)));
+            wCol=windowInput.get(wRow).size();
           } else if (screen.equals("ZOOM")) {
             zRow--;
           }
@@ -552,11 +560,25 @@ void mouseClicked() {
           }
         }
       } else if (buttons[i].name.equals("S")) {
-        if (!screen.equals("NORM")) {
+        /*if (!screen.equals("NORM")) {
           if (screen.equals("Y=")) {
             yRow++;
           } else if (screen.equals("WINDOW")) {
             wRow++;
+          } else if (screen.equals("ZOOM")) {
+            zRow++;
+          }
+          cursorY+=30;
+        }*/
+        if (!screen.equals("NORM")) {
+          if (screen.equals("Y=")) {
+            yRow++;
+            cursorX=70+textWidth(combine(graphInput.get(yRow)));
+            yCol=graphInput.get(yRow).size();
+          } else if (screen.equals("WINDOW")) {
+            wRow++;
+            cursorX=70+textWidth(combine(windowInput.get(wRow)));
+            wCol=windowInput.get(wRow).size();
           } else if (screen.equals("ZOOM")) {
             zRow++;
           }
@@ -582,6 +604,7 @@ void mouseClicked() {
       } else if (buttons[i].name.equals("WINDOW")) {
         screen = "WINDOW";
         cursorX = 70;
+        cursorY = 7;
       } else if (buttons[i].name.equals("ZOOM")) {
         screen = "ZOOM";
         cursorX = 70;
