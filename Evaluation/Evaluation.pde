@@ -33,12 +33,12 @@ void setup() {
   size(500, 700); 
   background(255);
   fill(0);
-  rect(cursorX, 20, 7.0023, 10);
+  rect(cursorX, 20, 5, 10);
   //PFont font = loadFont("FreeMono-48.vlw");
   //textFont(font, 12);
   //textSize(20);
   PFont font = loadFont("Monospaced.bold-48.vlw");
-  textFont(font,12);
+  textFont(font, 12);
   textSize(20);
   for (int i=0; i<8; i++) {
     input.add(new ArrayList<String>());
@@ -68,12 +68,12 @@ void setup() {
   buttons[3] = new Button(3*width/5, height/2-height/2/10, width/5, height/20, "TRACE", "CALC", "F4", 170);
   buttons[4] = new Button(4*width/5, height/2-height/2/10, width/5, height/20, "GRAPH", "TABLE", "F5", 170);
 
-  buttons[5] = new Button(0, height/2+(0*height/2/10), "2nd", "", "");
+  buttons[5] = new Button(0, height/2+(0*height/2/10), "2nd", "", "",0,0,255);
   buttons[6] = new Button(1*width/5, height/2+(0*height/2/10), "MODE", "QUIT", "");
   buttons[7] = new Button(2*width/5, height/2+(0*height/2/10), "DEL", "INS", "");
   buttons[8] = new Button(15*width/20, height/2+(0*height/2/10)+3, width/10, height/20-height/40+1, "N", "", "", 170);
 
-  buttons[9] = new Button(0, height/2+(1*height/2/10), "ALPHA", "A-LOCK", "");
+  buttons[9] = new Button(0, height/2+(1*height/2/10), "ALPHA", "A-LOCK", "",0,255,0);
   buttons[10] = new Button(1*width/5, height/2+(1*height/2/10), "X", "LINK", "");
   buttons[11] = new Button(2*width/5, height/2+(1*height/2/10), "STAT", "LIST", "");
   buttons[12] = new Button(13*width/20, height/2+(0.5*height/2/10)+5, width/10, height/20-height/40+1, "W", "", "", 170);
@@ -197,7 +197,7 @@ void drawCursor() {
     stroke(255);
     fill(255);
   }
-  rect(cursorX, cursorY, 7.0023, 10);//fixed cursor dimensions (if there's a way to conform it to text width maybe that would be better but it doesn't really matter)
+  rect(cursorX, cursorY, 7.25, 10);//fixed cursor dimensions (if there's a way to conform it to text width maybe that would be better but it doesn't really matter)
   stroke(0);
   fill(0);
 }
@@ -218,18 +218,22 @@ void CLEAR() {
     }
     cursorX=70;
   } else { //Clear when screen is normal. Clears everything
-    if (input.get(row).size()>0) { //clears current row only
-      input.get(row).clear();
-      col=0;
-    } else {
+    System.out.println(input);
+    System.out.println(input.get(row));
+    if (input.get(row).size()==0) {
       //for (int j=0; j<input.size (); j++) {//Clears everything
+      System.out.println("K");
       startRow=row;
       endRow=row+1;
+      cursorY=7;//sets cursor back to the top
       //row=0;
       //}
+    } else { //clears current row only
+      System.out.println("J");
+      input.get(row).clear();
+      col=0;
     }
     cursorX=11;//sets cursor back to the margin
-    cursorY=7;//sets cursor back to the top
   }
 }
 
@@ -256,19 +260,19 @@ void ENTER() {
       switch (exps.length) {
       case 1:
         evaluateParens(exps[0]);
-        if(error){
+        if (error) {
           Ans = "~ERROR";
           error = false;
-        }else{
+        } else {
           Ans = "~"+evaluateParens(exps[0]);
         }
         input.get(row).add(Ans);
         break;
       case 2:
         evaluateParens(exps[0]);
-        if(error){
+        if (error) {
           Ans = "~ERROR";
-        }else{
+        } else {
           Ans = "~"+evaluateParens(exps[0]);
         }
         alphabet[exps[1].charAt(0)-'A']=Ans.substring(1);
@@ -297,8 +301,8 @@ void ENTER() {
       wRow+=1;//moves down a line in windowInput
       wCol = 0;
     } else if (screen.equals("ZOOM")) {
-      for(int i=0; i<6; i++){
-       windowInput.get(i).clear(); 
+      for (int i=0; i<6; i++) {
+        windowInput.get(i).clear();
       }
       if (zRow==0) {//ZStandard
         windowInput.get(0).add("-10");//Xmin
@@ -340,19 +344,34 @@ void specialFunctions(int i) {
 void specialExponents(int i) {
   if (screen.equals("NORM") ) {
     if (col==0) {
-      inbefore = "Ans";
+      //inbefore = "Ans";
+      input.get(row).add(col, "Ans");
+      col++;
+      cursorX+=textWidth("Ans");
     }
     input.get(row).add(col, buttons[i].name.substring(1));
+    col++;
+    cursorX+=textWidth(buttons[i].name.substring(1));
   } else if (screen.equals("Y=") ) {
     if (yCol==0) {
-      inbefore = "Ans";
+      //inbefore = "Ans";
+      graphInput.get(yRow).add(yCol, "Ans");
+      yCol++;
+      cursorX+=textWidth("Ans");
     }
     graphInput.get(yRow).add(yCol, buttons[i].name.substring(1));
+    yCol++;
+    cursorX+=textWidth(buttons[i].name.substring(1));
   } else if (screen.equals("WINDOW")) {
     if (wCol==0) {
-      inbefore = "Ans";
+      //inbefore = "Ans";
+      windowInput.get(wRow).add(wCol, "Ans");
+      wCol++;
+      cursorX+=textWidth("Ans");
     }
     windowInput.get(wRow).add(wCol, buttons[i].name.substring(1));
+    wCol++;
+    cursorX+=textWidth(buttons[i].name.substring(1));
   }
   in = buttons[i].name.substring(1);
 }
@@ -480,21 +499,22 @@ void mouseClicked() {
         //startRow++;
       }
       if (buttons[i].name.equals("N")) {
-        if (screen.equals("NORM")) {
-          row--;
-        } else if (screen.equals("Y=")) {
-          yRow--;
-        } else if (screen.equals("WINDOW")) {
-          wRow--;
-        } else if (screen.equals("ZOOM")) {
-          zRow--;
+        if (!screen.equals("NORM")) {
+          if (screen.equals("Y=")) {
+            yRow--;
+          } else if (screen.equals("WINDOW")) {
+            wRow--;
+          } else if (screen.equals("ZOOM")) {
+            zRow--;
+          }
+          cursorY-=30;
         }
-        cursorY-=30;
       } else if (buttons[i].name.equals("E")) {
         if (screen.equals("NORM")) {
           if (col<input.get(row).size()) {
-            cursorX+=textWidth(input.get(row).get(col));
+            //cursorX+=textWidth(input.get(row).get(col));
             col++;
+            cursorX+=7.25;
           }
         } else if (screen.equals("Y=")) {
           if (yCol<graphInput.get(yRow).size()) {
@@ -508,16 +528,16 @@ void mouseClicked() {
           }
         }
       } else if (buttons[i].name.equals("S")) {
-        if (screen.equals("NORM")) {
-          row++;
-        } else if (screen.equals("Y=")) {
-          yRow++;
-        } else if (screen.equals("WINDOW")) {
-          wRow++;
-        } else if (screen.equals("ZOOM")) {
-          zRow++;
+        if (!screen.equals("NORM")) {
+          if (screen.equals("Y=")) {
+            yRow++;
+          } else if (screen.equals("WINDOW")) {
+            wRow++;
+          } else if (screen.equals("ZOOM")) {
+            zRow++;
+          }
+          cursorY+=30;
         }
-        cursorY+=30;
       } else if (buttons[i].name.equals("W")) {
         if (screen.equals("NORM")) {
           if (col>0) {
@@ -744,16 +764,18 @@ double evaluateParens(String expression) {
   } else { //rounds to 10 decimal points
     System.out.println(expression);
     try {
+      //System.out.println("H");
       java.math.BigDecimal bd = new java.math.BigDecimal(Double.parseDouble(expression));
-      bd = bd.setScale(10, java.math.BigDecimal.ROUND_HALF_UP);
+      bd = bd.setScale(9, java.math.BigDecimal.ROUND_HALF_UP);
       return(bd.doubleValue());
     } 
     catch (NumberFormatException e) {
-      try{
-      return Double.parseDouble(expression);
-      }catch(NumberFormatException f){
-       error = true;
-       return 0; 
+      try {
+        return Double.parseDouble(expression);
+      }
+      catch(NumberFormatException f) {
+        error = true;
+        return 0;
       }
     }
   }  
@@ -807,10 +829,11 @@ String evaluateParensHelper(String expression) {//separates into parentheses not
       return evaluateParensHelper(expression.substring(0, start)+evaluateParensHelper(expression.substring(start+1, i))+expression.substring(i+1));
     }
   }
-  try{
-  return evaluateMath(expression)+"";
-  }catch(NumberFormatException e){
-   return "ERROR"; 
+  try {
+    return evaluateMath(expression)+"";
+  }
+  catch(NumberFormatException e) {
+    return "ERROR";
   }
 }
 //recursive expression evaluation
@@ -823,7 +846,7 @@ double evaluateMath(String expression) {//does simple arithmatic
     }
   }
   expression=expression.replace("/", "*1/");
-    return Double.parseDouble(evaluateHelper(expression, 0));
+  return Double.parseDouble(evaluateHelper(expression, 0));
 }
 //helper
 String evaluateHelper(String expression, int delimiter) {
@@ -843,9 +866,10 @@ String evaluateHelper(String expression, int delimiter) {
       k++;
     }
     if (k<oper.length) {
-      try{
+      try {
         out = Double.parseDouble(oper[k]);
-      }catch(NumberFormatException e){
+      }
+      catch(NumberFormatException e) {
         return "ERROR";
       }
       for (int i=k; i<oper.length-1; i++) {
@@ -883,3 +907,4 @@ String combine(ArrayList<String> in) {
   }
   return joined;
 }
+
