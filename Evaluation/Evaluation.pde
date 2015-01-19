@@ -68,12 +68,12 @@ void setup() {
   buttons[3] = new Button(3*width/5, height/2-height/2/10, width/5, height/20, "TRACE", "CALC", "F4", 170);
   buttons[4] = new Button(4*width/5, height/2-height/2/10, width/5, height/20, "GRAPH", "TABLE", "F5", 170);
 
-  buttons[5] = new Button(0, height/2+(0*height/2/10), "2nd", "", "",0,0,255,0);
+  buttons[5] = new Button(0, height/2+(0*height/2/10), "2nd", "", "", 0, 0, 255, 0);
   buttons[6] = new Button(1*width/5, height/2+(0*height/2/10), "MODE", "QUIT", "");
   buttons[7] = new Button(2*width/5, height/2+(0*height/2/10), "DEL", "INS", "");
   buttons[8] = new Button(15*width/20, height/2+(0*height/2/10)+3, width/10, height/20-height/40+1, "N", "", "", 170);
 
-  buttons[9] = new Button(0, height/2+(1*height/2/10), "ALPHA", "A-LOCK", "",0,255,0,0);
+  buttons[9] = new Button(0, height/2+(1*height/2/10), "ALPHA", "A-LOCK", "", 0, 255, 0, 0);
   buttons[10] = new Button(1*width/5, height/2+(1*height/2/10), "X", "LINK", "");
   buttons[11] = new Button(2*width/5, height/2+(1*height/2/10), "STAT", "LIST", "");
   buttons[12] = new Button(13*width/20, height/2+(0.5*height/2/10)+5, width/10, height/20-height/40+1, "W", "", "", 170);
@@ -135,6 +135,21 @@ void draw() {
   fill(0);
   textAlign(LEFT, BOTTOM);
   background(255);
+  if (mode.equals("2nd")) {
+    buttons[5].colText = 255;
+    buttons[9].colText = 0;
+  } else if (mode.equals("ALPHA")) {
+    buttons[5].colText = 0;
+    buttons[9].colText = 255;
+  } else {
+    buttons[5].colText = 0;
+    buttons[9].colText = 0;
+  }
+  if (overWrite) {
+    buttons[7].greySecond = false;
+  } else {
+    buttons[7].greySecond = true;
+  }  
   for (int i=0; i<input.get (row).size(); i++) {
     System.out.print("\t"+textWidth(input.get(row).get(i)));
   }
@@ -197,7 +212,7 @@ void drawCursor() {
     stroke(255);
     fill(255);
   }
-  rect(cursorX, cursorY, 7.25, 10);//fixed cursor dimensions (if there's a way to conform it to text width maybe that would be better but it doesn't really matter)
+  rect(cursorX, cursorY, 7, 10);//fixed cursor dimensions (if there's a way to conform it to text width maybe that would be better but it doesn't really matter)
   stroke(0);
   fill(0);
 }
@@ -328,52 +343,54 @@ void ENTER() {
 
 void specialFunctions(int i) {
   if (screen.equals("NORM")) {
-    input.get(row).add(col, buttons[i].name.toLowerCase()+"(");
-    col++;
+    //input.get(row).add(col, buttons[i].name.toLowerCase()+"(");
+    //col++;
   } else if (screen.equals("Y=")) {
-    graphInput.get(yRow).add(yCol, buttons[i].name.toLowerCase()+"("); //adds to graphInput
-    yCol++;
+    //graphInput.get(yRow).add(yCol, buttons[i].name.toLowerCase()+"("); //adds to graphInput
+    //yCol++;
   } else if (screen.equals("WINDOW")) {
-    windowInput.get(wRow).add(wCol, buttons[i].name.toLowerCase()+"("); //adds to windowInput
-    wCol++;
+    //windowInput.get(wRow).add(wCol, buttons[i].name.toLowerCase()+"("); //adds to windowInput
+    //wCol++;
   }
-  cursorX+=textWidth(buttons[i].name+"(");
+  //cursorX+=textWidth(buttons[i].name+"(");
   in = buttons[i].name.toLowerCase()+"(";
+  ad();
 } 
 
 void specialExponents(int i) {
   if (screen.equals("NORM") ) {
     if (col==0) {
-      //inbefore = "Ans";
-      input.get(row).add(col, "Ans");
-      col++;
-      cursorX+=textWidth("Ans");
+      inbefore = "Ans";
+      //input.get(row).add(col, "Ans");
+      //col++;
+      //cursorX+=textWidth("Ans");
     }
-    input.get(row).add(col, buttons[i].name.substring(1));
-    col++;
-    cursorX+=textWidth(buttons[i].name.substring(1));
+    //input.get(row).add(col, buttons[i].name.substring(1));
+    //col++;
+    //cursorX+=textWidth(buttons[i].name.substring(1));
   } else if (screen.equals("Y=") ) {
     if (yCol==0) {
-      //inbefore = "Ans";
-      graphInput.get(yRow).add(yCol, "Ans");
-      yCol++;
-      cursorX+=textWidth("Ans");
+      inbefore = "Ans";
+      //graphInput.get(yRow).add(yCol, "Ans");
+      //yCol++;
+      //cursorX+=textWidth("Ans");
     }
-    graphInput.get(yRow).add(yCol, buttons[i].name.substring(1));
-    yCol++;
-    cursorX+=textWidth(buttons[i].name.substring(1));
+    //graphInput.get(yRow).add(yCol, buttons[i].name.substring(1));
+    //yCol++;
+    //cursorX+=textWidth(buttons[i].name.substring(1));
   } else if (screen.equals("WINDOW")) {
     if (wCol==0) {
-      //inbefore = "Ans";
-      windowInput.get(wRow).add(wCol, "Ans");
-      wCol++;
-      cursorX+=textWidth("Ans");
+      inbefore = "Ans";
+      //windowInput.get(wRow).add(wCol, "Ans");
+      //wCol++;
+      //cursorX+=textWidth("Ans");
     }
-    windowInput.get(wRow).add(wCol, buttons[i].name.substring(1));
-    wCol++;
-    cursorX+=textWidth(buttons[i].name.substring(1));
+    //windowInput.get(wRow).add(wCol, buttons[i].name.substring(1));
+    //wCol++;
+    //cursorX+=textWidth(buttons[i].name.substring(1));
   }
   in = buttons[i].name.substring(1);
+  ad();
 }
 
 void normalButtons(int i) {
@@ -395,6 +412,10 @@ void normalButtons(int i) {
     }
   }
   in = buttons[i].name;
+  ad();
+}
+
+void ad() {
   if (screen.equals("NORM")) { //adds to input
     if (col<input.get(row).size()) {
       System.out.println(textWidth(input.get(row).get(col)));
@@ -427,7 +448,7 @@ void normalButtons(int i) {
   } else if (screen.equals("Y=")) { //adds to graphInput
     //System.out.println(buttons[i].name);
     //System.out.println("graphInput: "+graphInput.toString());
-    in = buttons[i].name;
+    //in = buttons[i].name;
     if (yCol<graphInput.get(yRow).size()) {
       System.out.println(textWidth(graphInput.get(yRow).get(yCol)));
     }
@@ -457,7 +478,7 @@ void normalButtons(int i) {
       }
     }
   } else if (screen.equals("WINDOW")) {
-    in = buttons[i].name;
+    //in = buttons[i].name;
     if (wCol<windowInput.get(wRow).size()) {
       System.out.println(textWidth(windowInput.get(wRow).get(wCol)));
     }
@@ -487,6 +508,8 @@ void normalButtons(int i) {
       }
     }
   }
+  in = "";
+  inbefore = "";
 }
 
 void mouseClicked() {
@@ -513,7 +536,7 @@ void mouseClicked() {
           if (col<input.get(row).size()) {
             //cursorX+=textWidth(input.get(row).get(col));
             col++;
-            cursorX+=7.25;
+            cursorX+=textWidth(input.get(row).get(col));
           }
         } else if (screen.equals("Y=")) {
           if (yCol<graphInput.get(yRow).size()) {
@@ -600,10 +623,11 @@ void mouseClicked() {
           if (buttons[i].name.equals("STO->")) {
             if (screen.equals("NORM")) {
               if (col==0) {
-                //inbefore = "Ans";
-                input.get(row);
+                inbefore = "Ans";
+                //input.get(row);
               }
               in = buttons[i].name.substring(3);
+              ad();
             }
           } else if (buttons[i].name.equals("LOG") || buttons[i].name.equals("LN") ||
             buttons[i].name.equals("SIN") || buttons[i].name.equals("COS") || buttons[i].name.equals("TAN")) {
@@ -623,7 +647,7 @@ void mouseClicked() {
         } else if (buttons[i].name.equals("CLEAR")) { //Clear works the same as in normal mode (even in the Y= and Graph screens currently, which is a problem. I will fix this)
           CLEAR();
         } else if (buttons[i].name.equals("DEL")) {
-          overWrite=true;
+          overWrite=false;
         } else {//for all other buttons (these are grouped together because they affect the cursor, yes?)
           if (buttons[i].name.equals("(-)")) {
             //if (screen.equals("NORM")) {
@@ -661,13 +685,16 @@ void mouseClicked() {
               graphInput.get(yRow).add(yCol, buttons[i].sec);
             }
           }
-          if (!in.equals("")) {
-            input.get(row).add(col, in);
-            cursorX+=textWidth(in);
-            col++;
-          }
+          /*if (!in.equals("")) {
+           input.get(row).add(col, in);
+           cursorX+=textWidth(in);
+           col++;
+           }*/
+          ad();
         }
-        mode = "NORM"; //reverts mode back to norm after first button is pressed
+        if (mode.equals("2nd")) {
+          mode = "NORM"; //reverts mode back to norm after first button is pressed
+        }
       } else if (mode.equals("ALPHA")) { //buttons in alpha mode
         if (buttons[i].name.equals("2nd")) {//works the same as in normal mode
           mode = "2nd";

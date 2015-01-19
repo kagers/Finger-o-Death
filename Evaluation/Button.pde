@@ -2,9 +2,9 @@ class Button {
   float xcor, ycor, xSpan, ySpan; 
   String name, sec, alph;
   int col, colA, colB, colText;
-  boolean grey;
+  boolean grey, greySecond;
 
-  Button(float x, float y, float xS, float yS, String n, String s, String a, int c, int cA, int cB, int cT, boolean g) {
+  Button(float x, float y, float xS, float yS, String n, String s, String a, int c, int cA, int cB, int cT, boolean g, boolean gS) {
     xcor = x;
     ycor = y;
     xSpan = xS;
@@ -17,18 +17,23 @@ class Button {
     colB = cB;
     colText = cT;
     grey = g;
+    greySecond = gS;
   }
 
   Button(float x, float y, float xS, float yS, String n, String s, String a, int c) {
-    this(x, y, xS, yS, n, s, a, c, 0, 0, 0, true);
+    this(x, y, xS, yS, n, s, a, c, 0, 0, 0, true, false);
   }
 
+  //Button(float x, float y, float xS, float yS, String n, String s, String a, int c, boolean gS) {
+  //  this(x, y, xS, yS, n, s, a, c, 0, 0, 0, true, gS);
+  //}
+
   Button(float x, float y, String n, String s, String a) {
-    this(x, y, width/5, height/20, n, s, a, 125, 0, 0, 0, true);
+    this(x, y, width/5, height/20, n, s, a, 125, 0, 0, 0, true, false);
   }
 
   Button(float x, float y, String n, String s, String a, int c, int cA, int cB, int cT) {
-    this(x, y, width/5, height/20, n, s, a, c, cA, cB, cT, false);
+    this(x, y, width/5, height/20, n, s, a, c, cA, cB, cT, false, false);
   }
 
   void draw() {
@@ -43,7 +48,11 @@ class Button {
     fill(colText);
     textSize(12);
     text(name, xcor+(xSpan/2), ycor+(ySpan/2));
-    fill(0, 0, 255);
+    if (greySecond) {
+      fill(255);
+    } else {
+      fill(0, 0, 255);
+    }
     textSize(8);
     textAlign(LEFT, CENTER);
     text(sec, xcor+xSpan/8, ycor+(ySpan/4));
@@ -53,7 +62,6 @@ class Button {
     textSize(12);
     textAlign(LEFT, BOTTOM);
   }
-
 
   boolean isClicked() {
     return (mouseX>xcor && mouseX<xcor+xSpan && mouseY>ycor && mouseY<ycor+ySpan);
