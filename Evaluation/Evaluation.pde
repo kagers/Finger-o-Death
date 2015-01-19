@@ -27,6 +27,7 @@ String[] alphabet = new String[26];
 boolean overWrite=true;
 String inbefore = "";
 String in = "";
+boolean error = false;
 
 void setup() {
   size(500, 700); 
@@ -36,6 +37,9 @@ void setup() {
   //PFont font = loadFont("FreeMono-48.vlw");
   //textFont(font, 12);
   //textSize(20);
+//  PFont font = loadFont("MonotypeSorts-48.vlw");
+//  textFont(font,12);
+//  textSize(20);
   for (int i=0; i<8; i++) {
     input.add(new ArrayList<String>());
   }
@@ -734,7 +738,12 @@ double evaluateParens(String expression) {
       return(bd.doubleValue());
     } 
     catch (NumberFormatException e) {
+      try{
       return Double.parseDouble(expression);
+      }catch(NumberFormatException f){
+       //do something to display the error
+       return 0; 
+      }
     }
   }  
   /*while (expression.charAt (0)=='(' && expression.charAt(expression.length()-1)==')') {
@@ -787,7 +796,11 @@ String evaluateParensHelper(String expression) {//separates into parentheses not
       return evaluateParensHelper(expression.substring(0, start)+evaluateParensHelper(expression.substring(start+1, i))+expression.substring(i+1));
     }
   }
+  try{
   return evaluateMath(expression)+"";
+  }catch(NumberFormatException e){
+   return "ERROR"; 
+  }
 }
 //recursive expression evaluation
 double evaluateMath(String expression) {//does simple arithmatic
@@ -799,7 +812,7 @@ double evaluateMath(String expression) {//does simple arithmatic
     }
   }
   expression=expression.replace("/", "*1/");
-  return Double.parseDouble(evaluateHelper(expression, 0));
+    return Double.parseDouble(evaluateHelper(expression, 0));
 }
 //helper
 String evaluateHelper(String expression, int delimiter) {
@@ -819,7 +832,11 @@ String evaluateHelper(String expression, int delimiter) {
       k++;
     }
     if (k<oper.length) {
-      out = Double.parseDouble(oper[k]);
+      try{
+        out = Double.parseDouble(oper[k]);
+      }catch(NumberFormatException e){
+        return "ERROR";
+      }
       for (int i=k; i<oper.length-1; i++) {
         if (oper[k].length()>0) {
           switch (delimiter) {
