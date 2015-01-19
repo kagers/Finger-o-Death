@@ -33,6 +33,7 @@ void setup() {
   size(500, 700); 
   background(255);
   fill(0);
+  rect(0, width, height/2, height);
   rect(cursorX, 20, 5, 10);
   //PFont font = loadFont("FreeMono-48.vlw");
   //textFont(font, 12);
@@ -135,6 +136,7 @@ void draw() {
   fill(0);
   textAlign(LEFT, BOTTOM);
   background(255);
+  rect(0, height/2-40, width, height);
   if (mode.equals("2nd")) {
     buttons[5].colText = 255;
     buttons[9].colText = 0;
@@ -218,7 +220,7 @@ void drawCursor() {
 }
 
 void CLEAR() {
-  if (screen.equals("GRAPH")) {//Clear brings screen back from Graph to Norm
+  if (screen.equals("GRAPH") || screen.equals("ZOOM")) {//Clear brings screen back from Graph to Norm
     screen="NORM";
   } else if (screen.equals("Y=")) {//Clear for Y= screen
     if (combine(graphInput.get(yRow)).length()>0) {
@@ -648,18 +650,14 @@ void mouseClicked() {
           CLEAR();
         } else if (buttons[i].name.equals("DEL")) {
           overWrite=false;
+        } else if (buttons[i].name.equals("MODE")) {
+          screen = "NORM";
         } else {//for all other buttons (these are grouped together because they affect the cursor, yes?)
           if (buttons[i].name.equals("(-)")) {
-            //if (screen.equals("NORM")) {
             in = "Ans";
-            //input.get(row).add(col, "Ans");
-            //            } else if (screen.equals("Y=")) {
-            //              graphInput.get(yRow).add(yCol, "Ans");
-            //            }
           } else if (buttons[i].name.equals("x^2")) {
             if (screen.equals("NORM")) {
               in = "sqrt(";
-              //input.get(row).add(col, "sqrt(");
             } else if (screen.equals("Y=")) {
               graphInput.get(yRow).add(yCol, "sqrt(");
             }
