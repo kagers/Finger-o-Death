@@ -652,36 +652,37 @@ void mouseClicked() {
           overWrite=false;
         } else if (buttons[i].name.equals("MODE")) {
           screen = "NORM";
+          CLEAR();
         } else {//for all other buttons (these are grouped together because they affect the cursor, yes?)
           if (buttons[i].name.equals("(-)")) {
             in = "Ans";
           } else if (buttons[i].name.equals("x^2")) {
-            if (screen.equals("NORM")) {
+            //if (screen.equals("NORM")) {
               in = "sqrt(";
-            } else if (screen.equals("Y=")) {
-              graphInput.get(yRow).add(yCol, "sqrt(");
-            }
+            //} else if (screen.equals("Y=")) {
+            //  graphInput.get(yRow).add(yCol, "sqrt(");
+            //}
           } else if (buttons[i].name.equals("LOG") || buttons[i].name.equals("LN")) {
-            if (screen.equals("NORM")) {
+            //if (screen.equals("NORM")) {
               in = buttons[i].sec.substring(0, buttons[i].sec.length()-1);
               //input.get(row).add(col, buttons[i].sec.substring(0, buttons[i].sec.length()-1));
-            } else if (screen.equals("Y=")) {
-              graphInput.get(yRow).add(yCol, buttons[i].sec.substring(0, buttons[i].sec.length()-1));
-            }
+            //} else if (screen.equals("Y=")) {
+              //graphInput.get(yRow).add(yCol, buttons[i].sec.substring(0, buttons[i].sec.length()-1));
+            //}
           } else if (buttons[i].name.equals("SIN") || buttons[i].name.equals("COS") || buttons[i].name.equals("TAN")) {
-            if (screen.equals("NORM")) {
+            //if (screen.equals("NORM")) {
               in = buttons[i].sec.toLowerCase()+"(";
               //input.get(row).add(col, buttons[i].sec.toLowerCase()+"(");
-            } else if (screen.equals("Y=")) {
-              graphInput.get(yRow).add(yCol, buttons[i].sec.toLowerCase()+"(");
-            }
+            //} else if (screen.equals("Y=")) {
+              //graphInput.get(yRow).add(yCol, buttons[i].sec.toLowerCase()+"(");
+            //}
           } else {
-            if (screen.equals("NORM")) {
+            //if (screen.equals("NORM")) {
               in = buttons[i].sec;
               //input.get(row).add(col, buttons[i].sec);
-            } else if (screen.equals("Y=")) {
-              graphInput.get(yRow).add(yCol, buttons[i].sec);
-            }
+            //} else if (screen.equals("Y=")) {
+              //graphInput.get(yRow).add(yCol, buttons[i].sec);
+            //}
           }
           /*if (!in.equals("")) {
            input.get(row).add(col, in);
