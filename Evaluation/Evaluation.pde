@@ -254,11 +254,22 @@ void ENTER() {
       String[] exps = lastEvaluated.split("->");
       switch (exps.length) {
       case 1:
-        Ans = "~"+evaluateParens(exps[0]);
+        evaluateParens(exps[0]);
+        if(error){
+          Ans = "~ERROR";
+          error = false;
+        }else{
+          Ans = "~"+evaluateParens(exps[0]);
+        }
         input.get(row).add(Ans);
         break;
       case 2:
-        Ans = "~"+evaluateParens(exps[0]);
+        evaluateParens(exps[0]);
+        if(error){
+          Ans = "~ERROR";
+        }else{
+          Ans = "~"+evaluateParens(exps[0]);
+        }
         alphabet[exps[1].charAt(0)-'A']=Ans.substring(1);
         input.get(row).add(Ans);
         break;
@@ -741,7 +752,7 @@ double evaluateParens(String expression) {
       try{
       return Double.parseDouble(expression);
       }catch(NumberFormatException f){
-       //do something to display the error
+       error = true;
        return 0; 
       }
     }
