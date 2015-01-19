@@ -37,9 +37,9 @@ void setup() {
   //PFont font = loadFont("FreeMono-48.vlw");
   //textFont(font, 12);
   //textSize(20);
-//  PFont font = loadFont("MonotypeSorts-48.vlw");
-//  textFont(font,12);
-//  textSize(20);
+  PFont font = loadFont("Monospaced.bold-48.vlw");
+  textFont(font,12);
+  textSize(20);
   for (int i=0; i<8; i++) {
     input.add(new ArrayList<String>());
   }
@@ -138,6 +138,7 @@ void draw() {
   for (int i=0; i<input.get (row).size(); i++) {
     System.out.print("\t"+textWidth(input.get(row).get(i)));
   }
+  textSize(12);
   if (screen.equals("NORM")) {//normal display screen
     drawCursor();
     for (int i=startRow; i<=endRow; i++) {
@@ -374,7 +375,6 @@ void normalButtons(int i) {
       }
     }
   }
-
   in = buttons[i].name;
 
   if (screen.equals("NORM")) { //adds to input
