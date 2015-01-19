@@ -68,12 +68,12 @@ void setup() {
   buttons[3] = new Button(3*width/5, height/2-height/2/10, width/5, height/20, "TRACE", "CALC", "F4", 170);
   buttons[4] = new Button(4*width/5, height/2-height/2/10, width/5, height/20, "GRAPH", "TABLE", "F5", 170);
 
-  buttons[5] = new Button(0, height/2+(0*height/2/10), "2nd", "", "",0,0,255);
+  buttons[5] = new Button(0, height/2+(0*height/2/10), "2nd", "", "",0,0,255,0);
   buttons[6] = new Button(1*width/5, height/2+(0*height/2/10), "MODE", "QUIT", "");
   buttons[7] = new Button(2*width/5, height/2+(0*height/2/10), "DEL", "INS", "");
   buttons[8] = new Button(15*width/20, height/2+(0*height/2/10)+3, width/10, height/20-height/40+1, "N", "", "", 170);
 
-  buttons[9] = new Button(0, height/2+(1*height/2/10), "ALPHA", "A-LOCK", "",0,255,0);
+  buttons[9] = new Button(0, height/2+(1*height/2/10), "ALPHA", "A-LOCK", "",0,255,0,0);
   buttons[10] = new Button(1*width/5, height/2+(1*height/2/10), "X", "LINK", "");
   buttons[11] = new Button(2*width/5, height/2+(1*height/2/10), "STAT", "LIST", "");
   buttons[12] = new Button(13*width/20, height/2+(0.5*height/2/10)+5, width/10, height/20-height/40+1, "W", "", "", 170);
@@ -395,7 +395,6 @@ void normalButtons(int i) {
     }
   }
   in = buttons[i].name;
-
   if (screen.equals("NORM")) { //adds to input
     if (col<input.get(row).size()) {
       System.out.println(textWidth(input.get(row).get(col)));
@@ -601,7 +600,8 @@ void mouseClicked() {
           if (buttons[i].name.equals("STO->")) {
             if (screen.equals("NORM")) {
               if (col==0) {
-                inbefore = "Ans";
+                //inbefore = "Ans";
+                input.get(row);
               }
               in = buttons[i].name.substring(3);
             }
