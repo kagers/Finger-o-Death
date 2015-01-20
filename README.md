@@ -60,7 +60,9 @@ K began fixing of cursor movement.
 M made graph into a class.
 
 **2015-01-18:**<br>
-M
+M made working Window and Zoom screens.
+M started on error handling.
 
 **2015-01-19:**<br>
 K worked on visuals and continued improving cursor movement
+M worked on error handling/ made the error handling have less errors
