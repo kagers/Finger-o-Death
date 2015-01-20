@@ -39,9 +39,9 @@ void setup() {
   //PFont font = loadFont("FreeMono-48.vlw");
   //textFont(font, 12);
   //textSize(20);
-  PFont font = loadFont("Monospaced.bold-48.vlw");
-  textFont(font, 12);
-  textSize(20);
+  //PFont font = loadFont("Monospaced.bold-48.vlw");
+  //textFont(font, 12);
+  //textSize(20);
   for (int i=0; i<8; i++) {
     input.add(new ArrayList<String>());
   }
@@ -792,6 +792,11 @@ String evaluateFunctions(String fxn, String expression) {//Math with functions l
 }
 //recursively separates expression into parentheses
 double evaluateParens(String expression) {
+  for(int el=0; el<expression.length(); el++){
+    if(el!=0 && expression.substring(el,el+1).equals("(") && expression.substring(el-1,el).matches("[0-9]+")){
+      expression=expression.substring(0,el)+"*"+expression.substring(el);
+    }
+  }
   expression=expression.replace(")(", ")*(");
   //if (expression.indexOf("Ans")!=-1) {
   expression=expression.replace("Ans", Ans.substring(1));
@@ -967,4 +972,3 @@ String combine(ArrayList<String> in) {
   }
   return joined;
 }
-
