@@ -57,11 +57,11 @@ class Graphs {
 
   void grid() {
     for (float xcor=margin; xcor<=margin+gridWidth; xcor+=pixelXScl*xScl) {//vertical lines
-      stroke(225);
+      stroke(180);
       line(xcor, margin, xcor, gridHeight+margin);
     }
     for (float ycor=margin; ycor<=gridHeight+margin; ycor+=pixelYScl*yScl) {//horizontal lines
-      stroke(225);
+      stroke(180);
       line(margin, ycor, margin+gridWidth, ycor);
     }
     stroke(0);

@@ -31,7 +31,8 @@ boolean error = false;
 
 void setup() {
   size(500, 700); 
-  background(255);
+  background(196, 224, 190);
+  frame.setTitle("FINGER O' DEATH 83++");
   fill(0);
   rect(0, width, height/2, height);
   rect(cursorX, 20, 5, 10);
@@ -133,9 +134,10 @@ void draw() {
   /*for (int i=0; i<alphabet.length; i++){
    System.out.println(alphabet[i]); 
    }*/
+  System.out.println(screen);
   fill(0);
   textAlign(LEFT, BOTTOM);
-  background(255);
+  background(196, 224, 190);
   rect(0, height/2-40, width, height);
   if (mode.equals("2nd")) {
     buttons[5].colText = 255;
@@ -211,8 +213,8 @@ void drawCursor() {
     stroke(0);
     fill(0);
   } else {
-    stroke(255);
-    fill(255);
+    stroke(196, 224, 190);
+    fill(196, 224, 190);
   }
   rect(cursorX, cursorY, 7, 10);//fixed cursor dimensions (if there's a way to conform it to text width maybe that would be better but it doesn't really matter)
   stroke(0);
@@ -286,15 +288,20 @@ void ENTER() {
         input.get(row).add(Ans);
         break;
       case 2:
-        evaluateParens(exps[0]);
-        if (error) {
+        if (exps[1].length()!=1 || exps[1].charAt(0)=='E' || (exps[1].charAt(0)<'A' || exps[1].charAt(0)>'Z')) {
+          error = true;
           Ans = "~ERROR";
         } else {
-          Ans = "~"+evaluateParens(exps[0]);
+          evaluateParens(exps[0]);
+          if (error) {
+            Ans = "~ERROR";
+          } else {
+            Ans = "~"+evaluateParens(exps[0]);
+          }
+          alphabet[exps[1].charAt(0)-'A']=Ans.substring(1);
+          input.get(row).add(Ans);
+          break;
         }
-        alphabet[exps[1].charAt(0)-'A']=Ans.substring(1);
-        input.get(row).add(Ans);
-        break;
       }
       row++;
       cursorX=11;//cursor back to margin
@@ -561,15 +568,15 @@ void mouseClicked() {
         }
       } else if (buttons[i].name.equals("S")) {
         /*if (!screen.equals("NORM")) {
-          if (screen.equals("Y=")) {
-            yRow++;
-          } else if (screen.equals("WINDOW")) {
-            wRow++;
-          } else if (screen.equals("ZOOM")) {
-            zRow++;
-          }
-          cursorY+=30;
-        }*/
+         if (screen.equals("Y=")) {
+         yRow++;
+         } else if (screen.equals("WINDOW")) {
+         wRow++;
+         } else if (screen.equals("ZOOM")) {
+         zRow++;
+         }
+         cursorY+=30;
+         }*/
         if (!screen.equals("NORM")) {
           if (screen.equals("Y=")) {
             yRow++;
@@ -681,30 +688,30 @@ void mouseClicked() {
             in = "Ans";
           } else if (buttons[i].name.equals("x^2")) {
             //if (screen.equals("NORM")) {
-              in = "sqrt(";
+            in = "sqrt(";
             //} else if (screen.equals("Y=")) {
             //  graphInput.get(yRow).add(yCol, "sqrt(");
             //}
           } else if (buttons[i].name.equals("LOG") || buttons[i].name.equals("LN")) {
             //if (screen.equals("NORM")) {
-              in = buttons[i].sec.substring(0, buttons[i].sec.length()-1);
-              //input.get(row).add(col, buttons[i].sec.substring(0, buttons[i].sec.length()-1));
+            in = buttons[i].sec.substring(0, buttons[i].sec.length()-1);
+            //input.get(row).add(col, buttons[i].sec.substring(0, buttons[i].sec.length()-1));
             //} else if (screen.equals("Y=")) {
-              //graphInput.get(yRow).add(yCol, buttons[i].sec.substring(0, buttons[i].sec.length()-1));
+            //graphInput.get(yRow).add(yCol, buttons[i].sec.substring(0, buttons[i].sec.length()-1));
             //}
           } else if (buttons[i].name.equals("SIN") || buttons[i].name.equals("COS") || buttons[i].name.equals("TAN")) {
             //if (screen.equals("NORM")) {
-              in = buttons[i].sec.toLowerCase()+"(";
-              //input.get(row).add(col, buttons[i].sec.toLowerCase()+"(");
+            in = buttons[i].sec.toLowerCase()+"(";
+            //input.get(row).add(col, buttons[i].sec.toLowerCase()+"(");
             //} else if (screen.equals("Y=")) {
-              //graphInput.get(yRow).add(yCol, buttons[i].sec.toLowerCase()+"(");
+            //graphInput.get(yRow).add(yCol, buttons[i].sec.toLowerCase()+"(");
             //}
           } else {
             //if (screen.equals("NORM")) {
-              in = buttons[i].sec;
-              //input.get(row).add(col, buttons[i].sec);
+            in = buttons[i].sec;
+            //input.get(row).add(col, buttons[i].sec);
             //} else if (screen.equals("Y=")) {
-              //graphInput.get(yRow).add(yCol, buttons[i].sec);
+            //graphInput.get(yRow).add(yCol, buttons[i].sec);
             //}
           }
           /*if (!in.equals("")) {
