@@ -58,3 +58,9 @@ M made graph use Xmin, Xmax, Xscl, Ymin, Ymax, and Yscl.
 K changed storage of entries so that it doesn't erase past things when scrolling.
 K began fixing of cursor movement.
 M made graph into a class.
+
+**2015-01-18:**<br>
+M
+
+**2015-01-19:**<br>
+K worked on visuals and continued improving cursor movement
