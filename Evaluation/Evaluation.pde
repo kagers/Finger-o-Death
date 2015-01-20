@@ -39,8 +39,8 @@ void setup() {
   //PFont font = loadFont("FreeMono-48.vlw");
   //textFont(font, 12);
   //textSize(20);
-  //PFont font = loadFont("Monospaced.bold-48.vlw");
-  //textFont(font, 12);
+  PFont font = loadFont("Monospaced.bold-48.vlw");
+  textFont(font, 12);
   //textSize(20);
   for (int i=0; i<8; i++) {
     input.add(new ArrayList<String>());
@@ -134,7 +134,7 @@ void draw() {
   /*for (int i=0; i<alphabet.length; i++){
    System.out.println(alphabet[i]); 
    }*/
-  System.out.println(screen);
+  //System.out.println(screen);
   fill(0);
   textAlign(LEFT, BOTTOM);
   background(196, 224, 190);
@@ -216,7 +216,7 @@ void drawCursor() {
     stroke(196, 224, 190);
     fill(196, 224, 190);
   }
-  rect(cursorX, cursorY, 7, 10);//fixed cursor dimensions (if there's a way to conform it to text width maybe that would be better but it doesn't really matter)
+  rect(cursorX, cursorY, 7.25, 10);//fixed cursor dimensions (if there's a way to conform it to text width maybe that would be better but it doesn't really matter)
   stroke(0);
   fill(0);
 }
@@ -552,8 +552,8 @@ void mouseClicked() {
         if (screen.equals("NORM")) {
           if (col<input.get(row).size()) {
             //cursorX+=textWidth(input.get(row).get(col));
-            col++;
             cursorX+=textWidth(input.get(row).get(col));
+            col++;
           }
         } else if (screen.equals("Y=")) {
           if (yCol<graphInput.get(yRow).size()) {
@@ -567,16 +567,6 @@ void mouseClicked() {
           }
         }
       } else if (buttons[i].name.equals("S")) {
-        /*if (!screen.equals("NORM")) {
-         if (screen.equals("Y=")) {
-         yRow++;
-         } else if (screen.equals("WINDOW")) {
-         wRow++;
-         } else if (screen.equals("ZOOM")) {
-         zRow++;
-         }
-         cursorY+=30;
-         }*/
         if (!screen.equals("NORM")) {
           if (screen.equals("Y=")) {
             yRow++;
