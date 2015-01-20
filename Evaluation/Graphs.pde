@@ -75,8 +75,12 @@ class Graphs {
   }
 
   void graph(ArrayList<ArrayList<String>> functions) {//graphs all functions inputted into the Y= screen  
-
     for (int k=0; k<functions.size (); k++) {
+      for(int el=0; el<functions.get(k).size(); el++){
+       if (functions.get(k).get(el).equals("X") && el!=0 && functions.get(k).get(el-1).matches("[0-9]+")){
+         functions.get(k).add(el,"*");
+       }
+      }
       ArrayList<String> plugged = new ArrayList<String>();
       if (functions.get(k).size()!=0) {
         //finds all y values for all x values on the graph, with a 0.01 scale
