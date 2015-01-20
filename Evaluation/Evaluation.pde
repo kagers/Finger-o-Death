@@ -732,9 +732,9 @@ void mouseClicked() {
         } else if (buttons[i].name.equals("CLEAR")) {//works the same as in normal mode (maybe move these three outside of the overarching mode if statements to avoid repetition?)
           CLEAR();
         } else {//all other buttons; just prints out letter/symbol
-          if (screen.equals("NORM")) {
-            input.get(row).add(col, buttons[i].alph);
-            col++;
+          /*if (screen.equals("NORM")) {
+            //input.get(row).add(col, buttons[i].alph);
+            //col++;
           } else if (screen.equals("Y=")) {
             graphInput.get(yRow).add(yCol, buttons[i].alph);
             yCol++;
@@ -742,9 +742,13 @@ void mouseClicked() {
             windowInput.get(wRow).add(yCol, buttons[i].alph);
             wCol++;
           }
-          cursorX+=textWidth(buttons[i].alph);
+          cursorX+=textWidth(buttons[i].alph);*/
+          in = buttons[i].alph;
+          ad();
         }
-        mode = "NORM"; //reverts mode back to norm after first button is pressed
+        if (mode.equals("ALPHA")) {
+          mode = "NORM"; //reverts mode back to norm after first button is pressed
+        }
       }
     }
     //disp = combine(input);
