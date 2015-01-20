@@ -801,6 +801,7 @@ double evaluateParens(String expression) {
      return 0; 
     }
   }
+  expression=expression.replace("(-)","-1*");
   expression=expression.replace(")(", ")*(");
   //if (expression.indexOf("Ans")!=-1) {
   expression=expression.replace("Ans", Ans.substring(1));
