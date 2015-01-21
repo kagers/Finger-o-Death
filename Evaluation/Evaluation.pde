@@ -434,6 +434,7 @@ void ad() {
       }
     }
   } else if (screen.equals("Y=")) { //adds to graphInput
+  if (combine(graphInput.get(yRow)).length()<30 || (overWrite && yCol<graphInput.get(yRow).size())){
     //System.out.println(buttons[i].name);
     //System.out.println("graphInput: "+graphInput.toString());
     //in = buttons[i].name;
@@ -464,6 +465,7 @@ void ad() {
         cursorX+=textWidth(in);
         yCol++;
       }
+    }
     }
   } else if (screen.equals("WINDOW")) {
     //in = buttons[i].name;
@@ -649,7 +651,7 @@ void mouseClicked() {
           } else if (buttons[i].name.equals("CLEAR")) { //Clear works the same as in normal mode (even in the Y= and Graph screens currently, which is a problem. I will fix this)
             CLEAR();
           } else if (buttons[i].name.equals("DEL")) {
-            overWrite=false;
+            overWrite=!overWrite;
           } else if (buttons[i].name.equals("X")) {
             screen = "NORM";
             CLEAR();
