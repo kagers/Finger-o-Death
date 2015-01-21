@@ -735,6 +735,8 @@ double evaluateParens(String expression) {
   for (int el=0; el<expression.length (); el++) {
     if (el!=0 && expression.substring(el, el+1).equals("(") && expression.substring(el-1, el).matches("[0-9]+")) {//implied multiplication
       expression=expression.substring(0, el)+"*"+expression.substring(el);
+    }else if(el!=expression.length()-1 && expression.substring(el, el+1).equals(")") && expression.substring(el+1, el+2).matches("[0-9]+")) {//implied multiplication
+      expression=expression.substring(0, el+1)+"*"+expression.substring(el);
     }
     if (el!=0 && el!=expression.length()-1 && expression.substring(el, el+1).matches("[+\\-/*^]") && expression.substring(el+1, el+2).matches("[+\\-/*^]")) {
       error = true;
