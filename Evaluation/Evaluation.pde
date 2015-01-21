@@ -63,65 +63,65 @@ void setup() {
   g = new Graphs();
 
   buttons = new Button[51];
-  buttons[0] = new Button(0, height/2-height/2/10, width/5, height/20, "Y=", "STAT PLOT", "F1", 170);
-  buttons[1] = new Button(1*width/5, height/2-height/2/10, width/5, height/20, "WINDOW", "TBLSET", "F2", 170);
-  buttons[2] = new Button(2*width/5, height/2-height/2/10, width/5, height/20, "ZOOM", "FORMAT", "F3", 170);
-  buttons[3] = new Button(3*width/5, height/2-height/2/10, width/5, height/20, "TRACE", "CALC", "F4", 170);
-  buttons[4] = new Button(4*width/5, height/2-height/2/10, width/5, height/20, "GRAPH", "TABLE", "F5", 170);
+  buttons[0] = new Button(0, height/2-height/2/10, width/5, height/20, "Y=", "", "", 170);
+  buttons[1] = new Button(1*width/5, height/2-height/2/10, width/5, height/20, "WINDOW", "", "", 170);
+  buttons[2] = new Button(2*width/5, height/2-height/2/10, width/5, height/20, "ZOOM", "", "", 170);
+  buttons[3] = new Button(3*width/5, height/2-height/2/10, width/5, height/20, "TRACE", "", "", 170);
+  buttons[4] = new Button(4*width/5, height/2-height/2/10, width/5, height/20, "GRAPH", "", "", 170);
 
   buttons[5] = new Button(0, height/2+(0*height/2/10), "2nd", "", "", 0, 0, 255, 0);
-  buttons[6] = new Button(1*width/5, height/2+(0*height/2/10), "MODE", "QUIT", "");
+  buttons[6] = new Button(1*width/5, height/2+(0*height/2/10), "X", "QUIT", "");
   buttons[7] = new Button(2*width/5, height/2+(0*height/2/10), "DEL", "INS", "");
   buttons[8] = new Button(15*width/20, height/2+(0*height/2/10)+3, width/10, height/20-height/40+1, "N", "", "", 170);
 
   buttons[9] = new Button(0, height/2+(1*height/2/10), "ALPHA", "", "", 0, 255, 0, 0);
-  buttons[10] = new Button(1*width/5, height/2+(1*height/2/10), "X", "LINK", "");
-  buttons[11] = new Button(2*width/5, height/2+(1*height/2/10), "STAT", "LIST", "");
+  buttons[10] = new Button(1*width/5, height/2+(1*height/2/10), "MODE", "", "");
+  buttons[11] = new Button(2*width/5, height/2+(1*height/2/10), "STAT", "", "");
   buttons[12] = new Button(13*width/20, height/2+(0.5*height/2/10)+5, width/10, height/20-height/40+1, "W", "", "", 170);
   buttons[13] = new Button(15*width/20, height/2+(1*height/2/10)+6, width/10, height/20-height/40+1, "S", "", "", 170);
   buttons[14] = new Button(17*width/20, height/2+(0.5*height/2/10)+5, width/10, height/20-height/40+1, "E", "", "", 170);
 
-  buttons[15] = new Button(0, height/2+(2*height/2/10), "MATH", "TEST", "A");
-  buttons[16] = new Button(1*width/5, height/2+(2*height/2/10), "APPS", "ANGLE", "B");
-  buttons[17] = new Button(2*width/5, height/2+(2*height/2/10), "PRGM", "DRAW", "C");
-  buttons[18] = new Button(3*width/5, height/2+(2*height/2/10), "VARS", "DISTR", "");
+  buttons[15] = new Button(0, height/2+(2*height/2/10), "MATH", "", "A");
+  buttons[16] = new Button(1*width/5, height/2+(2*height/2/10), "APPS", "", "B");
+  buttons[17] = new Button(2*width/5, height/2+(2*height/2/10), "PRGM", "", "C");
+  buttons[18] = new Button(3*width/5, height/2+(2*height/2/10), "VARS", "", "");
   buttons[19] = new Button(4*width/5, height/2+(2*height/2/10), "CLEAR", "", "");
 
-  buttons[20] = new Button(0, height/2+(3*height/2/10), "x^(-)1", "MATRIX", "D");
+  buttons[20] = new Button(0, height/2+(3*height/2/10), "x^(-)1", "", "D");
   buttons[21] = new Button(1*width/5, height/2+(3*height/2/10), "SIN", "aSIN", "");
   buttons[22] = new Button(2*width/5, height/2+(3*height/2/10), "COS", "aCOS", "F");
   buttons[23] = new Button(3*width/5, height/2+(3*height/2/10), "TAN", "aTAN", "G");
   buttons[24] = new Button(4*width/5, height/2+(3*height/2/10), width/5, height/20, "^", "π", "H", 170);
 
   buttons[25] = new Button(0, height/2+(4*height/2/10), "x^2", "SQRT", "I");
-  buttons[26] = new Button(1*width/5, height/2+(4*height/2/10), width/5, height/20+height/20/5, ",", "EE", "J", 225);
-  buttons[27] = new Button(2*width/5, height/2+(4*height/2/10), width/5, height/20+height/20/5, "(", "{", "K", 225);
-  buttons[28] = new Button(3*width/5, height/2+(4*height/2/10), width/5, height/20+height/20/5, ")", "}", "L", 225);
+  buttons[26] = new Button(1*width/5, height/2+(4*height/2/10), width/5, height/20+height/20/5, ",", "", "J", 225);
+  buttons[27] = new Button(2*width/5, height/2+(4*height/2/10), width/5, height/20+height/20/5, "(", "", "K", 225);
+  buttons[28] = new Button(3*width/5, height/2+(4*height/2/10), width/5, height/20+height/20/5, ")", "", "L", 225);
   buttons[29] = new Button(4*width/5, height/2+(4*height/2/10), width/5, height/20, "/", "e", "M", 170);
 
   buttons[30] = new Button(0, height/2+(5*height/2/10), "LOG", "10^x", "N");
-  buttons[31] = new Button(1*width/5, height/2+(5*height/2/10)+height/20/5, width/5, height/20+height/20/5, "7", "u", "O", 225);
-  buttons[32] = new Button(2*width/5, height/2+(5*height/2/10)+height/20/5, width/5, height/20+height/20/5, "8", "v", "P", 225);
-  buttons[33] = new Button(3*width/5, height/2+(5*height/2/10)+height/20/5, width/5, height/20+height/20/5, "9", "w", "Q", 225);
-  buttons[34] = new Button(4*width/5, height/2+(5*height/2/10), width/5, height/20, "*", "[", "R", 170);
+  buttons[31] = new Button(1*width/5, height/2+(5*height/2/10)+height/20/5, width/5, height/20+height/20/5, "7", "", "O", 225);
+  buttons[32] = new Button(2*width/5, height/2+(5*height/2/10)+height/20/5, width/5, height/20+height/20/5, "8", "", "P", 225);
+  buttons[33] = new Button(3*width/5, height/2+(5*height/2/10)+height/20/5, width/5, height/20+height/20/5, "9", "", "Q", 225);
+  buttons[34] = new Button(4*width/5, height/2+(5*height/2/10), width/5, height/20, "*", "", "R", 170);
 
   buttons[35] = new Button(0, height/2+(6*height/2/10), "LN", "e^x", "S");
-  buttons[36] = new Button(1*width/5, height/2+(6*height/2/10)+2*height/20/5, width/5, height/20+height/20/5, "4", "L4", "T", 225);
-  buttons[37] = new Button(2*width/5, height/2+(6*height/2/10)+2*height/20/5, width/5, height/20+height/20/5, "5", "L5", "U", 225);
-  buttons[38] = new Button(3*width/5, height/2+(6*height/2/10)+2*height/20/5, width/5, height/20+height/20/5, "6", "L6", "V", 225);
-  buttons[39] = new Button(4*width/5, height/2+(6*height/2/10), width/5, height/20, "-", "]", "W", 170);
+  buttons[36] = new Button(1*width/5, height/2+(6*height/2/10)+2*height/20/5, width/5, height/20+height/20/5, "4", "", "T", 225);
+  buttons[37] = new Button(2*width/5, height/2+(6*height/2/10)+2*height/20/5, width/5, height/20+height/20/5, "5", "", "U", 225);
+  buttons[38] = new Button(3*width/5, height/2+(6*height/2/10)+2*height/20/5, width/5, height/20+height/20/5, "6", "", "V", 225);
+  buttons[39] = new Button(4*width/5, height/2+(6*height/2/10), width/5, height/20, "-", "", "W", 170);
 
-  buttons[40] = new Button(0, height/2+(7*height/2/10), "STO->", "RCL", "X");
-  buttons[41] = new Button(1*width/5, height/2+(7*height/2/10)+3*height/20/5, width/5, height/20+height/20/5, "1", "L1", "Y", 225);
-  buttons[42] = new Button(2*width/5, height/2+(7*height/2/10)+3*height/20/5, width/5, height/20+height/20/5, "2", "L2", "Z", 225);
-  buttons[43] = new Button(3*width/5, height/2+(7*height/2/10)+3*height/20/5, width/5, height/20+height/20/5, "3", "L3", "THETA", 225);
-  buttons[44] = new Button(4*width/5, height/2+(7*height/2/10), width/5, height/20, "+", "MEM", "''", 170);
+  buttons[40] = new Button(0, height/2+(7*height/2/10), "STO->", "Ans", "X");
+  buttons[41] = new Button(1*width/5, height/2+(7*height/2/10)+3*height/20/5, width/5, height/20+height/20/5, "1", "", "Y", 225);
+  buttons[42] = new Button(2*width/5, height/2+(7*height/2/10)+3*height/20/5, width/5, height/20+height/20/5, "2", "", "Z", 225);
+  buttons[43] = new Button(3*width/5, height/2+(7*height/2/10)+3*height/20/5, width/5, height/20+height/20/5, "3", "", "", 225);
+  buttons[44] = new Button(4*width/5, height/2+(7*height/2/10), width/5, height/20, "+", "", "''", 170);
 
   buttons[45] = new Button(0, height/2+(8*height/2/10), width/5, height/20+5*height/20/5, "ON", "OFF", "", 125);
-  buttons[46] = new Button(1*width/5, height/2+(8*height/2/10)+4*height/20/5, width/5, height/20+height/20/5, "0", "CATALOG", "SPACE", 225);
-  buttons[47] = new Button(2*width/5, height/2+(8*height/2/10)+4*height/20/5, width/5, height/20+height/20/5, ".", "i", ":", 225);
-  buttons[48] = new Button(3*width/5, height/2+(8*height/2/10)+4*height/20/5, width/5, height/20+height/20/5, "(-)", "ANS", "?", 225);
-  buttons[49] = new Button(4*width/5, height/2+(8*height/2/10), width/5, height/20+5*height/20/5, "ENTER", "ENTRY", "SOLVE", 170);
+  buttons[46] = new Button(1*width/5, height/2+(8*height/2/10)+4*height/20/5, width/5, height/20+height/20/5, "0", "", "", 225);
+  buttons[47] = new Button(2*width/5, height/2+(8*height/2/10)+4*height/20/5, width/5, height/20+height/20/5, ".", "", "", 225);
+  buttons[48] = new Button(3*width/5, height/2+(8*height/2/10)+4*height/20/5, width/5, height/20+height/20/5, "(-)", "", "", 225);
+  buttons[49] = new Button(4*width/5, height/2+(8*height/2/10), width/5, height/20+5*height/20/5, "ENTER", "", "", 170);
   buttons[50] = new Button(4*width/5, height/2+(2*height/2/10), "CLEAR", "", "");
 }
 
@@ -646,7 +646,7 @@ void mouseClicked() {
             CLEAR();
           } else if (buttons[i].name.equals("DEL")) {
             overWrite=false;
-          } else if (buttons[i].name.equals("MODE")) {
+          } else if (buttons[i].name.equals("X")) {
             screen = "NORM";
             CLEAR();
           } else if (buttons[i].name.equals("ON")) {
@@ -655,7 +655,7 @@ void mouseClicked() {
             buttons[7].greySecond = false;
             buttons[9].colText = 0;
           } else {
-            if (buttons[i].name.equals("(-)")) {
+            if (buttons[i].name.equals("STO->")) {
               in = "Ans";
             } else if (buttons[i].name.equals("x^2")) {
               in = "sqrt(";
