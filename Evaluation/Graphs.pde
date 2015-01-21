@@ -17,6 +17,9 @@ class Graphs {
   float gridWidth;
   float gridHeight;
   float margin;
+  
+  
+  boolean onePoint;
 
 
   Graphs() {
@@ -33,6 +36,7 @@ class Graphs {
     gridWidth = width-20;
     gridHeight = (height/2)-55;
     margin = 10;
+    onePoint = false;
     background(255);
   }
 
@@ -79,11 +83,11 @@ class Graphs {
       for (int el=0; el<functions.get (k).size(); el++) {
         if (functions.get(k).get(el).equals("X") && el!=0 && functions.get(k).get(el-1).matches("[0-9]+")) {
           functions.get(k).add(el, "(");
-          functions.get(k).add(el+2,")");
-        }else if(functions.get(k).get(el).equals("X") && el!=0 && functions.get(k).get(el-1).equals("*")){
-          functions.get(k).set(el-1,"(");
-          functions.get(k).add(el+1,")");
-        }else if(functions.get(k).get(el).equals("X") && el!=0 && functions.get(k).get(el-1).equals("/")){
+          functions.get(k).add(el+2, ")");
+        } else if (functions.get(k).get(el).equals("X") && el!=0 && functions.get(k).get(el-1).equals("*")) {
+          functions.get(k).set(el-1, "(");
+          functions.get(k).add(el+1, ")");
+        } else if (functions.get(k).get(el).equals("X") && el!=0 && functions.get(k).get(el-1).equals("/")) {
           //
         }
         System.out.println(functions.get(k).toString());
@@ -115,15 +119,21 @@ class Graphs {
           }
           if (error) {
             //System.out.println("ERROR in graph2");
-            functions.get(k).clear();
-            functions.get(k).add("ERROR");
-            screen = "Y=";
+            plugged.clear();
             error = false;
           } else {
+            onePoint = true;
             plotPoint((float)x, (float)evaluateParens(plugged));//plots the point
             plugged.clear();
           }
         }
+        if (!onePoint) {
+          functions.get(k).clear();
+          functions.get(k).add("ERROR");
+          screen = "Y=";
+          error = false;
+        }
+        onePoint = false;
       }
     }
   }
