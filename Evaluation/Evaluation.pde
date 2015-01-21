@@ -126,7 +126,7 @@ void setup() {
 }
 
 void draw() {
-  System.out.println(on);
+  //System.out.println(on);
   if (on) {
     //System.out.println(input);
     //System.out.println(endRow);
@@ -155,9 +155,9 @@ void draw() {
     } else {
       buttons[7].greySecond = true;
     }  
-    for (int i=0; i<input.get (row).size(); i++) {
-      System.out.print("\t"+textWidth(input.get(row).get(i)));
-    }
+    //for (int i=0; i<input.get (row).size(); i++) {
+    //  System.out.print("\t"+textWidth(input.get(row).get(i)));
+    //}
     textSize(12);
     if (screen.equals("NORM")) {//normal display screen
       drawCursor();
@@ -263,20 +263,20 @@ void CLEAR() {
 }
 
 void ENTER() {
-  if (mode.equals("2nd")) {
-    //ENTRY
-  } else if (mode.equals("ALPHA")) {
-    //SOLVE
-  } else if (mode.equals("NORM")) {
+  System.out.println(row);
+  System.out.print("\t"+startRow);
+  System.out.print("\t"+endRow);
+  if (mode.equals("NORM")) {
     if (screen.equals("NORM")) {
       if (input.get(row).size()!=0) {
         lastEvaluated=combine(input.get(row));
         row++;
-        if (row>8 && endRow-startRow>=8) {
+        if (row>8 && endRow-startRow>=9) {
           startRow++;
         } 
         endRow++;
         cursorY+=60;
+        //cursorY=7+30*(row%9+1);
       } else {
         cursorY+=30;
       }
@@ -316,8 +316,9 @@ void ENTER() {
       //}
       col=0;
       endRow++;
-      if (row>8 && endRow-startRow>=8) {
+      if (row>8 && endRow-startRow>=10) {
         startRow++;
+        System.out.println();
         cursorY=7+30*8;
       }
     } else if (screen.equals("Y=")) {//Enter for Y= screen
