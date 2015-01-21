@@ -38,8 +38,8 @@ void setup() {
   //PFont font = loadFont("FreeMono-48.vlw");
   //textFont(font, 12);
   //textSize(20);
-  PFont font = loadFont("Monospaced.bold-48.vlw");
-  textFont(font, 12);
+  //PFont font = loadFont("Monospaced.bold-48.vlw");
+  //textFont(font, 12);
   //textSize(20);
   for (int i=0; i<8; i++) {
     input.add(new ArrayList<String>());
@@ -736,7 +736,7 @@ double evaluateParens(String expression) {
     if (el!=0 && expression.substring(el, el+1).equals("(") && expression.substring(el-1, el).matches("[0-9]+")) {//implied multiplication
       expression=expression.substring(0, el)+"*"+expression.substring(el);
     }
-    if (el!=0 && expression.substring(el, el+1).matches("[+\\-/*^]") && expression.substring(el+1, el+2).matches("[+\\-/*^]")) {
+    if (el!=0 && el!=expression.length()-1 && expression.substring(el, el+1).matches("[+\\-/*^]") && expression.substring(el+1, el+2).matches("[+\\-/*^]")) {
       error = true;
       return 0;
     }
@@ -917,4 +917,3 @@ String combine(ArrayList<String> in) {
   }
   return joined;
 }
-
