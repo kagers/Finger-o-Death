@@ -617,7 +617,9 @@ void mouseClicked() {
                 input.get(wRow).remove(wCol);
               }
             }
-          } else {//NORMAL BUTTONS 
+          } else if (!buttons[i].name.equals("ON") && !buttons[i].name.equals("MATH") &&
+            !buttons[i].name.equals("APPS") && !buttons[i].name.equals("PRGM") && !buttons[i].name.equals("VARS") &&
+            !buttons[i].name.equals("STAT") && !buttons[i].name.equals("MODE") && !buttons[i].name.equals("TRACE")){//NORMAL BUTTONS 
             if (buttons[i].name.equals("STO->")) {
               if (screen.equals("NORM")) {
                 if (col==0) {
