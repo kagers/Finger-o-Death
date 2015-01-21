@@ -744,20 +744,98 @@ double evaluateParens(String expression) {
   for (int el=0; el<expression.length (); el++) {
     if (el!=0 && expression.substring(el, el+1).equals("(") && expression.substring(el-1, el).matches("[0-9]+")) {//implied multiplication
       expression=expression.substring(0, el)+"*"+expression.substring(el);
-    }else if(el!=expression.length()-1 && expression.substring(el, el+1).equals(")") && expression.substring(el+1, el+2).matches("[0-9]+")) {//implied multiplication
+    } else if (el!=expression.length()-1 && expression.substring(el, el+1).equals(")") && expression.substring(el+1, el+2).matches("[0-9]+")) {//implied multiplication
       expression=expression.substring(0, el+1)+"*"+expression.substring(el);
     }
     if (el!=0 && el!=expression.length()-1 && expression.substring(el, el+1).matches("[+\\-/*^]") && expression.substring(el+1, el+2).matches("[+\\-/*^]")) {
       error = true;
       return 0;
     }
-    if(el==0 && expression.length()>=3 && expression.substring(0,3).equals("(-)")){
+    if (expression.length()>=6 && el<=expression.length()-5) {
+      //System.out.println("passed length requirements");
+      if (expression.substring(el, el+4).equals("*(-)")) {
+        System.out.println("passed matching requirements"); 
+        int lastDigit = el-1;
+        System.out.println("trying it...");
+        for (int i=el; i>=0; i--) {
+          if (!expression.substring(i, i+1).matches("[0-9]+")) {
+            lastDigit = i-1;
+          }
+        }
+        System.out.println(lastDigit);
+        System.out.println(expression.substring(0, lastDigit)+"(-)"+expression.substring(lastDigit, el+1)+expression.substring(el+4));
+        expression = expression.substring(0, lastDigit)+"(-)"+expression.substring(lastDigit, el+1)+expression.substring(el+4);
+        System.out.println("expression: "+expression);
+        for (int em=0; em<expression.length (); em++) {
+          if (em==0) {
+            System.out.println("em==0");
+            if (expression.length()>=3) {
+              System.out.println("length is greater than or equal to 3");
+              if (expression.substring(0, 3).equals("(-)")) {
+                System.out.println("caught starting (-)");
+                expression = "0-"+expression.substring(3);
+              }
+            }
+          }
+        }
+      }
+    }
+    if (expression.length()>=6 && el<=expression.length()-5) {
+      //System.out.println("passed length requirements");
+      if (expression.substring(el, el+4).equals("/(-)")) {
+        System.out.println("passed matching requirements"); 
+        int lastDigit = el-1;
+        System.out.println("trying it...");
+        for (int i=el; i>=0; i--) {
+          if (!expression.substring(i, i+1).matches("[0-9]+")) {
+            lastDigit = i-1;
+          }
+        }
+        System.out.println(lastDigit);
+        System.out.println(expression.substring(0, lastDigit)+"(-)"+expression.substring(lastDigit, el+1)+expression.substring(el+4));
+        expression = expression.substring(0, lastDigit)+"(-)"+expression.substring(lastDigit, el+1)+expression.substring(el+4);
+        System.out.println("expression: "+expression);
+        for (int em=0; em<expression.length (); em++) {
+          if (em==0) {
+            System.out.println("em==0");
+            if (expression.length()>=3) {
+              System.out.println("length is greater than or equal to 3");
+              if (expression.substring(0, 3).equals("(-)")) {
+                System.out.println("caught starting (-)");
+                expression = "0-"+expression.substring(3);
+              }
+            }
+          }
+        }
+      }
+    }
+    if(expression.length()>=6 && el<=expression.length()-5) {
+      //System.out.println("passed length requirements");
+      if (expression.substring(el, el+4).equals("^(-)")) {
+        System.out.println("passed matching requirements"); 
+        int lastDigit = el-1;
+        System.out.println("trying it...");
+        for (int i=el; i>=0; i--) {
+          if (!expression.substring(i, i+1).matches("[0-9]+")) {
+            lastDigit = i-1;
+          }
+        }
+        System.out.println(lastDigit);
+        System.out.println("1/("+expression.substring(0,el+1)+expression.substring(el+4)+")");
+        expression = "1/("+expression.substring(0,el+1)+expression.substring(el+4)+")";
+        System.out.println("expression: "+expression);
+      }
+    }
+    if (el==0 && expression.length()>=3 && expression.substring(0, 3).equals("(-)")) {
+      System.out.println("caught starting (-)");
       expression = "0-"+expression.substring(3);
     }
-    if(expression.length()>=4 && el<=expression.length()-4 && expression.substring(el,el+4).equals("-(-)")){
-     expression = expression.substring(0,el)+"+"+expression.substring(el+4);
-    }else if(expression.length()>=4 && el<=expression.length()-4 && expression.substring(el,el+4).equals("+(-)")){
-     expression = expression.substring(0,el)+"-"+expression.substring(el+4);
+    if (expression.length()>=4 && el<=expression.length()-4 && expression.substring(el, el+4).equals("-(-)")) {
+      expression = expression.substring(0, el)+"+"+expression.substring(el+4);
+    } else if (expression.length()>=4 && el<=expression.length()-4 && expression.substring(el, el+4).equals("+(-)")) {
+      expression = expression.substring(0, el)+"-"+expression.substring(el+4);
+    } else {
+      //System.out.println("not caught");
     }
   }
   //expression=expression.replace("-(-)","+");
