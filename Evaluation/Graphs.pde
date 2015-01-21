@@ -110,6 +110,7 @@ class Graphs {
             functions.get(k).clear();
             functions.get(k).add("ERROR");
             screen = "Y=";
+            error = false;
           }else{
             plotPoint((float)x, (float)evaluateParens(plugged));//plots the point
             plugged.clear();
