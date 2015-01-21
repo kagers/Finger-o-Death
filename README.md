@@ -2,8 +2,10 @@ Finger-o-Death
 ==============
 ##Purpose:
 
-A TI style graphing calculator with powers including math, graphs, and TI BASIC.<br>
-Originally planned in Java and Processing, but now is full-on Processing.
+A TI style graphing calculator with powers including math, and graphs.<br>
+Originally planned in Java and Processing, but now is full-on Processing.<br>
+Be safe around floating point arithmetic -- don't forget how easily in can *double*-cross you.<br>
+Remember to turn on first, and happy mathing!
 
 ##log(development):
 
@@ -66,3 +68,7 @@ M started on error handling.
 **2015-01-19:**<br>
 K worked on visuals and continued improving cursor movement
 M worked on error handling/ made the error handling have less errors
+
+**2015-01-20:**<br>
+K fixed some lingering issues with scrolling.
+M greatly improved error handling, in math as well as graphs.
