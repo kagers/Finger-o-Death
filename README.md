@@ -66,3 +66,9 @@ M started on error handling.
 **2015-01-19:**<br>
 K worked on visuals and continued improving cursor movement
 M worked on error handling/ made the error handling have less errors
+
+**2015-01-19:**<br>
+K made the buttons that are only for display purposes do nothing, and eliminated the unecessary 2nd and Alpha functions.
+K fixed errors in scrolling.
+M fixed errors in using the negative sign.
+K and M fixed various other errors.
