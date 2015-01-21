@@ -5,7 +5,7 @@ Finger-o-Death
 A TI style graphing calculator with powers including math, and graphs.<br>
 Originally planned in Java and Processing, but now is full-on Processing.<br>
 Be safe around floating point arithmetic -- don't forget how easily in can *double*-cross you.<br>
-Remember to turn on first, and happy mathing!
+Remember to turn on first, and happy mathing!<br>
 
 ##log(development):
 
@@ -70,5 +70,8 @@ K worked on visuals and continued improving cursor movement
 M worked on error handling/ made the error handling have less errors
 
 **2015-01-20:**<br>
-K fixed some lingering issues with scrolling.
-M greatly improved error handling, in math as well as graphs.
+K made the buttons that are only for display purposes do nothing, and eliminated the unecessary 2nd and Alpha functions.
+K fixed errors in scrolling.
+M fixed errors in using the negative sign.
+K and M fixed various other errors.
+M greatly improved error handling
