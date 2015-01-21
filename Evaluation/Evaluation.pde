@@ -434,67 +434,69 @@ void ad() {
       }
     }
   } else if (screen.equals("Y=")) { //adds to graphInput
-  if (combine(graphInput.get(yRow)).length()<30 || (overWrite && yCol<graphInput.get(yRow).size())){
-    //System.out.println(buttons[i].name);
-    //System.out.println("graphInput: "+graphInput.toString());
-    //in = buttons[i].name;
-    if (yCol<graphInput.get(yRow).size()) {
-      //System.out.println(textWidth(graphInput.get(yRow).get(yCol)));
-    }
-    if (!overWrite || yCol>=graphInput.get(yRow).size()) {
-      if (!(inbefore.equals(""))) {
-        graphInput.get(yRow).add(yCol, inbefore);
-        cursorX+=textWidth(inbefore);
-        yCol++;
+    if (combine(graphInput.get(yRow)).length()<30 || (overWrite && yCol<graphInput.get(yRow).size())) {
+      //System.out.println(buttons[i].name);
+      //System.out.println("graphInput: "+graphInput.toString());
+      //in = buttons[i].name;
+      if (yCol<graphInput.get(yRow).size()) {
+        //System.out.println(textWidth(graphInput.get(yRow).get(yCol)));
       }
-      if (!(in.equals(""))) {
-        graphInput.get(yRow).add(yCol, in);
-        cursorX+=textWidth(in);
-        yCol++;
+      if (!overWrite || yCol>=graphInput.get(yRow).size()) {
+        if (!(inbefore.equals(""))) {
+          graphInput.get(yRow).add(yCol, inbefore);
+          cursorX+=textWidth(inbefore);
+          yCol++;
+        }
+        if (!(in.equals(""))) {
+          graphInput.get(yRow).add(yCol, in);
+          cursorX+=textWidth(in);
+          yCol++;
+        }
+        overWrite=true;
+      } else if (overWrite) {
+        //if (col<input.size()) {
+        if (!(inbefore.equals(""))) {
+          graphInput.get(yRow).set(yCol, inbefore);
+          cursorX+=textWidth(inbefore);
+          yCol++;
+        }
+        if (!(in.equals(""))) {
+          graphInput.get(yRow).set(yCol, in);
+          cursorX+=textWidth(in);
+          yCol++;
+        }
       }
-      overWrite=true;
-    } else if (overWrite) {
-      //if (col<input.size()) {
-      if (!(inbefore.equals(""))) {
-        graphInput.get(yRow).set(yCol, inbefore);
-        cursorX+=textWidth(inbefore);
-        yCol++;
-      }
-      if (!(in.equals(""))) {
-        graphInput.get(yRow).set(yCol, in);
-        cursorX+=textWidth(in);
-        yCol++;
-      }
-    }
     }
   } else if (screen.equals("WINDOW")) {
     //in = buttons[i].name;
-    if (wCol<windowInput.get(wRow).size()) {
-      System.out.println(textWidth(windowInput.get(wRow).get(wCol)));
-    }
-    if (!overWrite || wCol>=windowInput.get(wRow).size()) {
-      if (!(inbefore.equals(""))) {
-        windowInput.get(wRow).add(wCol, inbefore);
-        cursorX+=textWidth(inbefore);
-        wCol++;
+    if (combine(windowInput.get(wRow)).length()<35 || (overWrite && wCol<windowInput.get(wRow).size())) {
+      if (wCol<windowInput.get(wRow).size()) {
+        System.out.println(textWidth(windowInput.get(wRow).get(wCol)));
       }
-      if (!(in.equals(""))) {
-        windowInput.get(wRow).add(wCol, in);
-        cursorX+=textWidth(in);
-        wCol++;
-      }
-      overWrite=true;
-    } else if (overWrite) {
-      //if (col<input.size()) {
-      if (!(inbefore.equals(""))) {
-        windowInput.get(wRow).set(wCol, inbefore);
-        cursorX+=textWidth(inbefore);
-        wCol++;
-      }
-      if (!(in.equals(""))) {
-        windowInput.get(wRow).set(wCol, in);
-        cursorX+=textWidth(in);
-        wCol++;
+      if (!overWrite || wCol>=windowInput.get(wRow).size()) {
+        if (!(inbefore.equals(""))) {
+          windowInput.get(wRow).add(wCol, inbefore);
+          cursorX+=textWidth(inbefore);
+          wCol++;
+        }
+        if (!(in.equals(""))) {
+          windowInput.get(wRow).add(wCol, in);
+          cursorX+=textWidth(in);
+          wCol++;
+        }
+        overWrite=true;
+      } else if (overWrite) {
+        //if (col<input.size()) {
+        if (!(inbefore.equals(""))) {
+          windowInput.get(wRow).set(wCol, inbefore);
+          cursorX+=textWidth(inbefore);
+          wCol++;
+        }
+        if (!(in.equals(""))) {
+          windowInput.get(wRow).set(wCol, in);
+          cursorX+=textWidth(in);
+          wCol++;
+        }
       }
     }
   }
