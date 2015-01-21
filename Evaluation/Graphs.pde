@@ -76,10 +76,17 @@ class Graphs {
 
   void graph(ArrayList<ArrayList<String>> functions) {//graphs all functions inputted into the Y= screen  
     for (int k=0; k<functions.size (); k++) {
-      for(int el=0; el<functions.get(k).size(); el++){
-       if (functions.get(k).get(el).equals("X") && el!=0 && functions.get(k).get(el-1).matches("[0-9]+")){
-         functions.get(k).add(el,"*");
-       }
+      for (int el=0; el<functions.get (k).size(); el++) {
+        if (functions.get(k).get(el).equals("X") && el!=0 && functions.get(k).get(el-1).matches("[0-9]+")) {
+          functions.get(k).add(el, "(");
+          functions.get(k).add(el+2,")");
+        }else if(functions.get(k).get(el).equals("X") && el!=0 && functions.get(k).get(el-1).equals("*")){
+          functions.get(k).set(el-1,"(");
+          functions.get(k).add(el+1,")");
+        }else if(functions.get(k).get(el).equals("X") && el!=0 && functions.get(k).get(el-1).equals("/")){
+          //
+        }
+        System.out.println(functions.get(k).toString());
       }
       ArrayList<String> plugged = new ArrayList<String>();
       if (functions.get(k).size()!=0) {
@@ -99,19 +106,20 @@ class Graphs {
               plugged.add(functions.get(k).get(i));
             }
           }
-          //System.out.println(plugged);
-          try{
+          try {
+            //System.out.println(plugged);
             evaluateParens(plugged);
-          }catch(NumberFormatException e){
-            System.out.println("ERROR in graph");
           }
-          if(error){
-            System.out.println("ERROR in graph2");
+          catch(NumberFormatException e) {
+            error = true;
+          }
+          if (error) {
+            //System.out.println("ERROR in graph2");
             functions.get(k).clear();
             functions.get(k).add("ERROR");
             screen = "Y=";
             error = false;
-          }else{
+          } else {
             plotPoint((float)x, (float)evaluateParens(plugged));//plots the point
             plugged.clear();
           }
