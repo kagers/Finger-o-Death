@@ -93,15 +93,27 @@ class Graphs {
             if (functions.get(k).get(i).equals("X")) {//plugs in x value for every "X" in the input
               //System.out.println("plugged");
               plugged.add(""+x);
-              System.out.println(plugged);
+              //System.out.println(plugged);
             } else {
               //System.out.println(functions.get(k).get(i));
               plugged.add(functions.get(k).get(i));
             }
           }
           //System.out.println(plugged);
-          plotPoint((float)x, (float)evaluateParens(plugged));//plots the point
-          plugged.clear();
+          try{
+            evaluateParens(plugged);
+          }catch(NumberFormatException e){
+            System.out.println("ERROR in graph");
+          }
+          if(error){
+            System.out.println("ERROR in graph2");
+            functions.get(k).clear();
+            functions.get(k).add("ERROR");
+            screen = "Y=";
+          }else{
+            plotPoint((float)x, (float)evaluateParens(plugged));//plots the point
+            plugged.clear();
+          }
         }
       }
     }
