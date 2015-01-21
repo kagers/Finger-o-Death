@@ -35,12 +35,8 @@ void setup() {
   frame.setTitle("FINGER O' DEATH 83++");
   fill(0);
   rect(cursorX, 20, 5, 10);
-  //PFont font = loadFont("FreeMono-48.vlw");
-  //textFont(font, 12);
-  //textSize(20);
   //PFont font = loadFont("Monospaced.bold-48.vlw");
   //textFont(font, 12);
-  //textSize(20);
   for (int i=0; i<8; i++) {
     input.add(new ArrayList<String>());
   }
@@ -126,16 +122,7 @@ void setup() {
 }
 
 void draw() {
-  //System.out.println(on);
   if (on) {
-    //System.out.println(input);
-    //System.out.println(endRow);
-    //System.out.println(startRow);
-    //System.out.println(row);
-    /*for (int i=0; i<alphabet.length; i++){
-     System.out.println(alphabet[i]); 
-     }*/
-    //System.out.println(screen);
     fill(0);
     textAlign(LEFT, BOTTOM);
     background(196, 224, 190);
@@ -155,9 +142,6 @@ void draw() {
     } else {
       buttons[7].greySecond = true;
     }  
-    //for (int i=0; i<input.get (row).size(); i++) {
-    //  System.out.print("\t"+textWidth(input.get(row).get(i)));
-    //}
     textSize(12);
     if (screen.equals("NORM")) {//normal display screen
       drawCursor();
@@ -243,16 +227,11 @@ void CLEAR() {
     }
     cursorX=70;
   } else { //Clear when screen is normal. Clears everything
-    System.out.println(input);
-    System.out.println(input.get(row));
     if (input.get(row).size()==0) {
       //for (int j=0; j<input.size (); j++) {//Clears everything
-      System.out.println("K");
       startRow=row;
       endRow=row+1;
       cursorY=7;//sets cursor back to the top
-      //row=0;
-      //}
     } else { //clears current row only
       System.out.println("J");
       input.get(row).clear();
@@ -276,7 +255,6 @@ void ENTER() {
         } 
         endRow++;
         cursorY+=60;
-        //cursorY=7+30*(row%9+1);
       } else {
         cursorY+=30;
       }
@@ -311,9 +289,6 @@ void ENTER() {
       }
       row++;
       cursorX=11;//cursor back to margin
-      //if (input.get(row-1).size()!=0) {
-      //  row++;//row (of input?) increased by one
-      //}
       col=0;
       endRow++;
       if (row>8 && endRow-startRow>=10) {
@@ -383,7 +358,7 @@ void specialExponents(int i) {
 void normalButtons(int i) {
   //operators
   if (buttons[i].name.equals("+") || buttons[i].name.equals("-") || buttons[i].name.equals("*")
-    || buttons[i].name.equals("/")) {
+    || buttons[i].name.equals("/") || buttons[i].name.equals("^")) {
     if (screen.equals("NORM")) {
       if (col==0) {
         inbefore = "Ans";
@@ -421,7 +396,6 @@ void ad() {
         }
         overWrite=true;
       } else if (overWrite) {
-        //if (col<input.size()) {
         if (!(inbefore.equals(""))) {
           input.get(row).set(col, inbefore);
           cursorX+=textWidth(inbefore);
@@ -436,12 +410,6 @@ void ad() {
     }
   } else if (screen.equals("Y=")) { //adds to graphInput
     if (combine(graphInput.get(yRow)).length()<30 || (overWrite && yCol<graphInput.get(yRow).size())) {
-      //System.out.println(buttons[i].name);
-      //System.out.println("graphInput: "+graphInput.toString());
-      //in = buttons[i].name;
-      if (yCol<graphInput.get(yRow).size()) {
-        //System.out.println(textWidth(graphInput.get(yRow).get(yCol)));
-      }
       if (!overWrite || yCol>=graphInput.get(yRow).size()) {
         if (!(inbefore.equals(""))) {
           graphInput.get(yRow).add(yCol, inbefore);
@@ -455,7 +423,6 @@ void ad() {
         }
         overWrite=true;
       } else if (overWrite) {
-        //if (col<input.size()) {
         if (!(inbefore.equals(""))) {
           graphInput.get(yRow).set(yCol, inbefore);
           cursorX+=textWidth(inbefore);
@@ -469,7 +436,6 @@ void ad() {
       }
     }
   } else if (screen.equals("WINDOW")) {
-    //in = buttons[i].name;
     if (combine(windowInput.get(wRow)).length()<35 || (overWrite && wCol<windowInput.get(wRow).size())) {
       if (wCol<windowInput.get(wRow).size()) {
         System.out.println(textWidth(windowInput.get(wRow).get(wCol)));
@@ -487,7 +453,6 @@ void ad() {
         }
         overWrite=true;
       } else if (overWrite) {
-        //if (col<input.size()) {
         if (!(inbefore.equals(""))) {
           windowInput.get(wRow).set(wCol, inbefore);
           cursorX+=textWidth(inbefore);
@@ -517,11 +482,7 @@ void mouseClicked() {
             if (screen.equals("Y=")) {
               yRow--;
               cursorX=70+textWidth(combine(graphInput.get(yRow)));
-              //if (graphInput.get(yRow).size()>0){
               yCol=graphInput.get(yRow).size();
-              //} else {
-              //  yCol=0;
-              //}
             } else if (screen.equals("WINDOW")) {
               wRow--;
               cursorX=70+textWidth(combine(windowInput.get(wRow)));
@@ -534,7 +495,6 @@ void mouseClicked() {
         } else if (buttons[i].name.equals("E")) {
           if (screen.equals("NORM")) {
             if (col<input.get(row).size()) {
-              //cursorX+=textWidth(input.get(row).get(col));
               cursorX+=textWidth(input.get(row).get(col));
               col++;
             }
@@ -631,7 +591,6 @@ void mouseClicked() {
               if (screen.equals("NORM")) {
                 if (col==0) {
                   inbefore = "Ans";
-                  //input.get(row);
                 }
                 in = buttons[i].name.substring(3);
                 ad();
