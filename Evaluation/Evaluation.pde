@@ -403,32 +403,34 @@ void normalButtons(int i) {
 
 void ad() {
   if (screen.equals("NORM")) { //adds to input
-    if (col<input.get(row).size()) {
-      System.out.println(textWidth(input.get(row).get(col)));
-    }
-    if (!overWrite || col>=input.get(row).size()) {
-      if (!(inbefore.equals(""))) {
-        input.get(row).add(col, inbefore);
-        cursorX+=textWidth(inbefore);
-        col++;
+    if (combine(input.get(row)).length()<45 || (overWrite && col<input.get(row).size())) {
+      if (col<input.get(row).size()) {
+        System.out.println(textWidth(input.get(row).get(col)));
       }
-      if (!(in.equals(""))) {
-        input.get(row).add(col, in);
-        cursorX+=textWidth(in);
-        col++;
-      }
-      overWrite=true;
-    } else if (overWrite) {
-      //if (col<input.size()) {
-      if (!(inbefore.equals(""))) {
-        input.get(row).set(col, inbefore);
-        cursorX+=textWidth(inbefore);
-        col++;
-      }
-      if (!(in.equals(""))) {
-        input.get(row).set(col, in);
-        cursorX+=textWidth(in);
-        col++;
+      if (!overWrite || col>=input.get(row).size()) {
+        if (!(inbefore.equals(""))) {
+          input.get(row).add(col, inbefore);
+          cursorX+=textWidth(inbefore);
+          col++;
+        }
+        if (!(in.equals(""))) {
+          input.get(row).add(col, in);
+          cursorX+=textWidth(in);
+          col++;
+        }
+        overWrite=true;
+      } else if (overWrite) {
+        //if (col<input.size()) {
+        if (!(inbefore.equals(""))) {
+          input.get(row).set(col, inbefore);
+          cursorX+=textWidth(inbefore);
+          col++;
+        }
+        if (!(in.equals(""))) {
+          input.get(row).set(col, in);
+          cursorX+=textWidth(in);
+          col++;
+        }
       }
     }
   } else if (screen.equals("Y=")) { //adds to graphInput
@@ -619,7 +621,7 @@ void mouseClicked() {
             }
           } else if (!buttons[i].name.equals("ON") && !buttons[i].name.equals("MATH") &&
             !buttons[i].name.equals("APPS") && !buttons[i].name.equals("PRGM") && !buttons[i].name.equals("VARS") &&
-            !buttons[i].name.equals("STAT") && !buttons[i].name.equals("MODE") && !buttons[i].name.equals("TRACE")){//NORMAL BUTTONS 
+            !buttons[i].name.equals("STAT") && !buttons[i].name.equals("MODE") && !buttons[i].name.equals("TRACE")) {//NORMAL BUTTONS 
             if (buttons[i].name.equals("STO->")) {
               if (screen.equals("NORM")) {
                 if (col==0) {
@@ -737,7 +739,7 @@ double evaluateParens(String expression) {
   for (int el=0; el<expression.length (); el++) {
     if (el!=0 && expression.substring(el, el+1).equals("(") && expression.substring(el-1, el).matches("[0-9]+")) {//implied multiplication
       expression=expression.substring(0, el)+"*"+expression.substring(el);
-    }else if(el!=expression.length()-1 && expression.substring(el, el+1).equals(")") && expression.substring(el+1, el+2).matches("[0-9]+")) {//implied multiplication
+    } else if (el!=expression.length()-1 && expression.substring(el, el+1).equals(")") && expression.substring(el+1, el+2).matches("[0-9]+")) {//implied multiplication
       expression=expression.substring(0, el+1)+"*"+expression.substring(el);
     }
     if (el!=0 && el!=expression.length()-1 && expression.substring(el, el+1).matches("[+\\-/*^]") && expression.substring(el+1, el+2).matches("[+\\-/*^]")) {
@@ -921,3 +923,4 @@ String combine(ArrayList<String> in) {
   }
   return joined;
 }
+
