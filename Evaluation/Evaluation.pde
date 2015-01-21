@@ -34,8 +34,8 @@ void setup() {
   frame.setTitle("FINGER O' DEATH 83++");
   fill(0);
   rect(cursorX, 20, 5, 10);
-  //PFont font = loadFont("Monospaced.bold-48.vlw");
-  //textFont(font, 12);
+  PFont font = loadFont("Monospaced.bold-48.vlw");
+  textFont(font, 12);
   for (int i=0; i<8; i++) {
     input.add(new ArrayList<String>());
   }
@@ -515,7 +515,7 @@ void mouseClicked() {
               cursorX-=textWidth(input.get(row).get(col));
             }
           } else if (screen.equals("Y=")) {
-            if (yCol>0) {
+            if (yCol>0 && yCol<graphInput.get(yRow).size()) {
               yCol--;
               cursorX-=textWidth(graphInput.get(yRow).get(yCol));
             }
