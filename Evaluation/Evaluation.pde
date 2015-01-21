@@ -768,7 +768,7 @@ double evaluateParens(String expression) {
         }
       }
     }
-    if(expression.length()>=6 && el<=expression.length()-5) {
+    if (expression.length()>=6 && el<=expression.length()-5) {
       //System.out.println("passed length requirements");
       if (expression.substring(el, el+4).equals("^(-)")) {
         System.out.println("passed matching requirements"); 
@@ -780,8 +780,8 @@ double evaluateParens(String expression) {
           }
         }
         System.out.println(lastDigit);
-        System.out.println("1/("+expression.substring(0,el+1)+expression.substring(el+4)+")");
-        expression = "1/("+expression.substring(0,el+1)+expression.substring(el+4)+")";
+        System.out.println("1/("+expression.substring(0, el+1)+expression.substring(el+4)+")");
+        expression = "1/("+expression.substring(0, el+1)+expression.substring(el+4)+")";
         System.out.println("expression: "+expression);
       }
     }
@@ -828,7 +828,13 @@ double evaluateParens(String expression) {
   }
   expression=evaluateParensHelper(expression);//refers to helper function
   if (screen.equals("GRAPH")) {//does not round when graphing (messes up when it tries to round nonexistent points using x values outside the domain)
-    return Double.parseDouble(expression);
+    try {
+      return Double.parseDouble(expression);
+    } 
+    catch (Exception e) {
+      error = true;
+      return 0;
+    }
   } else { //rounds to 10 decimal points
     System.out.println(expression);
     try {
@@ -975,3 +981,4 @@ String combine(ArrayList<String> in) {
   }
   return joined;
 }
+

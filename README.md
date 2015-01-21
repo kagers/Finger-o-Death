@@ -4,6 +4,7 @@ Finger-o-Death
 
 A TI style graphing calculator with powers including math, and graphs.<br>
 Originally planned in Java and Processing, but now is full-on Processing.<br>
+Some buttons do not work by design.<br>
 Be safe around floating point arithmetic -- don't forget how easily in can *double*-cross you.<br>
 Remember to turn on first, and happy mathing!<br>
 
