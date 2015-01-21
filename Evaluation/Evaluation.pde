@@ -22,7 +22,6 @@ int endRow = 1;
 String[] functions;
 String mode = "NORM";
 String screen = "NORM";
-//double Ans = 0;
 String[] alphabet = new String[26];
 boolean overWrite=true;
 String inbefore = "";
@@ -156,7 +155,7 @@ void draw() {
     } else if (screen.equals("Y=") ) {//Y= display screen
       for (int i=0; i<10; i++) {
         text("Y"+i+"=", 40, 20+(30*i));
-        drawCursor();//not sure if this is necessary here; will test later
+        drawCursor();
         for (int j=0; j<graphInput.size (); j++) {
           String joined = combine(graphInput.get(j));
           if (joined.length()>0) {//displays inputted functions
@@ -171,7 +170,7 @@ void draw() {
       for (int i=0; i<6; i++) {
         String n = names.substring(i*5, (i*5)+5);
         text(n, 65-textWidth(n), 20+(30*i));
-        drawCursor();//not sure if this is necessary here; will test later
+        drawCursor();
         for (int j=0; j<windowInput.size (); j++) {
           String joined = combine(windowInput.get(j));
           if (joined.length()>0) {//displays inputted functions
@@ -185,7 +184,7 @@ void draw() {
       names.add("2:ZTrig");
       for (int i=0; i<2; i++) {
         text(names.get(i), 70, 20+(30*i));
-        drawCursor();//not sure if this is necessary here; will test later
+        drawCursor();
       }
     }
   } else {
@@ -206,7 +205,7 @@ void drawCursor() {
     stroke(196, 224, 190);
     fill(196, 224, 190);
   }
-  rect(cursorX, cursorY, 7.25, 10);//fixed cursor dimensions (if there's a way to conform it to text width maybe that would be better but it doesn't really matter)
+  rect(cursorX, cursorY, 7.25, 10);//fixed cursor dimensions 
   stroke(0);
   fill(0);
 }
@@ -216,24 +215,22 @@ void CLEAR() {
     screen="NORM";
   } else if (screen.equals("Y=")) {//Clear for Y= screen
     if (combine(graphInput.get(yRow)).length()>0) {
-      graphInput.get(yRow).clear(); //clears current line only
+      graphInput.get(yRow).clear(); 
       yCol=0;
     }
     cursorX=70;
-  } else if (screen.equals("WINDOW")) {//Clear current line only
+  } else if (screen.equals("WINDOW")) {
     if (combine(windowInput.get(wRow)).length()>0) {
-      windowInput.get(wRow).clear(); //clears current line only
+      windowInput.get(wRow).clear();
       wCol=0;
     }
     cursorX=70;
   } else { //Clear when screen is normal. Clears everything
     if (input.get(row).size()==0) {
-      //for (int j=0; j<input.size (); j++) {//Clears everything
       startRow=row;
       endRow=row+1;
       cursorY=7;//sets cursor back to the top
-    } else { //clears current row only
-      System.out.println("J");
+    } else { 
       input.get(row).clear();
       col=0;
     }
@@ -242,9 +239,6 @@ void CLEAR() {
 }
 
 void ENTER() {
-  System.out.println(row);
-  System.out.print("\t"+startRow);
-  System.out.print("\t"+endRow);
   if (mode.equals("NORM")) {
     if (screen.equals("NORM")) {
       if (input.get(row).size()!=0) {
@@ -258,7 +252,6 @@ void ENTER() {
       } else {
         cursorY+=30;
       }
-      System.out.println(lastEvaluated);
       String[] exps = lastEvaluated.split("->");
       switch (exps.length) {
       case 1:
@@ -293,7 +286,6 @@ void ENTER() {
       endRow++;
       if (row>8 && endRow-startRow>=10) {
         startRow++;
-        System.out.println();
         cursorY=7+30*8;
       }
     } else if (screen.equals("Y=")) {//Enter for Y= screen
@@ -325,8 +317,6 @@ void ENTER() {
         windowInput.get(4).add("4");//Ymax
         windowInput.get(5).add("1");//Yscl
       }
-      System.out.println(windowInput.toString());
-      System.out.println(zRow);
       screen="GRAPH";
     }
   }
@@ -380,9 +370,6 @@ void normalButtons(int i) {
 void ad() {
   if (screen.equals("NORM")) { //adds to input
     if (combine(input.get(row)).length()<45 || (overWrite && col<input.get(row).size())) {
-      if (col<input.get(row).size()) {
-        System.out.println(textWidth(input.get(row).get(col)));
-      }
       if (!overWrite || col>=input.get(row).size()) {
         if (!(inbefore.equals(""))) {
           input.get(row).add(col, inbefore);
@@ -437,9 +424,6 @@ void ad() {
     }
   } else if (screen.equals("WINDOW")) {
     if (combine(windowInput.get(wRow)).length()<35 || (overWrite && wCol<windowInput.get(wRow).size())) {
-      if (wCol<windowInput.get(wRow).size()) {
-        System.out.println(textWidth(windowInput.get(wRow).get(wCol)));
-      }
       if (!overWrite || wCol>=windowInput.get(wRow).size()) {
         if (!(inbefore.equals(""))) {
           windowInput.get(wRow).add(wCol, inbefore);
@@ -597,7 +581,6 @@ void mouseClicked() {
               }
             } else if (buttons[i].name.equals("LOG") || buttons[i].name.equals("LN") ||
               buttons[i].name.equals("SIN") || buttons[i].name.equals("COS") || buttons[i].name.equals("TAN")) {
-              System.out.println("Log etc clicked");
               specialFunctions(i);
             } else if (buttons[i].name.equals("x^2") || buttons[i].name.equals("x^(-)1")) {
               specialExponents(i);
@@ -608,7 +591,7 @@ void mouseClicked() {
         } else if (mode.equals("2nd")) { //buttons in 2nd mode
           if (buttons[i].name.equals("2nd")) { //changes mode back to norm
             mode = "NORM";
-          } else if (buttons[i].name.equals("ALPHA")) { //changes mode to Alpha (should do A-lock, no? Will fix if there's time)
+          } else if (buttons[i].name.equals("ALPHA")) { 
             mode = "ALPHA";
           } else if (buttons[i].name.equals("CLEAR")) { //Clear works the same as in normal mode (even in the Y= and Graph screens currently, which is a problem. I will fix this)
             CLEAR();
@@ -711,27 +694,18 @@ double evaluateParens(String expression) {
       return 0;
     }
     if (expression.length()>=6 && el<=expression.length()-5) {
-      //System.out.println("passed length requirements");
       if (expression.substring(el, el+4).equals("*(-)")) {
-        System.out.println("passed matching requirements"); 
         int lastDigit = el-1;
-        System.out.println("trying it...");
         for (int i=el; i>=0; i--) {
           if (!expression.substring(i, i+1).matches("[0-9]+")) {
             lastDigit = i-1;
           }
         }
-        System.out.println(lastDigit);
-        System.out.println(expression.substring(0, lastDigit)+"(-)"+expression.substring(lastDigit, el+1)+expression.substring(el+4));
         expression = expression.substring(0, lastDigit)+"(-)"+expression.substring(lastDigit, el+1)+expression.substring(el+4);
-        System.out.println("expression: "+expression);
         for (int em=0; em<expression.length (); em++) {
           if (em==0) {
-            System.out.println("em==0");
             if (expression.length()>=3) {
-              System.out.println("length is greater than or equal to 3");
               if (expression.substring(0, 3).equals("(-)")) {
-                System.out.println("caught starting (-)");
                 expression = "0-"+expression.substring(3);
               }
             }
@@ -740,27 +714,18 @@ double evaluateParens(String expression) {
       }
     }
     if (expression.length()>=6 && el<=expression.length()-5) {
-      //System.out.println("passed length requirements");
       if (expression.substring(el, el+4).equals("/(-)")) {
-        System.out.println("passed matching requirements"); 
         int lastDigit = el-1;
-        System.out.println("trying it...");
         for (int i=el; i>=0; i--) {
           if (!expression.substring(i, i+1).matches("[0-9]+")) {
             lastDigit = i-1;
           }
         }
-        System.out.println(lastDigit);
-        System.out.println(expression.substring(0, lastDigit)+"(-)"+expression.substring(lastDigit, el+1)+expression.substring(el+4));
         expression = expression.substring(0, lastDigit)+"(-)"+expression.substring(lastDigit, el+1)+expression.substring(el+4);
-        System.out.println("expression: "+expression);
         for (int em=0; em<expression.length (); em++) {
           if (em==0) {
-            System.out.println("em==0");
             if (expression.length()>=3) {
-              System.out.println("length is greater than or equal to 3");
               if (expression.substring(0, 3).equals("(-)")) {
-                System.out.println("caught starting (-)");
                 expression = "0-"+expression.substring(3);
               }
             }
@@ -769,41 +734,27 @@ double evaluateParens(String expression) {
       }
     }
     if (expression.length()>=6 && el<=expression.length()-5) {
-      //System.out.println("passed length requirements");
       if (expression.substring(el, el+4).equals("^(-)")) {
-        System.out.println("passed matching requirements"); 
         int lastDigit = el-1;
-        System.out.println("trying it...");
         for (int i=el; i>=0; i--) {
           if (!expression.substring(i, i+1).matches("[0-9]+")) {
             lastDigit = i-1;
           }
         }
-        System.out.println(lastDigit);
-        System.out.println("1/("+expression.substring(0, el+1)+expression.substring(el+4)+")");
         expression = "1/("+expression.substring(0, el+1)+expression.substring(el+4)+")";
-        System.out.println("expression: "+expression);
       }
     }
     if (el==0 && expression.length()>=3 && expression.substring(0, 3).equals("(-)")) {
-      System.out.println("caught starting (-)");
       expression = "0-"+expression.substring(3);
     }
     if (expression.length()>=4 && el<=expression.length()-4 && expression.substring(el, el+4).equals("-(-)")) {
       expression = expression.substring(0, el)+"+"+expression.substring(el+4);
     } else if (expression.length()>=4 && el<=expression.length()-4 && expression.substring(el, el+4).equals("+(-)")) {
       expression = expression.substring(0, el)+"-"+expression.substring(el+4);
-    } else {
-      //System.out.println("not caught");
     }
   }
-  //expression=expression.replace("-(-)","+");
-  //expression=expression.replace("+(-)","-");
-  //expression=expression.replace("(-)", "-1*");
   expression=expression.replace(")(", ")*(");
-  //if (expression.indexOf("Ans")!=-1) {
   expression=expression.replace("Ans", Ans.substring(1));
-  //}
   for (int i=0; i<alphabet.length; i++) {
     if (!(""+(char)('A'+i)).equals("E")) {
       expression=expression.replace(""+(char)('A'+i), alphabet[i]);
@@ -835,10 +786,8 @@ double evaluateParens(String expression) {
       error = true;
       return 0;
     }
-  } else { //rounds to 10 decimal points
-    System.out.println(expression);
+  } else { //rounds to 9 decimal points
     try {
-      //System.out.println("H");
       java.math.BigDecimal bd = new java.math.BigDecimal(Double.parseDouble(expression));
       bd = bd.setScale(9, java.math.BigDecimal.ROUND_HALF_UP);
       return(bd.doubleValue());
